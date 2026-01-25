@@ -1,0 +1,122 @@
+{
+  "next_id": 4,
+  "updated_at": "2026-01-25T14:30:30.773235",
+  "items": [
+    {
+      "id": "BL-001",
+      "title": "EXP-001: PyO3/maturin hybrid build workflow investigation",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-01-25T14:30:12.374239",
+      "completed_at": null,
+      "tags": [
+        "investigation",
+        "v001-prerequisite",
+        "rust",
+        "tooling"
+      ],
+      "description": "Before designing v001, investigate the PyO3/maturin hybrid build chain:\n\n- How does the dev workflow actually function? (edit Rust, rebuild, import in Python)\n- What's the compile time impact?\n- How do we generate and maintain .pyi stub files?\n- What CI configuration is needed for hybrid builds?\n- Are there gotchas with maturin develop vs maturin build?\n\nThis informs Milestone 1.1 (project setup) and 1.2-1.3 (Rust core).",
+      "acceptance_criteria": [
+        {
+          "text": "Exploration documents hybrid Python+Rust build workflow",
+          "done": false
+        },
+        {
+          "text": "Dev experience documented (edit-compile-test cycle)",
+          "done": false
+        },
+        {
+          "text": "CI setup requirements identified",
+          "done": false
+        },
+        {
+          "text": "Type stub (.pyi) generation process documented",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: EXP-001: PyO3/maturin hybrid build workflow investigation. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-002",
+      "title": "EXP-002: Recording fake pattern for FFmpeg executor",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-01-25T14:30:20.472748",
+      "completed_at": null,
+      "tags": [
+        "investigation",
+        "v001-prerequisite",
+        "testing",
+        "ffmpeg"
+      ],
+      "description": "Investigate the recording fake pattern for FFmpeg integration testing:\n\n- How does RecordingFFmpegExecutor capture commands?\n- How do we verify captured commands against expected FFmpeg syntax?\n- What's the contract test pattern — run against real FFmpeg periodically?\n- How does this integrate with the black box testing harness?\n\nThis informs v001 (basic structure) and v004 (full testing infrastructure).",
+      "acceptance_criteria": [
+        {
+          "text": "Concrete RecordingFFmpegExecutor implementation documented",
+          "done": false
+        },
+        {
+          "text": "Recording/playback mechanism for command verification explained",
+          "done": false
+        },
+        {
+          "text": "Contract test pattern for FFmpeg commands demonstrated",
+          "done": false
+        },
+        {
+          "text": "Integration with pytest fixtures shown",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: EXP-002: Recording fake pattern for FFmpeg executor. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-003",
+      "title": "EXP-003: FastAPI static file serving for GUI",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-25T14:30:30.773235",
+      "completed_at": null,
+      "tags": [
+        "investigation",
+        "v005-prerequisite",
+        "gui",
+        "fastapi"
+      ],
+      "description": "Investigate serving the React/Svelte GUI from FastAPI:\n\n- How do we configure FastAPI to serve static files from Vite build output?\n- What's the development workflow — proxy setup for hot reload?\n- How do we handle the /gui/* route mounting?\n- What about index.html fallback for SPA routing?\n\nThis informs v005 (GUI shell).",
+      "acceptance_criteria": [
+        {
+          "text": "FastAPI StaticFiles mount configuration documented",
+          "done": false
+        },
+        {
+          "text": "Vite build output integration explained",
+          "done": false
+        },
+        {
+          "text": "Development workflow (hot reload) documented",
+          "done": false
+        },
+        {
+          "text": "Production deployment pattern shown",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: EXP-003: FastAPI static file serving for GUI. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    }
+  ],
+  "completed_count": 0,
+  "cancelled_count": 0
+}
