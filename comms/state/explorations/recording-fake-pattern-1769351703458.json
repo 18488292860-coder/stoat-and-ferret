@@ -1,0 +1,15 @@
+{
+  "exploration_id": "recording-fake-pattern-1769351703458",
+  "results_folder": "recording-fake-pattern",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-01-25T14:35:03.458194",
+  "updated_at": "2026-01-25T14:35:03.458194",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/recording-fake-pattern/prompt.md",
+  "outbox_path": "comms/outbox/exploration/recording-fake-pattern"
+}

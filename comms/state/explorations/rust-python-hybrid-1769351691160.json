@@ -1,10 +1,10 @@
 {
   "exploration_id": "rust-python-hybrid-1769351691160",
   "results_folder": "rust-python-hybrid",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 28492,
   "started_at": "2026-01-25T14:34:51.160901",
-  "updated_at": "2026-01-25T14:34:51.160901",
+  "updated_at": "2026-01-25T14:34:52.950576",
   "completed_at": null,
   "error": null,
   "documents": [],
