@@ -98,6 +98,18 @@ Items explicitly deferred during version design, with target versions.
 |---------|------|---------|  
 | v001 | 2026-01-26 | Foundation version: Python/Rust tooling, timeline math, FFmpeg command builder |
 
+## v002 Backlog Items
+
+Backlog items planned for inclusion in v002:
+
+| ID | Title | Priority | Theme |
+|----|-------|----------|-------|
+| BL-004 | Expose Clip and ValidationError types to Python | P1 | 01-python-bindings |
+| BL-005 | Expose TimeRange and list operations to Python | P1 | 01-python-bindings |
+| BL-006 | Update AGENTS.md with PyO3 bindings guidance | P1 | 02-tooling-process |
+| BL-007 | Automate type stub generation in CI | P2 | 02-tooling-process |
+| BL-008 | Clean up Python API naming inconsistencies | P2 | 01-python-bindings |
+
 ## Backlog Integration
 
 Work that surfaces during planning or execution but doesn't fit current scope:
