@@ -9,7 +9,7 @@
 
 | Version | Roadmap Reference | Focus | Prerequisites | Status |
 |---------|-------------------|-------|---------------|--------|
-| v001 | Phase 1, M1.1-1.3 | Foundation + Rust core basics | EXP-001, EXP-002 | planned |
+| v001 | Phase 1, M1.1-1.3 | Foundation + Rust core basics | EXP-001, EXP-002 | complete |
 | v002 | Phase 1, M1.4-1.5 | Database + FFmpeg integration | v001 | planned |
 | v003 | Phase 1, M1.6-1.7 | API layer + Clip model | v002 | planned |
 | v004 | Phase 1, M1.8-1.9 | Testing infrastructure + quality verification | v003 | planned |
@@ -94,7 +94,9 @@ Items explicitly deferred during version design, with target versions.
 
 ## Completed Versions
 
-*None yet*
+| Version | Date | Summary |
+|---------|------|---------|  
+| v001 | 2026-01-26 | Foundation version: Python/Rust tooling, timeline math, FFmpeg command builder |
 
 ## Backlog Integration
 
@@ -114,3 +116,4 @@ Work that surfaces during planning or execution but doesn't fit current scope:
 | 2025-01-25 | Initial plan created | Project bootstrap, mapping Phase 1-2 milestones to versions |
 | 2025-01-25 | EXP-001, EXP-002 complete | Investigations for v001 prerequisites |
 | 2025-01-25 | v001 design complete | 3 themes, 10 features designed |
+| 2026-01-26 | v001 complete | Foundation version delivered |

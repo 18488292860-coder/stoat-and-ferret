@@ -1,6 +1,6 @@
 {
-  "next_id": 4,
-  "updated_at": "2026-01-25T22:28:39.017459",
+  "next_id": 13,
+  "updated_at": "2026-01-26T17:16:39.614225",
   "items": [
     {
       "id": "BL-001",
@@ -113,6 +113,347 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: EXP-003: FastAPI static file serving for GUI. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-004",
+      "title": "Expose Clip and ValidationError types to Python",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:15:52.979456",
+      "completed_at": null,
+      "tags": [
+        "python-bindings",
+        "v002",
+        "rust",
+        "pyo3"
+      ],
+      "description": "Theme 02 (timeline-math) implemented Clip and ValidationError types in Rust but noted \"PyO3 bindings not yet added\". These types need to be exposed to Python with full type stubs.",
+      "acceptance_criteria": [
+        {
+          "text": "Clip type exposed to Python with all methods",
+          "done": false
+        },
+        {
+          "text": "ValidationError exposed with field, message, actual, expected attributes",
+          "done": false
+        },
+        {
+          "text": "Type stubs updated in stubs/stoat_ferret_core/",
+          "done": false
+        },
+        {
+          "text": "Integration tests verify round-trip behavior",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Expose Clip and ValidationError types to Python. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-005",
+      "title": "Expose TimeRange and list operations to Python",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:15:58.874332",
+      "completed_at": null,
+      "tags": [
+        "python-bindings",
+        "v002",
+        "rust",
+        "pyo3"
+      ],
+      "description": "Theme 02 (timeline-math) implemented TimeRange with set operations and list operations in Rust but noted these are \"not yet exposed to Python\". Critical for Python-side timeline manipulation.",
+      "acceptance_criteria": [
+        {
+          "text": "TimeRange type exposed to Python with half-open interval semantics",
+          "done": false
+        },
+        {
+          "text": "Set operations (overlap, intersection, union, subtraction, contains) available",
+          "done": false
+        },
+        {
+          "text": "List operations (find_gaps, merge_ranges) available",
+          "done": false
+        },
+        {
+          "text": "Type stubs updated",
+          "done": false
+        },
+        {
+          "text": "Integration tests verify all operations",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Expose TimeRange and list operations to Python. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-006",
+      "title": "Update AGENTS.md with PyO3 bindings guidance",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:05.360801",
+      "completed_at": null,
+      "tags": [
+        "process",
+        "documentation",
+        "pyo3"
+      ],
+      "description": "v001 retrospective identified that deferring PyO3 bindings created tech debt. AGENTS.md should instruct Claude Code to add Python bindings incrementally in the same feature that implements the Rust types, rather than deferring to a later feature.",
+      "acceptance_criteria": [
+        {
+          "text": "AGENTS.md includes section on PyO3 bindings best practices",
+          "done": false
+        },
+        {
+          "text": "Guidance states: add Python bindings in same feature as Rust implementation",
+          "done": false
+        },
+        {
+          "text": "Guidance states: do not defer bindings to a later feature",
+          "done": false
+        },
+        {
+          "text": "Example provided showing correct incremental approach",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Update AGENTS.md with PyO3 bindings guidance. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-007",
+      "title": "Automate type stub generation in CI",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:11.387037",
+      "completed_at": null,
+      "tags": [
+        "tooling",
+        "ci",
+        "pyo3",
+        "type-stubs"
+      ],
+      "description": "Type stubs in stubs/stoat_ferret_core/ are manually maintained. This can drift from the actual Rust API. Automate stub generation in CI to catch drift early.",
+      "acceptance_criteria": [
+        {
+          "text": "pyo3-stub-gen or equivalent generates stubs automatically",
+          "done": false
+        },
+        {
+          "text": "CI step verifies generated stubs match committed stubs",
+          "done": false
+        },
+        {
+          "text": "CI fails if stubs are out of sync with Rust API",
+          "done": false
+        },
+        {
+          "text": "Documentation on how to regenerate stubs",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Automate type stub generation in CI. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-008",
+      "title": "Clean up Python API naming inconsistencies",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:17.330873",
+      "completed_at": null,
+      "tags": [
+        "api",
+        "cleanup",
+        "pyo3"
+      ],
+      "description": "v001 retrospective noted some Python methods have `py_` prefixes or different names than their Rust counterparts. This creates API inconsistency. Clean up naming to be consistent across languages where possible.",
+      "acceptance_criteria": [
+        {
+          "text": "Audit all Python methods for py_ prefixes",
+          "done": false
+        },
+        {
+          "text": "Remove unnecessary py_ prefixes where Rust and Python names can match",
+          "done": false
+        },
+        {
+          "text": "Document any intentional naming differences",
+          "done": false
+        },
+        {
+          "text": "Update type stubs to match",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Clean up Python API naming inconsistencies. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-009",
+      "title": "Add property test guidance to feature design template",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:23.472478",
+      "completed_at": null,
+      "tags": [
+        "process",
+        "testing",
+        "proptest"
+      ],
+      "description": "v001 retrospective suggested writing proptest invariants before implementation as executable specifications. Add guidance to feature design templates encouraging this pattern, along with tracking expected test counts.",
+      "acceptance_criteria": [
+        {
+          "text": "Feature design template includes property test section",
+          "done": false
+        },
+        {
+          "text": "Guidance on writing proptest invariants before implementation",
+          "done": false
+        },
+        {
+          "text": "Example showing invariant-first design approach",
+          "done": false
+        },
+        {
+          "text": "Documentation on expected test count tracking",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Add property test guidance to feature design template. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-010",
+      "title": "Configure Rust code coverage with llvm-cov",
+      "priority": "P3",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:28.865973",
+      "completed_at": null,
+      "tags": [
+        "testing",
+        "coverage",
+        "rust",
+        "ci"
+      ],
+      "description": "v001 retrospective noted Rust code coverage is not tracked. Configure llvm-cov to measure and report Rust test coverage alongside Python coverage.",
+      "acceptance_criteria": [
+        {
+          "text": "llvm-cov configured for Rust workspace",
+          "done": false
+        },
+        {
+          "text": "Coverage reports generated during CI",
+          "done": false
+        },
+        {
+          "text": "Coverage threshold enforced (e.g., 80%)",
+          "done": false
+        },
+        {
+          "text": "Coverage visible in CI artifacts or dashboard",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Configure Rust code coverage with llvm-cov. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-011",
+      "title": "Consolidate Python/Rust build backends",
+      "priority": "P3",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:34.152027",
+      "completed_at": null,
+      "tags": [
+        "tooling",
+        "build",
+        "complexity"
+      ],
+      "description": "v001 uses hatchling for Python package management and maturin for Rust/PyO3 builds. This dual-backend approach adds complexity. Evaluate whether the build system can be simplified.",
+      "acceptance_criteria": [
+        {
+          "text": "Evaluate if hatchling + maturin can be unified",
+          "done": false
+        },
+        {
+          "text": "Document build system architecture and rationale",
+          "done": false
+        },
+        {
+          "text": "Simplify if possible without breaking functionality",
+          "done": false
+        },
+        {
+          "text": "Update developer documentation",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Consolidate Python/Rust build backends. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-012",
+      "title": "Fix coverage reporting gaps for ImportError fallback",
+      "priority": "P3",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-26T17:16:39.614208",
+      "completed_at": null,
+      "tags": [
+        "testing",
+        "coverage",
+        "cleanup"
+      ],
+      "description": "v001 retrospective noted ImportError fallback code is excluded from coverage. Review all coverage exclusions and ensure they are intentional and documented.",
+      "acceptance_criteria": [
+        {
+          "text": "Identify all coverage exclusions in Python code",
+          "done": false
+        },
+        {
+          "text": "Remove or justify each exclusion",
+          "done": false
+        },
+        {
+          "text": "ImportError fallback properly tested or documented as intentional exclusion",
+          "done": false
+        },
+        {
+          "text": "Coverage threshold maintained",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Fix coverage reporting gaps for ImportError fallback. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
       "implemented_in_theme": null
     }

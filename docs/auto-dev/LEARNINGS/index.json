@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "id": "LRN-001",
+      "title": "PyO3 Method Chaining with PyRefMut",
+      "tags": [
+        "rust",
+        "pyo3",
+        "patterns",
+        "builder"
+      ],
+      "created": "2026-01-26T17:17:25.712714Z",
+      "source": "v001 retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "PyO3 Method Chaining with PyRefMut",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-001-pyo3-method-chaining-with-pyrefmut.md"
+    },
+    {
+      "id": "LRN-002",
+      "title": "Frame-Accurate Timeline Math",
+      "tags": [
+        "rust",
+        "video",
+        "precision",
+        "math"
+      ],
+      "created": "2026-01-26T17:17:36.777238Z",
+      "source": "v001 retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Frame-Accurate Timeline Math",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-002-frame-accurate-timeline-math.md"
+    },
+    {
+      "id": "LRN-003",
+      "title": "Security Validation Whitelist Pattern",
+      "tags": [
+        "security",
+        "validation",
+        "patterns"
+      ],
+      "created": "2026-01-26T17:17:48.490846Z",
+      "source": "v001 retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Security Validation Whitelist Pattern",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-003-security-validation-whitelist-pattern.md"
+    }
+  ],
+  "next_id": 4
+}
