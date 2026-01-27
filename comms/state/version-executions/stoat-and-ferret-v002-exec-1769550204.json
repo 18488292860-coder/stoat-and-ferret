@@ -1,0 +1,20 @@
+{
+  "schema_version": "2.0",
+  "execution_id": "stoat-and-ferret-v002-exec-1769550204",
+  "project": "stoat-and-ferret",
+  "version": "v002",
+  "status": "running",
+  "phase": "post-development",
+  "post_dev_step": "cleanup",
+  "post_dev_progress": "4/4",
+  "started_at": "2026-01-27T21:43:24.744841Z",
+  "updated_at": "2026-01-27T23:36:57.526306Z",
+  "completed_at": null,
+  "halt_reason": null,
+  "pause_requested": false,
+  "c4_regenerated": null,
+  "pause_reason": null,
+  "pause_message": null,
+  "crashed_predecessor": null,
+  "crashed_successor": null
+}

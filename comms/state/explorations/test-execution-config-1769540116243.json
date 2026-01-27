@@ -1,0 +1,20 @@
+{
+  "exploration_id": "test-execution-config-1769540116243",
+  "results_folder": "test-execution-config",
+  "status": "complete",
+  "pid": 16768,
+  "started_at": "2026-01-27T18:55:16.243431",
+  "updated_at": "2026-01-27T18:58:59.065312",
+  "completed_at": "2026-01-27T18:58:59.064934",
+  "error": null,
+  "documents": [
+    "README.md",
+    "auto-dev-settings.md",
+    "current-config.md",
+    "modification-options.md"
+  ],
+  "committed": false,
+  "commit_error": "Commit failed: warning: in the working copy of 'comms/outbox/exploration/stub-gen-cli-test/CORRECTED-IMPLEMENTATION-PLAN.md', LF will be replaced by CRLF the next time Git touches it\nerror: invalid path 'nul'\nerror: unable to add 'nul' to index\nfatal: adding files failed\n",
+  "prompt_path": "comms/inbox/exploration/test-execution-config/prompt.md",
+  "outbox_path": "comms/outbox/exploration/test-execution-config"
+}
