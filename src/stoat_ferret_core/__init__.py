@@ -17,6 +17,9 @@ Timeline Types
 - Position: Frame-accurate timeline position
 - Duration: Frame-accurate duration
 - TimeRange: Half-open interval [start, end) with set operations
+- find_gaps: Find gaps between ranges
+- merge_ranges: Merge overlapping/adjacent ranges
+- total_coverage: Calculate total duration covered by ranges
 
 FFmpeg Command Building
 -----------------------
@@ -47,33 +50,28 @@ from __future__ import annotations
 
 try:
     from stoat_ferret_core._core import (
-        # Clip types
         Clip,
         ClipValidationError,
-        # Exceptions
         CommandError,
         Duration,
-        # FFmpeg command building
         FFmpegCommand,
         Filter,
         FilterChain,
         FilterGraph,
-        # Timeline types
         FrameRate,
         Position,
         SanitizationError,
         TimeRange,
         ValidationError,
         concat_filter,
-        # Sanitization functions
         escape_filter_text,
-        # Utility function
+        find_gaps,
         health_check,
-        # Clip validation functions
+        merge_ranges,
         py_validate_clip,
         py_validate_clips,
-        # Filter helper functions
         scale_filter,
+        total_coverage,
         validate_audio_codec,
         validate_crf,
         validate_path,
@@ -101,6 +99,9 @@ except ImportError:  # pragma: no cover
     Position = _not_built  # type: ignore[misc,assignment]
     Duration = _not_built  # type: ignore[misc,assignment]
     TimeRange = _not_built  # type: ignore[misc,assignment]
+    find_gaps = _not_built
+    merge_ranges = _not_built
+    total_coverage = _not_built
     FFmpegCommand = _not_built  # type: ignore[misc,assignment]
     Filter = _not_built  # type: ignore[misc,assignment]
     FilterChain = _not_built  # type: ignore[misc,assignment]
@@ -133,6 +134,10 @@ __all__ = [
     "Position",
     "Duration",
     "TimeRange",
+    # TimeRange list operations
+    "find_gaps",
+    "merge_ranges",
+    "total_coverage",
     # FFmpeg command building
     "FFmpegCommand",
     "Filter",
