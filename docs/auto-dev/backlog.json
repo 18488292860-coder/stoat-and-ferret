@@ -1,6 +1,6 @@
 {
   "next_id": 13,
-  "updated_at": "2026-01-26T17:16:39.614225",
+  "updated_at": "2026-01-28T07:46:17.287791",
   "items": [
     {
       "id": "BL-001",
@@ -120,10 +120,10 @@
       "id": "BL-004",
       "title": "Expose Clip and ValidationError types to Python",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-26T17:15:52.979456",
-      "completed_at": null,
+      "completed_at": "2026-01-28T07:46:02.471405",
       "tags": [
         "python-bindings",
         "v002",
@@ -151,17 +151,17 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Expose Clip and ValidationError types to Python. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v002",
+      "implemented_in_theme": "01-rust-python-bindings"
     },
     {
       "id": "BL-005",
       "title": "Expose TimeRange and list operations to Python",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-26T17:15:58.874332",
-      "completed_at": null,
+      "completed_at": "2026-01-28T07:45:01.464881",
       "tags": [
         "python-bindings",
         "v002",
@@ -193,17 +193,17 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Expose TimeRange and list operations to Python. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v002",
+      "implemented_in_theme": "01-rust-python-bindings"
     },
     {
       "id": "BL-006",
       "title": "Update AGENTS.md with PyO3 bindings guidance",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-26T17:16:05.360801",
-      "completed_at": null,
+      "completed_at": "2026-01-28T07:45:04.497597",
       "tags": [
         "process",
         "documentation",
@@ -230,17 +230,17 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Update AGENTS.md with PyO3 bindings guidance. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v002",
+      "implemented_in_theme": "02-tooling-process"
     },
     {
       "id": "BL-007",
       "title": "Automate type stub generation in CI",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-26T17:16:11.387037",
-      "completed_at": null,
+      "completed_at": "2026-01-28T07:46:13.695335",
       "tags": [
         "tooling",
         "ci",
@@ -268,17 +268,17 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Automate type stub generation in CI. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v002",
+      "implemented_in_theme": "01-rust-python-bindings"
     },
     {
       "id": "BL-008",
       "title": "Clean up Python API naming inconsistencies",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-26T17:16:17.330873",
-      "completed_at": null,
+      "completed_at": "2026-01-28T07:46:17.287788",
       "tags": [
         "api",
         "cleanup",
@@ -305,8 +305,8 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Clean up Python API naming inconsistencies. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v002",
+      "implemented_in_theme": "01-rust-python-bindings"
     },
     {
       "id": "BL-009",
@@ -458,6 +458,6 @@
       "implemented_in_theme": null
     }
   ],
-  "completed_count": 0,
+  "completed_count": 6,
   "cancelled_count": 0
 }
