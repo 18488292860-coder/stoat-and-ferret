@@ -9,10 +9,10 @@
     {
       "number": 1,
       "name": "process-improvements",
-      "status": "pending",
+      "status": "in_progress",
       "features_total": 3,
-      "features_complete": 0,
-      "started_at": null,
+      "features_complete": 3,
+      "started_at": "2026-01-28T19:56:20.425388Z",
       "completed_at": null,
       "skip_reason": null
     },
@@ -48,5 +48,5 @@
     }
   ],
   "current_theme": 1,
-  "current_feature": 1
+  "current_feature": 3
 }
