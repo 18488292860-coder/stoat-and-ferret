@@ -1,10 +1,10 @@
 {
   "exploration_id": "fastapi-testing-patterns-1769597710479",
   "results_folder": "fastapi-testing-patterns",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 26292,
   "started_at": "2026-01-28T10:55:10.479591",
-  "updated_at": "2026-01-28T10:55:10.479591",
+  "updated_at": "2026-01-28T10:55:14.449545",
   "completed_at": null,
   "error": null,
   "documents": [],
