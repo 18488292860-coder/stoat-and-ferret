@@ -1,10 +1,10 @@
 {
   "exploration_id": "ci-path-filters-1769597744570",
   "results_folder": "ci-path-filters",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 26292,
   "started_at": "2026-01-28T10:55:44.570182",
-  "updated_at": "2026-01-28T10:55:44.570182",
+  "updated_at": "2026-01-28T10:55:48.997983",
   "completed_at": null,
   "error": null,
   "documents": [],

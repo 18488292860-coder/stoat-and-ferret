@@ -1,0 +1,15 @@
+{
+  "exploration_id": "alembic-verification-1769597760247",
+  "results_folder": "alembic-verification",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-01-28T10:56:00.247521",
+  "updated_at": "2026-01-28T10:56:00.247521",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/alembic-verification/prompt.md",
+  "outbox_path": "comms/outbox/exploration/alembic-verification"
+}
