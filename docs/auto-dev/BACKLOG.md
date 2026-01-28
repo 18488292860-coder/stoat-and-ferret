@@ -1,6 +1,6 @@
 # Project Backlog
 
-*Last updated: 2026-01-28 09:26*
+*Last updated: 2026-01-28 09:50*
 
 **Total completed:** 6 | **Cancelled:** 0
 
@@ -10,7 +10,7 @@
 |----------|------|-------|
 | P0 | Critical | 0 |
 | P1 | High | 0 |
-| P2 | Medium | 5 |
+| P2 | Medium | 6 |
 | P3 | Low | 4 |
 
 ## Quick Reference
@@ -22,6 +22,7 @@
 | <a id="bl-013-ref"></a>[BL-013](#bl-013) | P2 | m | Add async repository implementation for FastAPI (aiosqlite) | v002 retrospective identified that synchronous SQLite wil... |
 | <a id="bl-014-ref"></a>[BL-014](#bl-014) | P2 | s | Add Docker-based local testing option | v002 retrospective identified that Windows Application Co... |
 | <a id="bl-015-ref"></a>[BL-015](#bl-015) | P2 | s | Add migration verification to CI (upgrade/downgrade/upgrade) | v002 retrospective suggested adding migration verificatio... |
+| <a id="bl-017-ref"></a>[BL-017](#bl-017) | P2 | m | Optimize CI to skip heavy steps for docs-only commits | The CI workflow runs full build and test suite even for d... |
 | <a id="bl-010-ref"></a>[BL-010](#bl-010) | P3 | m | Configure Rust code coverage with llvm-cov | v001 retrospective noted Rust code coverage is not tracke... |
 | <a id="bl-011-ref"></a>[BL-011](#bl-011) | P3 | m | Consolidate Python/Rust build backends | v001 uses hatchling for Python package management and mat... |
 | <a id="bl-012-ref"></a>[BL-012](#bl-012) | P3 | m | Fix coverage reporting gaps for ImportError fallback | v001 retrospective noted ImportError fallback code is exc... |
@@ -32,12 +33,13 @@
 | Tag | Count | Items |
 |-----|-------|-------|
 | testing | 4 | BL-009, BL-010, BL-012, BL-016 |
+| ci | 3 | BL-010, BL-015, BL-017 |
 | database | 3 | BL-013, BL-015, BL-016 |
 | process | 2 | BL-009, BL-014 |
 | coverage | 2 | BL-010, BL-012 |
-| ci | 2 | BL-010, BL-015 |
 | tooling | 2 | BL-011, BL-014 |
 | cleanup | 2 | BL-012, BL-016 |
+| developer-experience | 2 | BL-014, BL-017 |
 | investigation | 1 | BL-003 |
 | v005-prerequisite | 1 | BL-003 |
 | gui | 1 | BL-003 |
@@ -50,10 +52,10 @@
 | v003 | 1 | BL-013 |
 | tech-debt | 1 | BL-013 |
 | docker | 1 | BL-014 |
-| developer-experience | 1 | BL-014 |
 | migrations | 1 | BL-015 |
 | quality | 1 | BL-015 |
 | consistency | 1 | BL-016 |
+| optimization | 1 | BL-017 |
 
 ## Item Details
 
@@ -148,6 +150,23 @@ v002 retrospective suggested adding migration verification to CI to ensure all m
 - [ ] Documentation updated with migration testing requirements
 
 [↑ Back to list](#bl-015-ref)
+
+#### 📋 BL-017: Optimize CI to skip heavy steps for docs-only commits
+
+**Status:** open
+**Tags:** ci, optimization, developer-experience
+
+The CI workflow runs full build and test suite even for documentation-only or housekeeping commits (e.g., version closure, changelog updates, exploration archiving). This wastes CI minutes and slows down simple administrative tasks. Implement path-based filtering or commit message detection to skip heavy steps when only docs/config files change.
+
+**Use Case:** This feature addresses: Optimize CI to skip heavy steps for docs-only commits. It improves the system by resolving the described requirement.
+
+**Acceptance Criteria:**
+- [ ] CI workflow detects docs-only or housekeeping commits (e.g., chore:, docs: prefixes)
+- [ ] Docs-only commits skip Rust build, Python tests, and other heavy steps
+- [ ] Path filters implemented for src/, rust/, tests/ vs docs/, comms/
+- [ ] Full CI still runs on code changes and PR merges to main
+
+[↑ Back to list](#bl-017-ref)
 
 ### P3: Low
 

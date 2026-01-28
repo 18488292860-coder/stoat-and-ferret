@@ -1,6 +1,6 @@
 {
-  "next_id": 17,
-  "updated_at": "2026-01-28T09:26:52.286502",
+  "next_id": 18,
+  "updated_at": "2026-01-28T09:50:25.704437",
   "items": [
     {
       "id": "BL-001",
@@ -594,6 +594,43 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Unify InMemory vs FTS5 search behavior. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-017",
+      "title": "Optimize CI to skip heavy steps for docs-only commits",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-01-28T09:50:25.704437",
+      "completed_at": null,
+      "tags": [
+        "ci",
+        "optimization",
+        "developer-experience"
+      ],
+      "description": "The CI workflow runs full build and test suite even for documentation-only or housekeeping commits (e.g., version closure, changelog updates, exploration archiving). This wastes CI minutes and slows down simple administrative tasks. Implement path-based filtering or commit message detection to skip heavy steps when only docs/config files change.",
+      "acceptance_criteria": [
+        {
+          "text": "CI workflow detects docs-only or housekeeping commits (e.g., chore:, docs: prefixes)",
+          "done": false
+        },
+        {
+          "text": "Docs-only commits skip Rust build, Python tests, and other heavy steps",
+          "done": false
+        },
+        {
+          "text": "Path filters implemented for src/, rust/, tests/ vs docs/, comms/",
+          "done": false
+        },
+        {
+          "text": "Full CI still runs on code changes and PR merges to main",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Optimize CI to skip heavy steps for docs-only commits. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
       "implemented_in_theme": null
     }
