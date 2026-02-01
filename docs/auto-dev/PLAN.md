@@ -11,7 +11,7 @@
 |---------|-------------------|-------|---------------|--------|
 | v001 | Phase 1, M1.1-1.3 | Foundation + Rust core basics | EXP-001, EXP-002 | complete |
 | v002 | Phase 1, M1.4-1.5 | Database + FFmpeg integration | v001 | complete |
-| v003 | Phase 1, M1.6-1.7 | API layer + Clip model | v002 | planned |
+| v003 | Phase 1, M1.6-1.7 | API layer + Clip model | v002 | complete |
 | v004 | Phase 1, M1.8-1.9 | Testing infrastructure + quality verification | v003 | planned |
 | v005 | Phase 1, M1.10-1.12 | GUI shell + library browser + project manager | v004 | planned |
 | v006 | Phase 2, M2.1-2.3 | Effects engine foundation | v005 | planned |
@@ -95,9 +95,10 @@ Items explicitly deferred during version design, with target versions.
 ## Completed Versions
 
 | Version | Date | Summary |
-|---------|------|---------|  
+|---------|------|---------|
 | v001 | 2026-01-26 | Foundation version: Python/Rust tooling, timeline math, FFmpeg command builder |
 | v002 | 2026-01-27 | Database & FFmpeg integration: Python bindings completion, SQLite with repository pattern, FFmpeg executor with observability |
+| v003 | 2026-01-28 | API layer + Clip model: FastAPI REST API, async repository layer, video library endpoints, clip/project data models with Rust validation, CI improvements (BL-013, BL-015, BL-017) |
 
 ## Backlog Integration
 
@@ -119,3 +120,4 @@ Work that surfaces during planning or execution but doesn't fit current scope:
 | 2025-01-25 | v001 design complete | 3 themes, 10 features designed |
 | 2026-01-26 | v001 complete | Foundation version delivered |
 | 2026-01-27 | v002 complete | Database & FFmpeg integration delivered (4 themes, 13 features) |
+| 2026-01-28 | v003 complete | API layer + Clip model delivered (4 themes, 15 features, BL-013/015/017 completed) |

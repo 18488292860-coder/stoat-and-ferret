@@ -1,6 +1,6 @@
 {
   "next_id": 18,
-  "updated_at": "2026-01-28T09:50:25.704437",
+  "updated_at": "2026-02-01T00:00:00.000000",
   "items": [
     {
       "id": "BL-001",
@@ -461,10 +461,10 @@
       "id": "BL-013",
       "title": "Add async repository implementation for FastAPI (aiosqlite)",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-28T09:26:37.042060",
-      "completed_at": null,
+      "completed_at": "2026-01-28T22:37:18.032534Z",
       "tags": [
         "database",
         "async",
@@ -475,25 +475,25 @@
       "acceptance_criteria": [
         {
           "text": "AsyncVideoRepository protocol defined",
-          "done": false
+          "done": true
         },
         {
           "text": "aiosqlite implementation created",
-          "done": false
+          "done": true
         },
         {
           "text": "Existing sync repository kept for CLI/scripts",
-          "done": false
+          "done": true
         },
         {
           "text": "Integration tests verify async behavior",
-          "done": false
+          "done": true
         }
       ],
-      "notes": null,
+      "notes": "Completed in v003/01-process-improvements",
       "use_case": "This feature addresses: Add async repository implementation for FastAPI (aiosqlite). It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v003",
+      "implemented_in_theme": "01-process-improvements"
     },
     {
       "id": "BL-014",
@@ -533,10 +533,10 @@
       "id": "BL-015",
       "title": "Add migration verification to CI (upgrade/downgrade/upgrade)",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "s",
       "added": "2026-01-28T09:26:47.388756",
-      "completed_at": null,
+      "completed_at": "2026-01-28T22:37:18.032534Z",
       "tags": [
         "ci",
         "database",
@@ -547,21 +547,21 @@
       "acceptance_criteria": [
         {
           "text": "CI runs: alembic upgrade head && alembic downgrade base && alembic upgrade head",
-          "done": false
+          "done": true
         },
         {
           "text": "CI fails if any migration step fails",
-          "done": false
+          "done": true
         },
         {
           "text": "Documentation updated with migration testing requirements",
-          "done": false
+          "done": true
         }
       ],
-      "notes": null,
+      "notes": "Completed in v003/01-process-improvements",
       "use_case": "This feature addresses: Add migration verification to CI (upgrade/downgrade/upgrade). It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v003",
+      "implemented_in_theme": "01-process-improvements"
     },
     {
       "id": "BL-016",
@@ -601,10 +601,10 @@
       "id": "BL-017",
       "title": "Optimize CI to skip heavy steps for docs-only commits",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-28T09:50:25.704437",
-      "completed_at": null,
+      "completed_at": "2026-01-28T22:37:18.032534Z",
       "tags": [
         "ci",
         "optimization",
@@ -614,27 +614,27 @@
       "acceptance_criteria": [
         {
           "text": "CI workflow detects docs-only or housekeeping commits (e.g., chore:, docs: prefixes)",
-          "done": false
+          "done": true
         },
         {
           "text": "Docs-only commits skip Rust build, Python tests, and other heavy steps",
-          "done": false
+          "done": true
         },
         {
           "text": "Path filters implemented for src/, rust/, tests/ vs docs/, comms/",
-          "done": false
+          "done": true
         },
         {
           "text": "Full CI still runs on code changes and PR merges to main",
-          "done": false
+          "done": true
         }
       ],
-      "notes": null,
+      "notes": "Completed in v003/01-process-improvements",
       "use_case": "This feature addresses: Optimize CI to skip heavy steps for docs-only commits. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v003",
+      "implemented_in_theme": "01-process-improvements"
     }
   ],
-  "completed_count": 6,
+  "completed_count": 9,
   "cancelled_count": 0
 }
