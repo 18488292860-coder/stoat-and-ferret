@@ -1,0 +1,3 @@
+Run an exploration for stoat-and-ferret with results_folder="post-version-retrospective".
+
+Prompt: Execute the post-version retrospective process documented in docs/auto-dev/PROCESS/draft/post-version-retrospective-process.md. Identify the most recently completed version from comms/outbox/versions/execution/ and run the process for that version.
