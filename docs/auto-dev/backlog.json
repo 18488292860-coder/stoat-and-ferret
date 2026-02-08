@@ -1,6 +1,6 @@
 {
-  "next_id": 20,
-  "updated_at": "2026-02-06T20:37:40.867168",
+  "next_id": 53,
+  "updated_at": "2026-02-08T18:00:50.676541",
   "items": [
     {
       "id": "BL-001",
@@ -319,7 +319,8 @@
       "tags": [
         "process",
         "testing",
-        "proptest"
+        "proptest",
+        "v004"
       ],
       "description": "v001 retrospective suggested writing proptest invariants before implementation as executable specifications. Add guidance to feature design templates encouraging this pattern, along with tracking expected test counts.",
       "acceptance_criteria": [
@@ -357,7 +358,8 @@
         "testing",
         "coverage",
         "rust",
-        "ci"
+        "ci",
+        "v004"
       ],
       "description": "v001 retrospective noted Rust code coverage is not tracked. Configure llvm-cov to measure and report Rust test coverage alongside Python coverage.",
       "acceptance_criteria": [
@@ -431,7 +433,8 @@
       "tags": [
         "testing",
         "coverage",
-        "cleanup"
+        "cleanup",
+        "v004"
       ],
       "description": "v001 retrospective noted ImportError fallback code is excluded from coverage. Review all coverage exclusions and ensure they are intentional and documented.",
       "acceptance_criteria": [
@@ -507,7 +510,8 @@
         "tooling",
         "docker",
         "process",
-        "developer-experience"
+        "developer-experience",
+        "v004"
       ],
       "description": "v002 retrospective identified that Windows Application Control policies can block local Python testing. A Docker-based option would bypass these restrictions and provide consistent dev environments.",
       "acceptance_criteria": [
@@ -575,7 +579,8 @@
         "database",
         "cleanup",
         "testing",
-        "consistency"
+        "consistency",
+        "v004"
       ],
       "description": "v002 retrospective noted that InMemoryVideoRepository uses substring match while SQLiteVideoRepository uses FTS5 full-text search. Consider unifying search behavior for consistent testing.",
       "acceptance_criteria": [
@@ -671,6 +676,1315 @@
       "acceptance_criteria": [],
       "notes": null,
       "use_case": "This feature addresses: Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-020",
+      "title": "Implement InMemory test doubles for Projects and Jobs",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:56:36.056975",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "testing",
+        "test-doubles"
+      ],
+      "description": "The RecordingFFmpegExecutor test double exists from v002, but InMemoryProjectStorage and InMemoryJobQueue are missing. The 07-quality-architecture.md spec requires these test doubles for black box testing (M1.8), but only InMemoryVideoRepository has been implemented. Without these doubles, integration tests cannot run in isolation from real storage and must use the actual database, making tests slow and non-deterministic.",
+      "acceptance_criteria": [
+        {
+          "text": "InMemoryProjectStorage implements AsyncProjectRepository protocol with deepcopy isolation",
+          "done": false
+        },
+        {
+          "text": "InMemoryJobQueue provides synchronous deterministic execution with configurable outcomes",
+          "done": false
+        },
+        {
+          "text": "Both doubles include seed helpers for populating test data",
+          "done": false
+        },
+        {
+          "text": "Contract tests verify InMemory behavior matches real SQLite implementations",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement InMemory test doubles for Projects and Jobs. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-021",
+      "title": "Add dependency injection to create_app() for test wiring",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:56:42.085445",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "testing",
+        "dependency-injection"
+      ],
+      "description": "The `create_app()` factory exists but does not accept injectable dependencies as specified in 07-quality-architecture.md. Tests currently cannot swap in recording or in-memory fakes at the application level. This blocks black box testing (M1.8) because there is no way to wire test doubles into the running FastAPI app without monkey-patching.",
+      "acceptance_criteria": [
+        {
+          "text": "create_app() accepts optional executor, repository, and job queue parameters",
+          "done": false
+        },
+        {
+          "text": "Default behavior unchanged — production uses real implementations when None passed",
+          "done": false
+        },
+        {
+          "text": "Test mode injects recording/in-memory fakes through the same interface",
+          "done": false
+        },
+        {
+          "text": "At least one integration test demonstrates the test wiring end-to-end",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Add dependency injection to create_app() for test wiring. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-022",
+      "title": "Build fixture factory with builder pattern for test data",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:56:48.722950",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "testing",
+        "fixtures"
+      ],
+      "description": "No builder-pattern fixture factory exists for creating test data. Tests currently construct project and clip objects inline with repetitive setup code. The 07-quality-architecture.md spec requires `with_clip()`, `with_text_overlay()`, `build()`, and `create_via_api()` methods. Without a fixture factory, tests are verbose, inconsistent, and fragile when data models change.",
+      "acceptance_criteria": [
+        {
+          "text": "Builder creates test projects with configurable clips and effects via chained methods",
+          "done": false
+        },
+        {
+          "text": "build() returns domain objects directly for unit tests without HTTP",
+          "done": false
+        },
+        {
+          "text": "create_via_api() exercises the full HTTP path for black box tests",
+          "done": false
+        },
+        {
+          "text": "Pytest fixtures use the factory, replacing inline test data construction",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build fixture factory with builder pattern for test data. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-023",
+      "title": "Implement black box test scenario catalog",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:56:54.536604",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "testing",
+        "black-box"
+      ],
+      "description": "No black box integration tests exist despite the API being stable since v003. The 07-quality-architecture.md spec requires tests that exercise complete workflows through the REST API using real Rust core plus recording fakes. Without these tests, regressions in end-to-end flows (scan → project → clips) go undetected until manual testing.",
+      "acceptance_criteria": [
+        {
+          "text": "Core workflow test covers scan → project → clips flow through REST API",
+          "done": false
+        },
+        {
+          "text": "Error handling tests cover validation errors and FFmpeg failure scenarios",
+          "done": false
+        },
+        {
+          "text": "All tests use recording test doubles and never mock the Rust core directly",
+          "done": false
+        },
+        {
+          "text": "Tests run in CI without FFmpeg installed",
+          "done": false
+        },
+        {
+          "text": "pytest markers separate black box tests from unit tests",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement black box test scenario catalog. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-024",
+      "title": "Contract tests with real FFmpeg for executor fidelity",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:04.009812",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "testing",
+        "ffmpeg",
+        "contract"
+      ],
+      "description": "RecordingFFmpegExecutor and FakeFFmpegExecutor exist from v001-v002, but no tests verify they produce behavior identical to RealFFmpegExecutor. This was explicitly deferred from v001 and is required by M1.9 (quality verification). Without contract tests, recording fakes may silently diverge from real FFmpeg behavior, undermining the validity of all integration tests that rely on them.",
+      "acceptance_criteria": [
+        {
+          "text": "Parametrized tests run the same commands against Real, Recording, and Fake executors",
+          "done": false
+        },
+        {
+          "text": "At least 5 representative FFmpeg commands tested across executor implementations",
+          "done": false
+        },
+        {
+          "text": "Tests marked with @pytest.mark.requires_ffmpeg for CI environments without FFmpeg",
+          "done": false
+        },
+        {
+          "text": "Contract violations between fake and real executor fail the test suite",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Contract tests with real FFmpeg for executor fidelity. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-025",
+      "title": "Security audit of Rust path validation and input sanitization",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:10.187170",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "security",
+        "audit"
+      ],
+      "description": "M1.9 specifies a security review of Rust sanitization covering path traversal, null bytes, and shell injection vectors. The Rust core handles user-provided file paths and filter text (via `escape_filter_text()`), but no formal audit artifact documents what has been reviewed, what attack vectors are covered, and where gaps remain. Without this audit, security coverage is implicit and unverifiable.",
+      "acceptance_criteria": [
+        {
+          "text": "Review covers path traversal, null byte injection, and shell injection vectors in Rust core",
+          "done": false
+        },
+        {
+          "text": "Audit document published in docs/ with findings and coverage assessment",
+          "done": false
+        },
+        {
+          "text": "Any identified gaps addressed with new tests or code fixes",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Security audit of Rust path validation and input sanitization. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-026",
+      "title": "Rust vs Python performance benchmark for core operations",
+      "priority": "P3",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:15.444447",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "benchmarking",
+        "rust"
+      ],
+      "description": "M1.9 requires benchmarking Rust core operations against pure-Python equivalents to validate the performance justification for the hybrid architecture. No benchmark infrastructure exists. Without measured speedup ratios, the decision to use Rust for timeline math and filter generation lacks empirical backing.",
+      "acceptance_criteria": [
+        {
+          "text": "Benchmark script compares Rust vs Python for at least 3 representative operations",
+          "done": false
+        },
+        {
+          "text": "Results documented with speedup ratios for each operation",
+          "done": false
+        },
+        {
+          "text": "Benchmark runnable via uv run python benchmarks/ command",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Rust vs Python performance benchmark for core operations. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-027",
+      "title": "Async job queue for scan operations",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:21.142515",
+      "completed_at": null,
+      "tags": [
+        "v004",
+        "async",
+        "scan"
+      ],
+      "description": "The scan endpoint blocks the HTTP request until the entire directory scan completes. This was identified as tech debt in the v003 retrospective. For large media directories, scan can take significant time, leaving the client with no progress feedback. The black box test scenario catalog (M1.8) also requires async scan behavior to test job progress workflows.",
+      "acceptance_criteria": [
+        {
+          "text": "Scan endpoint returns job ID immediately instead of blocking",
+          "done": false
+        },
+        {
+          "text": "Job status queryable via GET endpoint with progress information",
+          "done": false
+        },
+        {
+          "text": "InMemoryJobQueue supports synchronous test execution for deterministic tests",
+          "done": false
+        },
+        {
+          "text": "Existing scan tests updated to use the async pattern",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Async job queue for scan operations. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-028",
+      "title": "EXP: Frontend framework selection and Vite project setup",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:38.184470",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "gui",
+        "investigation"
+      ],
+      "description": "No frontend project exists — no `gui/` directory, package.json, or framework choice has been finalized. The 08-gui-architecture.md suggests React 18+ or Svelte 4+ with Vite and Tailwind. BL-003 covers investigating FastAPI static file serving but not the framework decision or project scaffolding. All v005 GUI milestones (M1.10–M1.12) are blocked until a frontend project is in place.",
+      "acceptance_criteria": [
+        {
+          "text": "Framework selected (React vs Svelte) with documented rationale",
+          "done": false
+        },
+        {
+          "text": "gui/ project scaffolded with Vite, Tailwind CSS, and TypeScript",
+          "done": false
+        },
+        {
+          "text": "npm run build produces gui/dist/ with a working bundle",
+          "done": false
+        },
+        {
+          "text": "FastAPI serves the built frontend at /gui/* routes",
+          "done": false
+        },
+        {
+          "text": "Dev proxy configured for Vite HMR during development",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: EXP: Frontend framework selection and Vite project setup. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-029",
+      "title": "Implement WebSocket endpoint for real-time events",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:43.982521",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "websocket",
+        "api"
+      ],
+      "description": "M1.10 requires a `/ws` WebSocket endpoint for real-time event broadcasting, but no WebSocket support exists in the current FastAPI app. The application shell needs live health status updates and the dashboard needs an activity feed. Without WebSocket support, the GUI must resort to polling, creating unnecessary load and delayed feedback.",
+      "acceptance_criteria": [
+        {
+          "text": "/ws endpoint accepts WebSocket connections with proper handshake",
+          "done": false
+        },
+        {
+          "text": "Health status changes broadcast to all connected clients",
+          "done": false
+        },
+        {
+          "text": "Activity events (scan started/completed, project created) broadcast in real time",
+          "done": false
+        },
+        {
+          "text": "Connection lifecycle tested: connect, disconnect, reconnect scenarios",
+          "done": false
+        },
+        {
+          "text": "WebSocket messages include correlation IDs from existing middleware",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement WebSocket endpoint for real-time events. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-030",
+      "title": "Build application shell and navigation components",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:50.109098",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "gui",
+        "shell"
+      ],
+      "description": "M1.10 specifies an application shell with navigation tabs, status bar, and health indicator, but no frontend components exist. The shell is the frame that hosts all other GUI panels (library browser, project manager, effect workshop). Without it, individual components have no layout structure or navigation context.",
+      "acceptance_criteria": [
+        {
+          "text": "Navigation between Dashboard, Library, and Projects tabs works with URL routing",
+          "done": false
+        },
+        {
+          "text": "Health indicator polls /health/ready and displays green/yellow/red status",
+          "done": false
+        },
+        {
+          "text": "Status bar displays WebSocket connection state",
+          "done": false
+        },
+        {
+          "text": "Progressive tabs — only shows features whose backends are available",
+          "done": false
+        },
+        {
+          "text": "Component unit tests pass in Vitest",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build application shell and navigation components. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-031",
+      "title": "Build dashboard panel with health cards and activity log",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:57:55.468176",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "gui",
+        "dashboard"
+      ],
+      "description": "M1.10 specifies a dashboard with system health cards, recent activity log, and metrics overview. No dashboard component exists. The dashboard is the landing page and primary system health visibility tool. Without it, users have no centralized view of component status (Python, Rust core, FFmpeg) or recent system activity.",
+      "acceptance_criteria": [
+        {
+          "text": "Health cards display individual component status (Python, Rust core, FFmpeg)",
+          "done": false
+        },
+        {
+          "text": "Activity log receives and displays WebSocket events in real time",
+          "done": false
+        },
+        {
+          "text": "Metrics cards show API request count and Rust operation timing from /metrics",
+          "done": false
+        },
+        {
+          "text": "Dashboard auto-refreshes on a configurable interval",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build dashboard panel with health cards and activity log. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-032",
+      "title": "Implement thumbnail generation pipeline for video library",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:58:04.504476",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "thumbnails",
+        "ffmpeg"
+      ],
+      "description": "The library browser spec (M1.11) assumes thumbnail display for videos, but no thumbnail generation pipeline exists. Videos are scanned and stored with metadata, but no representative frame is extracted. Without thumbnails, the library browser would display a text-only list, degrading the visual browsing experience that is core to a video editing tool.",
+      "acceptance_criteria": [
+        {
+          "text": "Thumbnail generated during video scan or on first access",
+          "done": false
+        },
+        {
+          "text": "GET /api/videos/{id}/thumbnail returns the thumbnail image",
+          "done": false
+        },
+        {
+          "text": "Configurable thumbnail size with default 320x180",
+          "done": false
+        },
+        {
+          "text": "Graceful fallback returns a placeholder for videos where extraction fails",
+          "done": false
+        },
+        {
+          "text": "RecordingFFmpegExecutor captures thumbnail generation commands for testing",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement thumbnail generation pipeline for video library. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-033",
+      "title": "Build library browser with video grid, search, and scan UI",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:58:10.196219",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "gui",
+        "library"
+      ],
+      "description": "M1.11 specifies a library browser with video grid, search, sort/filter, and scan controls. No frontend components for video display exist. The library browser is the primary entry point for working with media — users need to find, browse, and select videos before creating projects. The backend API endpoints (search, list, scan) exist from v003 but have no GUI consumer.",
+      "acceptance_criteria": [
+        {
+          "text": "Video grid displays thumbnails, filename, and duration for each video",
+          "done": false
+        },
+        {
+          "text": "Search bar calls /api/videos/search with debounced input",
+          "done": false
+        },
+        {
+          "text": "Sort by date, name, or duration updates the grid",
+          "done": false
+        },
+        {
+          "text": "Scan modal triggers directory scan and shows progress feedback",
+          "done": false
+        },
+        {
+          "text": "Virtual scrolling or pagination handles libraries with 100+ videos",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build library browser with video grid, search, and scan UI. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-034",
+      "title": "Fix pagination total count for list endpoints",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:58:15.599657",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "api",
+        "pagination"
+      ],
+      "description": "Paginated list endpoints return page-based results but lack a true total count. This was identified as tech debt in the v003 retrospective. The library browser needs the total count for virtual scrolling (to size the scroll container) and for displaying \"X of Y results\" feedback. Without it, the frontend cannot accurately represent the full dataset size.",
+      "acceptance_criteria": [
+        {
+          "text": "List endpoints return a total field with the full count of matching items",
+          "done": false
+        },
+        {
+          "text": "Search endpoint returns total matching results separate from page size",
+          "done": false
+        },
+        {
+          "text": "Existing pagination tests updated to verify total count accuracy",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Fix pagination total count for list endpoints. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-035",
+      "title": "Build project manager with list, creation, and details views",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:58:20.785944",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "gui",
+        "projects"
+      ],
+      "description": "M1.12 specifies a project manager with project list, creation modal, and details view showing Rust-calculated timeline positions. No frontend components for project management exist. The project API endpoints exist from v003, but users cannot create, browse, or inspect projects through the GUI. This is the last GUI milestone in Phase 1.",
+      "acceptance_criteria": [
+        {
+          "text": "Project list displays name, creation date, and clip count",
+          "done": false
+        },
+        {
+          "text": "New Project modal validates output settings (resolution, fps, format)",
+          "done": false
+        },
+        {
+          "text": "Project details view displays clip list with Rust-calculated timeline positions",
+          "done": false
+        },
+        {
+          "text": "Delete action requires confirmation dialog before execution",
+          "done": false
+        },
+        {
+          "text": "Component unit tests pass in Vitest",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build project manager with list, creation, and details views. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-036",
+      "title": "Set up Playwright E2E test infrastructure for GUI",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:58:25.894825",
+      "completed_at": null,
+      "tags": [
+        "v005",
+        "testing",
+        "e2e"
+      ],
+      "description": "The 08-gui-architecture.md quality requirements specify Playwright for E2E testing, but no E2E test infrastructure exists. Unit tests (Vitest) cover individual components, but there are no tests verifying that the full stack (FastAPI + built frontend) works end-to-end. Without E2E tests, regressions in the integration between frontend and backend go undetected.",
+      "acceptance_criteria": [
+        {
+          "text": "Playwright configured with CI integration in GitHub Actions",
+          "done": false
+        },
+        {
+          "text": "At least 3 E2E tests covering navigation, scan trigger, and project creation",
+          "done": false
+        },
+        {
+          "text": "Tests run against FastAPI serving the built frontend bundle",
+          "done": false
+        },
+        {
+          "text": "Accessibility checks (WCAG AA) included in test assertions",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Set up Playwright E2E test infrastructure for GUI. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-037",
+      "title": "Implement FFmpeg filter expression engine in Rust",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:58:45.828090",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "rust",
+        "filters",
+        "expressions"
+      ],
+      "description": "The current filter system (v001) handles simple key=value parameters only. FFmpeg filter expressions like `enable='between(t,3,5)'`, alpha expressions, and time-based arithmetic have no Rust representation. M2.1 requires a type-safe expression builder that prevents syntactically invalid expressions. Without this, text overlay animations (M2.2), speed control (M2.3), and all v007 effects cannot be built safely.",
+      "acceptance_criteria": [
+        {
+          "text": "Expression types cover enable, alpha, time, and arithmetic expressions",
+          "done": false
+        },
+        {
+          "text": "Builder API prevents construction of syntactically invalid expressions at compile time",
+          "done": false
+        },
+        {
+          "text": "Expressions serialize to valid FFmpeg filter syntax strings",
+          "done": false
+        },
+        {
+          "text": "Property-based tests (proptest) generate random valid expressions and verify serialization",
+          "done": false
+        },
+        {
+          "text": "PyO3 bindings expose expression builder to Python with type stubs",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement FFmpeg filter expression engine in Rust. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-038",
+      "title": "Implement filter graph validation for pad matching",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:58:50.346126",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "rust",
+        "filters",
+        "validation"
+      ],
+      "description": "The current FilterGraph (v001) builds FFmpeg filter strings but performs no validation of input/output pad matching. Invalid graphs (unconnected pads, cycles, mismatched labels) are only caught when FFmpeg rejects the command at runtime. M2.1 requires compile-time-safe graph construction. Without validation, complex filter graphs for effects composition will produce cryptic FFmpeg errors instead of actionable messages.",
+      "acceptance_criteria": [
+        {
+          "text": "Pad labels validated for correct matching (output label feeds matching input label)",
+          "done": false
+        },
+        {
+          "text": "Unconnected pads detected and reported with the specific pad name",
+          "done": false
+        },
+        {
+          "text": "Graph cycles detected and rejected before serialization",
+          "done": false
+        },
+        {
+          "text": "Validation error messages include actionable guidance on how to fix the graph",
+          "done": false
+        },
+        {
+          "text": "Existing FilterGraph tests updated to cover validation",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement filter graph validation for pad matching. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-039",
+      "title": "Build filter composition system for chaining, branching, and merging",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:58:55.785960",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "rust",
+        "filters",
+        "composition"
+      ],
+      "description": "No support exists for composing filter chains programmatically. The current system builds individual filters but cannot chain them sequentially, branch one stream into multiple, or merge multiple streams (e.g., overlay, amix). M2.1 requires a composition API for building complex filter graphs. Without it, every effect combination must manually construct raw filter strings, which is error-prone and unvalidatable.",
+      "acceptance_criteria": [
+        {
+          "text": "Chain composition applies filters sequentially to a single stream",
+          "done": false
+        },
+        {
+          "text": "Branch splits one stream into multiple output streams",
+          "done": false
+        },
+        {
+          "text": "Merge combines multiple streams using overlay, amix, or concat",
+          "done": false
+        },
+        {
+          "text": "Composed graphs pass FilterGraph validation automatically",
+          "done": false
+        },
+        {
+          "text": "PyO3 bindings expose composition API to Python with type stubs",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build filter composition system for chaining, branching, and merging. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-040",
+      "title": "Implement drawtext filter builder for text overlays",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:59:02.289043",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "rust",
+        "text-overlay"
+      ],
+      "description": "The `escape_filter_text()` function exists in the Rust sanitize module, but no structured drawtext builder handles position, font, color, shadow, box background, or alpha animation parameters. M2.2 requires a type-safe text overlay system. Without a builder, constructing drawtext filters requires manually assembling complex parameter strings with correct escaping — a frequent source of FFmpeg errors.",
+      "acceptance_criteria": [
+        {
+          "text": "Position options support absolute coordinates, centered, and margin-based placement",
+          "done": false
+        },
+        {
+          "text": "Styling covers font size, color, shadow offset/color, and box background",
+          "done": false
+        },
+        {
+          "text": "Alpha animation supports fade in/out with configurable duration using expression engine",
+          "done": false
+        },
+        {
+          "text": "Generated drawtext filters validated as syntactically correct FFmpeg syntax",
+          "done": false
+        },
+        {
+          "text": "Contract tests verify generated commands pass ffmpeg -filter_complex validation",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement drawtext filter builder for text overlays. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-041",
+      "title": "Implement speed control filter builders (setpts/atempo)",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:59:12.246297",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "rust",
+        "speed-control"
+      ],
+      "description": "No Rust types exist for video speed (setpts) or audio speed (atempo) control. M2.3 requires speed adjustment from 0.25x to 4.0x. The atempo filter maxes at 2.0x and requires automatic chaining for higher speeds — a non-obvious FFmpeg detail that should be encapsulated in the builder. Without these builders, speed control must be hand-coded with raw filter strings for each speed value.",
+      "acceptance_criteria": [
+        {
+          "text": "Video speed adjustable via setpts with factor range 0.25x–4.0x",
+          "done": false
+        },
+        {
+          "text": "Audio speed via atempo with automatic chaining for factors above 2.0x",
+          "done": false
+        },
+        {
+          "text": "Option to drop audio entirely instead of speed-adjusting it",
+          "done": false
+        },
+        {
+          "text": "Validation rejects out-of-range values with helpful error messages",
+          "done": false
+        },
+        {
+          "text": "Unit tests cover edge cases: 1x (no-op), boundary values, extreme speeds",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement speed control filter builders (setpts/atempo). It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-042",
+      "title": "Create effect discovery API endpoint",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:59:18.403862",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "api",
+        "effects",
+        "discovery"
+      ],
+      "description": "M2.2 and 05-api-specification.md specify an `/effects` discovery endpoint, but no such endpoint exists. The frontend needs a way to discover available effects with their parameter schemas and AI hints. Without a discovery endpoint, the GUI must hard-code knowledge of available effects, breaking the extensibility model and preventing the v007 Effect Workshop from dynamically generating parameter forms.",
+      "acceptance_criteria": [
+        {
+          "text": "GET /effects returns a list of all available effects",
+          "done": false
+        },
+        {
+          "text": "Each effect includes name, description, and parameter JSON schema",
+          "done": false
+        },
+        {
+          "text": "AI hints included for each parameter to guide user input",
+          "done": false
+        },
+        {
+          "text": "Text overlay and speed control registered as discoverable effects",
+          "done": false
+        },
+        {
+          "text": "Response includes Rust-generated filter preview for default parameters",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Create effect discovery API endpoint. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-043",
+      "title": "Create API endpoint to apply text overlay effect to clips",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:59:24.988435",
+      "completed_at": null,
+      "tags": [
+        "v006",
+        "api",
+        "text-overlay"
+      ],
+      "description": "No API endpoint exists to apply effects to clips. The Rust drawtext builder will generate filter strings, but there is no REST endpoint to receive effect parameters, apply them to a specific clip, and store the configuration in the project model. M2.2 requires this bridge between the Rust effects engine and the clip/project data model. The clip model currently has no field for storing applied effects.",
+      "acceptance_criteria": [
+        {
+          "text": "POST endpoint applies text overlay parameters to a specified clip",
+          "done": false
+        },
+        {
+          "text": "Effect configuration stored persistently in the clip/project model",
+          "done": false
+        },
+        {
+          "text": "Response includes the generated FFmpeg filter string for transparency",
+          "done": false
+        },
+        {
+          "text": "Validation errors from Rust surface as structured API error responses",
+          "done": false
+        },
+        {
+          "text": "Black box test covers the apply → verify filter string flow",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Create API endpoint to apply text overlay effect to clips. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-044",
+      "title": "Implement audio mixing filter builders (amix/volume/fade)",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:59:41.434479",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "rust",
+        "audio",
+        "mixing"
+      ],
+      "description": "No Rust types exist for audio mixing, volume control, or audio fade effects. M2.4 requires amix for combining audio tracks, per-track volume control, fade in/out, and audio ducking patterns. The existing filter system handles video filters only. Without audio builders, mixing multiple audio sources (music + speech) requires manual FFmpeg filter string construction with no validation or ducking automation.",
+      "acceptance_criteria": [
+        {
+          "text": "amix filter builder supports configurable number of input tracks",
+          "done": false
+        },
+        {
+          "text": "Per-track volume control validates range 0.0–10.0 using existing validate_volume",
+          "done": false
+        },
+        {
+          "text": "Audio fade in/out supports configurable duration via expression engine",
+          "done": false
+        },
+        {
+          "text": "Audio ducking pattern lowers music volume during speech segments",
+          "done": false
+        },
+        {
+          "text": "Edge case tests cover silence, clipping prevention, and format mismatches",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement audio mixing filter builders (amix/volume/fade). It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-045",
+      "title": "Implement transition filter builders (fade/xfade)",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:59:46.825964",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "rust",
+        "transitions"
+      ],
+      "description": "No Rust types exist for video transitions. M2.5 requires fade in, fade out, crossfade between clips, and xfade with selectable transition effects (wipeleft, slideright, etc.). Transitions are fundamental to video editing but currently have no type-safe builder. Without these, transition effects must be manually assembled as raw FFmpeg filter strings with no parameter validation.",
+      "acceptance_criteria": [
+        {
+          "text": "Fade in/out with configurable duration and color",
+          "done": false
+        },
+        {
+          "text": "Crossfade between two clips with overlap duration parameter",
+          "done": false
+        },
+        {
+          "text": "xfade supports selectable effect types (fade, wipeleft, slideright, etc.)",
+          "done": false
+        },
+        {
+          "text": "Parameter validation rejects invalid duration or effect type with helpful messages",
+          "done": false
+        },
+        {
+          "text": "PyO3 bindings expose transition builders to Python with type stubs",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement transition filter builders (fade/xfade). It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-046",
+      "title": "Create transition API endpoint for clip-to-clip transitions",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T17:59:51.298982",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "api",
+        "transitions"
+      ],
+      "description": "M2.5 specifies an `/effects/transition` endpoint for applying transitions between adjacent clips, but no such endpoint exists. The Rust transition builders will generate filter strings, but there is no REST endpoint to receive transition parameters, validate clip adjacency, and store the transition in the project timeline. Without this, transitions cannot be applied through the API.",
+      "acceptance_criteria": [
+        {
+          "text": "POST endpoint applies a transition between two specified clips",
+          "done": false
+        },
+        {
+          "text": "Validates that the two clips are adjacent in the project timeline",
+          "done": false
+        },
+        {
+          "text": "Response includes the generated FFmpeg filter string",
+          "done": false
+        },
+        {
+          "text": "Transition configuration stored persistently in the project model",
+          "done": false
+        },
+        {
+          "text": "Black box test covers apply transition and verify filter output flow",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Create transition API endpoint for clip-to-clip transitions. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-047",
+      "title": "Build effect registry with JSON schema validation and builder protocol",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T17:59:58.051286",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "registry",
+        "effects",
+        "schema"
+      ],
+      "description": "M2.6 specifies a central effect registry where each effect is registered with its JSON schema, Rust validation functions, and builder protocol. The v006 discovery endpoint provides basic listing, but the full registry pattern — schema validation, effect builder injection, and metrics tracking — is missing. Without a registry, each effect is independently wired, making the Effect Workshop GUI unable to dynamically generate forms or validate parameters.",
+      "acceptance_criteria": [
+        {
+          "text": "Registry stores effect metadata, parameter JSON schemas, and builder references",
+          "done": false
+        },
+        {
+          "text": "JSON schema validation enforces parameter constraints for all registered effects",
+          "done": false
+        },
+        {
+          "text": "Effect builder protocol supports dependency injection for effect construction",
+          "done": false
+        },
+        {
+          "text": "All existing effects (text overlay, speed, audio, transitions) registered",
+          "done": false
+        },
+        {
+          "text": "effect_applications_total Prometheus counter increments by effect type on application",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build effect registry with JSON schema validation and builder protocol. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-048",
+      "title": "Build effect catalog UI component",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T18:00:07.485872",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "gui",
+        "effects",
+        "catalog"
+      ],
+      "description": "M2.8 specifies an effect catalog component for browsing and selecting available effects, but no such frontend component exists. The `/effects` discovery endpoint (v006) provides the data, but there is no UI to consume it. Users need a visual catalog to discover what effects are available before they can configure and apply them. This is the entry point for the entire Effect Workshop workflow.",
+      "acceptance_criteria": [
+        {
+          "text": "Grid/list view displays available effects fetched from /effects endpoint",
+          "done": false
+        },
+        {
+          "text": "Effect cards show name, description, and category",
+          "done": false
+        },
+        {
+          "text": "AI hints displayed as contextual tooltips on each effect",
+          "done": false
+        },
+        {
+          "text": "Search and filter by category narrows the displayed effects",
+          "done": false
+        },
+        {
+          "text": "Clicking an effect opens its parameter configuration form",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build effect catalog UI component. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-049",
+      "title": "Build dynamic parameter form generator from JSON schema",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T18:00:14.349552",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "gui",
+        "effects",
+        "forms"
+      ],
+      "description": "M2.8 specifies auto-generating parameter forms from JSON schema, but no dynamic form rendering component exists. Each effect has a unique parameter schema (from the effect registry), and building static forms per effect doesn't scale. Without a schema-driven form generator, every new effect requires custom frontend code for its parameter UI, and the live filter preview feature cannot work generically.",
+      "acceptance_criteria": [
+        {
+          "text": "Forms generated dynamically from effect JSON schema definitions",
+          "done": false
+        },
+        {
+          "text": "Supports parameter types: number (with range slider), string, enum (dropdown), boolean, color picker",
+          "done": false
+        },
+        {
+          "text": "Inline validation displays error messages from Rust validation",
+          "done": false
+        },
+        {
+          "text": "Live filter string preview updates as parameter values change",
+          "done": false
+        },
+        {
+          "text": "Default values pre-populated from the JSON schema",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build dynamic parameter form generator from JSON schema. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-050",
+      "title": "Implement live FFmpeg filter preview in effect parameter UI",
+      "priority": "P1",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T18:00:19.762113",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "gui",
+        "preview",
+        "transparency"
+      ],
+      "description": "M2.8 specifies showing the Rust-generated FFmpeg filter string in real time as users adjust effect parameters. This is the core transparency feature — users see exactly what commands Rust generates. No such preview component exists. Without live preview, the tool's key differentiator (transparency into FFmpeg command generation) is invisible during effect configuration.",
+      "acceptance_criteria": [
+        {
+          "text": "Filter string panel displays the current FFmpeg filter and updates on parameter change",
+          "done": false
+        },
+        {
+          "text": "API calls to get filter preview are debounced to avoid excessive requests",
+          "done": false
+        },
+        {
+          "text": "FFmpeg filter syntax displayed with syntax highlighting",
+          "done": false
+        },
+        {
+          "text": "Copy-to-clipboard button copies the filter string for external use",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Implement live FFmpeg filter preview in effect parameter UI. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-051",
+      "title": "Build effect builder workflow with clip selector and effect stack",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-08T18:00:26.538591",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "gui",
+        "effects",
+        "builder"
+      ],
+      "description": "M2.9 specifies a complete effect builder workflow: select effect, configure parameters, choose target clip, view the effect stack per clip, and edit/remove applied effects. No such workflow exists. Individual components (catalog, form, preview) need to be composed into a coherent workflow. Without this, users cannot complete the full loop of discovering, configuring, applying, and managing effects on clips.",
+      "acceptance_criteria": [
+        {
+          "text": "Apply to Clip workflow presents a clip selector from the current project",
+          "done": false
+        },
+        {
+          "text": "Effect stack visualization shows all effects applied to a selected clip in order",
+          "done": false
+        },
+        {
+          "text": "Preview thumbnail displays a static frame with the effect applied",
+          "done": false
+        },
+        {
+          "text": "Edit action re-opens parameter form with existing values for an applied effect",
+          "done": false
+        },
+        {
+          "text": "Remove action deletes an effect from a clip's effect stack with confirmation",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: Build effect builder workflow with clip selector and effect stack. It improves the system by resolving the described requirement.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null
+    },
+    {
+      "id": "BL-052",
+      "title": "E2E tests for effect workshop workflow",
+      "priority": "P2",
+      "status": "open",
+      "size": "m",
+      "added": "2026-02-08T18:00:32.690882",
+      "completed_at": null,
+      "tags": [
+        "v007",
+        "testing",
+        "e2e",
+        "effects"
+      ],
+      "description": "The effect workshop comprises multiple GUI components (catalog, form generator, preview, builder workflow) that must work together end-to-end. No E2E tests cover this workflow. The v005 Playwright infrastructure provides the foundation, but effect-specific test scenarios are needed. Without E2E coverage, regressions in the multi-step effect application workflow go undetected.",
+      "acceptance_criteria": [
+        {
+          "text": "E2E test browses effect catalog and selects an effect",
+          "done": false
+        },
+        {
+          "text": "E2E test configures parameters and verifies filter preview updates in real time",
+          "done": false
+        },
+        {
+          "text": "E2E test applies effect to a clip and verifies effect stack display",
+          "done": false
+        },
+        {
+          "text": "E2E test edits and removes an applied effect successfully",
+          "done": false
+        },
+        {
+          "text": "Accessibility checks (WCAG AA) pass for all form components",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "This feature addresses: E2E tests for effect workshop workflow. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
       "implemented_in_theme": null
     }

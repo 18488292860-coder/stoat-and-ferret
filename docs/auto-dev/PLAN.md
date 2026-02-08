@@ -77,6 +77,28 @@ Track explorations that must complete before version design.
 
 **Rationale:** GUI milestones are tightly coupled — shell provides frame for browser and manager.
 
+### v006 Boundary
+
+**Included:** Milestones 2.1, 2.2, 2.3
+- FFmpeg filter expression engine (Rust)
+- Filter graph validation and composition
+- Text overlay system (drawtext builder)
+- Speed control filters (setpts/atempo)
+- Effect discovery API endpoint
+
+**Rationale:** All effects engine work is pure Rust + API. Independent of v005 GUI — can be developed in parallel if needed. Lays the foundation for v007 Effect Workshop.
+
+### v007 Boundary
+
+**Included:** Milestones 2.4, 2.5, 2.6, 2.8, 2.9
+- Audio mixing filter builders
+- Transition filter builders and API
+- Effect registry with JSON schema validation
+- Effect catalog, parameter form generator, and live preview UI
+- Effect builder workflow (apply, edit, remove effects on clips)
+
+**Rationale:** Combines remaining effects (audio, transitions) with the full GUI Effect Workshop. M2.8–2.9 (GUI) depends on M2.4–2.6 (effects) being complete within the same version.
+
 ## Deferred Items
 
 Items explicitly deferred during version design, with target versions.
@@ -110,6 +132,28 @@ Work that surfaces during planning or execution but doesn't fit current scope:
 | `deferred` | Known work explicitly pushed to later |
 | `discovered` | Found during execution, not originally planned |
 | `blocked` | Waiting on external dependency |
+
+### Backlog Coverage by Version (as of 2026-02-08)
+
+Gap analysis completed for v004–v007. All planned versions now have backlog items covering their milestone scope.
+
+| Version | Milestones | New Items | Existing Items Tagged | Total Coverage |
+|---------|-----------|-----------|----------------------|----------------|
+| v004 | M1.8–1.9 | 8 (BL-020–027) | 5 (BL-009, 010, 012, 014, 016) | 13 items |
+| v005 | M1.10–1.12 | 9 (BL-028–036) | 1 (BL-003) | 10 items |
+| v006 | M2.1–2.3 | 7 (BL-037–043) | 0 | 7 items |
+| v007 | M2.4–2.6, 2.8–2.9 | 9 (BL-044–052) | 0 | 9 items |
+
+**Cross-version dependencies:**
+- v005 depends on v004 (black box testing infrastructure validates GUI backend)
+- v006 is independent of v005 (pure Rust + API work)
+- v007 depends on both v006 (effects engine) and v005 (frontend project)
+
+**Items requiring exploration (EXP) before implementation:**
+- BL-028: Frontend framework selection (extends BL-003)
+- BL-043: Clip effect model design (how effects attach to clips)
+- BL-047: Effect registry schema and builder protocol design
+- BL-051: Preview thumbnail pipeline (frame extraction + effect application)
 
 ## Change Log
 
