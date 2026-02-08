@@ -1,14 +1,17 @@
 {
   "exploration_id": "design-v004-resume-1770586754009",
   "results_folder": "design-v004-resume",
-  "status": "running",
+  "status": "complete",
   "pid": 21224,
   "started_at": "2026-02-08T21:39:14.009393",
-  "updated_at": "2026-02-08T21:39:15.831610",
-  "completed_at": null,
+  "updated_at": "2026-02-08T22:15:00.430500",
+  "completed_at": "2026-02-08T22:15:00.430209",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md",
+    "resume-log.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/design-v004-resume/prompt.md",
   "outbox_path": "comms/outbox/exploration/design-v004-resume"

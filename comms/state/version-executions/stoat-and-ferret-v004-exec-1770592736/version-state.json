@@ -9,10 +9,10 @@
     {
       "number": 1,
       "name": "test-foundation",
-      "status": "pending",
+      "status": "in_progress",
       "features_total": 3,
-      "features_complete": 0,
-      "started_at": null,
+      "features_complete": 3,
+      "started_at": "2026-02-08T23:19:08.529972Z",
       "completed_at": null,
       "skip_reason": null
     },
@@ -58,6 +58,6 @@
     }
   ],
   "current_theme": 1,
-  "current_feature": 1,
+  "current_feature": 3,
   "baseline_failures": []
 }
