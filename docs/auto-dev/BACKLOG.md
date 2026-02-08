@@ -1,6 +1,6 @@
 # Project Backlog
 
-*Last updated: 2026-02-08 18:00*
+*Last updated: 2026-02-08 20:29*
 
 **Total completed:** 9 | **Cancelled:** 0
 
@@ -161,6 +161,8 @@ The RecordingFFmpegExecutor test double exists from v002, but InMemoryProjectSto
 - [ ] Both doubles include seed helpers for populating test data
 - [ ] Contract tests verify InMemory behavior matches real SQLite implementations
 
+**Notes:** Use case: A developer writing integration tests for the project management API needs to verify that creating a project, adding clips, and rendering produces the correct FFmpeg command — without touching the real database or file system. They instantiate InMemoryProjectStorage and InMemoryJobQueue, seed them with test data, wire them into the app, and assert on outcomes deterministically.
+
 [↑ Back to list](#bl-020-ref)
 
 #### 📋 BL-021: Add dependency injection to create_app() for test wiring
@@ -177,6 +179,8 @@ The `create_app()` factory exists but does not accept injectable dependencies as
 - [ ] Default behavior unchanged — production uses real implementations when None passed
 - [ ] Test mode injects recording/in-memory fakes through the same interface
 - [ ] At least one integration test demonstrates the test wiring end-to-end
+
+**Notes:** Use case: A test author needs to verify end-to-end API behavior with recording fakes. They call create_app(executor=RecordingFFmpegExecutor(), repository=InMemoryVideoRepository()) and get a fully wired FastAPI app where every dependency is a test double — no monkey-patching, no module-level globals to swap.
 
 [↑ Back to list](#bl-021-ref)
 
@@ -195,6 +199,8 @@ No builder-pattern fixture factory exists for creating test data. Tests currentl
 - [ ] create_via_api() exercises the full HTTP path for black box tests
 - [ ] Pytest fixtures use the factory, replacing inline test data construction
 
+**Notes:** Use case: A developer writes a test for clip reordering. Instead of 15 lines of manual dict construction, they write ProjectBuilder().with_clip(start=0, end=5).with_clip(start=5, end=10).build() and get a valid Project with two clips. When the Clip model adds a new required field next version, only the builder needs updating — not every test.
+
 [↑ Back to list](#bl-022-ref)
 
 #### 📋 BL-023: Implement black box test scenario catalog
@@ -212,6 +218,8 @@ No black box integration tests exist despite the API being stable since v003. Th
 - [ ] All tests use recording test doubles and never mock the Rust core directly
 - [ ] Tests run in CI without FFmpeg installed
 - [ ] pytest markers separate black box tests from unit tests
+
+**Notes:** Use case: After refactoring the scan endpoint to be async, a developer runs the black box test suite. Tests exercise the full scan → project → clips workflow through HTTP requests against a real FastAPI app with recording fakes. A regression where scan results no longer populate the video library is caught before it reaches main.
 
 [↑ Back to list](#bl-023-ref)
 
@@ -597,6 +605,8 @@ v001 retrospective suggested writing proptest invariants before implementation a
 - [ ] Example showing invariant-first design approach
 - [ ] Documentation on expected test count tracking
 
+**Notes:** Use case: A developer designing a new Rust type (e.g., AudioMixer) opens the feature design template and sees a property test section. Following the guidance, they write proptest invariants first — "mixing two silent tracks produces silence", "output duration equals longest input" — then implement the type to satisfy them. The invariants serve as executable specifications that catch edge cases unit tests would miss.
+
 [↑ Back to list](#bl-009-ref)
 
 #### 📋 BL-014: Add Docker-based local testing option
@@ -612,6 +622,8 @@ v002 retrospective identified that Windows Application Control policies can bloc
 - [ ] docker-compose.yml with Python + Rust build environment
 - [ ] README documents Docker-based testing workflow
 - [ ] Tests can run inside container bypassing host restrictions
+
+**Notes:** Use case: A contributor on Windows with Application Control policies enabled cannot run pytest locally because the policy blocks Python execution. They run docker-compose up test and the full test suite executes inside a Linux container, bypassing host restrictions and providing the same environment as CI.
 
 [↑ Back to list](#bl-014-ref)
 
@@ -641,6 +653,8 @@ RecordingFFmpegExecutor and FakeFFmpegExecutor exist from v001-v002, but no test
 - [ ] Tests marked with @pytest.mark.requires_ffmpeg for CI environments without FFmpeg
 - [ ] Contract violations between fake and real executor fail the test suite
 
+**Notes:** Use case: The RecordingFFmpegExecutor is used in all integration tests. A developer changes how FFmpeg handles concat operations in the real executor. Without contract tests, the recording fake still returns old behavior, and integration tests pass even though real FFmpeg would fail. Contract tests catch the divergence by running identical commands against both executors.
+
 [↑ Back to list](#bl-024-ref)
 
 #### 📋 BL-025: Security audit of Rust path validation and input sanitization
@@ -656,6 +670,8 @@ M1.9 specifies a security review of Rust sanitization covering path traversal, n
 - [ ] Review covers path traversal, null byte injection, and shell injection vectors in Rust core
 - [ ] Audit document published in docs/ with findings and coverage assessment
 - [ ] Any identified gaps addressed with new tests or code fixes
+
+**Notes:** Use case: A user provides a file path like "../../etc/passwd" or a text overlay containing shell metacharacters. The Rust core must reject these inputs before they reach FFmpeg. The security audit documents which attack vectors are tested, which code paths handle them, and whether any gaps exist — giving the team confidence that user input cannot escape the sandbox.
 
 [↑ Back to list](#bl-025-ref)
 
@@ -673,6 +689,8 @@ The scan endpoint blocks the HTTP request until the entire directory scan comple
 - [ ] Job status queryable via GET endpoint with progress information
 - [ ] InMemoryJobQueue supports synchronous test execution for deterministic tests
 - [ ] Existing scan tests updated to use the async pattern
+
+**Notes:** Use case: A user starts a scan of a large media directory (10,000+ files). Instead of waiting 30 seconds for the HTTP response, they get a job ID back immediately and can poll for progress. The GUI shows a progress bar updating in real-time. If they navigate away and come back, the job status endpoint tells them the scan is 73% complete.
 
 [↑ Back to list](#bl-027-ref)
 
@@ -797,6 +815,8 @@ v001 retrospective noted Rust code coverage is not tracked. Configure llvm-cov t
 - [ ] Coverage threshold enforced (e.g., 80%)
 - [ ] Coverage visible in CI artifacts or dashboard
 
+**Notes:** Use case: After merging a PR that adds new Rust code, the CI pipeline runs llvm-cov and reports that Rust coverage dropped from 92% to 85%. The developer sees the uncovered lines in the CI artifact, adds tests for the missing paths, and pushes a fix — maintaining the 90% threshold before the PR can merge.
+
 [↑ Back to list](#bl-010-ref)
 
 #### 📋 BL-011: Consolidate Python/Rust build backends
@@ -831,6 +851,8 @@ v001 retrospective noted ImportError fallback code is excluded from coverage. Re
 - [ ] ImportError fallback properly tested or documented as intentional exclusion
 - [ ] Coverage threshold maintained
 
+**Notes:** Use case: A developer notices the coverage report shows 93% but suspects some lines are excluded via pragmas. They audit all # pragma: no cover comments and find the ImportError fallback for the Rust extension is excluded but could be tested by running without the compiled module. After removing unjustified exclusions and adding targeted tests, the coverage number reflects actual test quality.
+
 [↑ Back to list](#bl-012-ref)
 
 #### 📋 BL-016: Unify InMemory vs FTS5 search behavior
@@ -847,6 +869,8 @@ v002 retrospective noted that InMemoryVideoRepository uses substring match while
 - [ ] Tests verify consistent behavior across implementations
 - [ ] Documentation explains search behavior
 
+**Notes:** Use case: A test uses InMemoryVideoRepository and searches for "sunset beach". It finds the video because substring match hits. The same test against SQLite with FTS5 would not find it because FTS5 tokenizes differently. This inconsistency means tests pass with the in-memory double but fail in production. Unifying search semantics ensures test results predict production behavior.
+
 [↑ Back to list](#bl-016-ref)
 
 #### 📋 BL-026: Rust vs Python performance benchmark for core operations
@@ -862,5 +886,7 @@ M1.9 requires benchmarking Rust core operations against pure-Python equivalents 
 - [ ] Benchmark script compares Rust vs Python for at least 3 representative operations
 - [ ] Results documented with speedup ratios for each operation
 - [ ] Benchmark runnable via uv run python benchmarks/ command
+
+**Notes:** Use case: A stakeholder asks whether the Rust/Python hybrid architecture is justified. The benchmark suite runs timeline calculations, filter generation, and clip validation in both pure Python and Rust, producing a comparison table showing that Rust is N× faster for each operation — providing empirical evidence for the architecture decision.
 
 [↑ Back to list](#bl-026-ref)
