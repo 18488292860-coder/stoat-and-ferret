@@ -1,14 +1,21 @@
 {
   "exploration_id": "backlog-gap-analysis-1770569933869",
   "results_folder": "backlog-gap-analysis",
-  "status": "running",
+  "status": "complete",
   "pid": 18944,
   "started_at": "2026-02-08T16:58:53.869103",
-  "updated_at": "2026-02-08T16:58:55.811035",
-  "completed_at": null,
+  "updated_at": "2026-02-08T17:06:00.427940",
+  "completed_at": "2026-02-08T17:06:00.426332",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md",
+    "existing-backlog-mapping.md",
+    "v004-testing-infrastructure.md",
+    "v005-gui-shell.md",
+    "v006-effects-engine.md",
+    "v007-effect-workshop.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/backlog-gap-analysis/prompt.md",
   "outbox_path": "comms/outbox/exploration/backlog-gap-analysis"

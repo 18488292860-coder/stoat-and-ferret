@@ -1,0 +1,15 @@
+{
+  "exploration_id": "backlog-creation-1770573339696",
+  "results_folder": "backlog-creation",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-08T17:55:39.696311",
+  "updated_at": "2026-02-08T17:55:39.696311",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/backlog-creation/prompt.md",
+  "outbox_path": "comms/outbox/exploration/backlog-creation"
+}
