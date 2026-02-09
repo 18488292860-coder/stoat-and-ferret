@@ -1,10 +1,10 @@
 {
   "exploration_id": "v005-retro-007-proposals-1770663658486",
   "results_folder": "v005-retro-007-proposals",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 22096,
   "started_at": "2026-02-09T19:00:58.486969",
-  "updated_at": "2026-02-09T19:00:58.486969",
+  "updated_at": "2026-02-09T19:03:18.390583",
   "completed_at": null,
   "error": null,
   "documents": [],
