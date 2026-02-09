@@ -7,8 +7,8 @@
 
 ## Current Focus
 
-**Recently Completed:** v003 (API layer + Clip model)
-**Upcoming:** v004 (testing infrastructure + quality verification)
+**Recently Completed:** v004 (testing infrastructure + quality verification)
+**Upcoming:** v005 (GUI shell + library browser + project manager)
 
 ## Roadmap → Version Mapping
 
@@ -17,7 +17,7 @@
 | v007 | Phase 2, M2.4–2.6, M2.8–2.9 | Effect Workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview | 📋 planned |
 | v006 | Phase 2, M2.1–2.3 | Effects engine foundation: filter expression engine, graph validation, text overlay, speed control | 📋 planned |
 | v005 | Phase 1, M1.10–1.12 | GUI shell + library browser + project manager | 📋 planned |
-| v004 | Phase 1, M1.8–1.9 | Testing infrastructure + quality verification | 📋 planned |
+| v004 | Phase 1, M1.8–1.9 | Testing infrastructure + quality verification | ✅ complete |
 | v003 | Phase 1, M1.6–1.7 | API layer + Clip model | ✅ complete |
 | v002 | Phase 1, M1.4–1.5 | Database + FFmpeg integration | ✅ complete |
 | v001 | Phase 1, M1.1–1.3 | Foundation + Rust core basics | ✅ complete |
