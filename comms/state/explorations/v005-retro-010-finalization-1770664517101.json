@@ -1,10 +1,10 @@
 {
   "exploration_id": "v005-retro-010-finalization-1770664517101",
   "results_folder": "v005-retro-010-finalization",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 22096,
   "started_at": "2026-02-09T19:15:17.101632",
-  "updated_at": "2026-02-09T19:15:17.101632",
+  "updated_at": "2026-02-09T19:15:19.102045",
   "completed_at": null,
   "error": null,
   "documents": [],
