@@ -1,0 +1,15 @@
+{
+  "exploration_id": "design-v005-002-backlog-1770631581678",
+  "results_folder": "design-v005-002-backlog",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-09T10:06:21.678310",
+  "updated_at": "2026-02-09T10:06:21.678310",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/design-v005-002-backlog/prompt.md",
+  "outbox_path": "comms/outbox/exploration/design-v005-002-backlog"
+}
