@@ -1,6 +1,6 @@
 {
   "next_id": 53,
-  "updated_at": "2026-02-09T10:08:13.475735",
+  "updated_at": "2026-02-09T18:43:11.355666",
   "items": [
     {
       "id": "BL-001",
@@ -82,10 +82,10 @@
       "id": "BL-003",
       "title": "EXP-003: FastAPI static file serving for GUI",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-01-25T14:30:30.773235",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:01.140225",
       "tags": [
         "investigation",
         "v005-prerequisite",
@@ -113,8 +113,8 @@
       ],
       "notes": "Use case: A developer sets up the v005 GUI integration and needs to know how FastAPI will serve the Vite-built frontend bundle, how SPA client-side routing will work with server-side fallback, and what the dev workflow looks like with hot module replacement proxied through FastAPI.",
       "use_case": "This feature addresses: EXP-003: FastAPI static file serving for GUI. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "frontend-foundation"
     },
     {
       "id": "BL-004",
@@ -976,10 +976,10 @@
       "id": "BL-028",
       "title": "EXP: Frontend framework selection and Vite project setup",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:38.184470",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:02.397488",
       "tags": [
         "v005",
         "gui",
@@ -1010,17 +1010,17 @@
       ],
       "notes": "Use case: A user opens the application URL and expects to see a functioning web interface. Currently there is no frontend at all — no gui/ directory, no package.json, no framework. This item bootstraps the entire frontend project so that subsequent GUI features (shell, dashboard, library browser) have a foundation to build on.",
       "use_case": "This feature addresses: EXP: Frontend framework selection and Vite project setup. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "frontend-foundation"
     },
     {
       "id": "BL-029",
       "title": "Implement WebSocket endpoint for real-time events",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:43.982521",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:03.473592",
       "tags": [
         "v005",
         "websocket",
@@ -1051,17 +1051,17 @@
       ],
       "notes": "Use case: A user triggers a directory scan from the library browser and sees a spinning indicator while the scan runs. When the scan completes, the video grid updates automatically without a page refresh. This real-time feedback requires WebSocket push from the server — without it, the user must manually refresh to see new videos.",
       "use_case": "This feature addresses: Implement WebSocket endpoint for real-time events. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "frontend-foundation"
     },
     {
       "id": "BL-030",
       "title": "Build application shell and navigation components",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:50.109098",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:04.589424",
       "tags": [
         "v005",
         "gui",
@@ -1092,17 +1092,17 @@
       ],
       "notes": "Use case: A user navigates between the Dashboard, Library, and Projects tabs using the top navigation bar. The status bar at the bottom shows a green health indicator confirming the backend is reachable. When the server goes down, the indicator turns red and unavailable tabs are hidden, preventing the user from interacting with broken features.",
       "use_case": "This feature addresses: Build application shell and navigation components. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "gui-components"
     },
     {
       "id": "BL-031",
       "title": "Build dashboard panel with health cards and activity log",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:55.468176",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:05.793196",
       "tags": [
         "v005",
         "gui",
@@ -1129,17 +1129,17 @@
       ],
       "notes": "Use case: A user opens the application and lands on the dashboard. They see health cards showing Python (green), Rust core (green), and FFmpeg (yellow — not installed). The activity log shows the last scan completed 5 minutes ago with 12 new videos found. This gives the user immediate system awareness without digging into logs or API responses.",
       "use_case": "This feature addresses: Build dashboard panel with health cards and activity log. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "gui-components"
     },
     {
       "id": "BL-032",
       "title": "Implement thumbnail generation pipeline for video library",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:58:04.504476",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:07.083333",
       "tags": [
         "v005",
         "thumbnails",
@@ -1170,17 +1170,17 @@
       ],
       "notes": "Use case: A user browses the video library and sees thumbnail previews for each video instead of text-only filenames. When a new video is scanned, a representative frame is extracted and stored. For corrupt or unsupported files, a placeholder image is shown so the grid layout remains consistent.",
       "use_case": "This feature addresses: Implement thumbnail generation pipeline for video library. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "backend-services"
     },
     {
       "id": "BL-033",
       "title": "Build library browser with video grid, search, and scan UI",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:58:10.196219",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:08.087942",
       "tags": [
         "v005",
         "gui",
@@ -1211,17 +1211,17 @@
       ],
       "notes": "Use case: A user wants to find a specific clip in a library of 200+ videos. They type a partial filename in the search bar and see results update as they type. They sort by date to find recently added clips, then click the Scan button to add videos from a new directory. The scan modal shows progress and the grid updates when new files are found.",
       "use_case": "This feature addresses: Build library browser with video grid, search, and scan UI. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "gui-components"
     },
     {
       "id": "BL-034",
       "title": "Fix pagination total count for list endpoints",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:58:15.599657",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:09.091777",
       "tags": [
         "v005",
         "api",
@@ -1244,17 +1244,17 @@
       ],
       "notes": "Use case: The library browser displays \"Showing 20 of ?\" because the API returns paginated results without a total count. With the fix, it shows \"Showing 20 of 247 videos\" and the scrollbar accurately represents the full dataset size, enabling smooth virtual scrolling through large libraries.",
       "use_case": "This feature addresses: Fix pagination total count for list endpoints. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "backend-services"
     },
     {
       "id": "BL-035",
       "title": "Build project manager with list, creation, and details views",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:58:20.785944",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:10.193544",
       "tags": [
         "v005",
         "gui",
@@ -1285,17 +1285,17 @@
       ],
       "notes": "Use case: A user clicks \"New Project\", enters output settings (1080p, 30fps, MP4), and creates a project. They navigate to the project list, see it alongside other projects, and click through to the details view where clips are listed with Rust-calculated timeline positions showing start/end times. They can delete old projects with a confirmation dialog to prevent accidents.",
       "use_case": "This feature addresses: Build project manager with list, creation, and details views. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "gui-components"
     },
     {
       "id": "BL-036",
       "title": "Set up Playwright E2E test infrastructure for GUI",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:58:25.894825",
-      "completed_at": null,
+      "completed_at": "2026-02-09T18:43:11.355663",
       "tags": [
         "v005",
         "testing",
@@ -1322,8 +1322,8 @@
       ],
       "notes": "Use case: A developer pushes a change to the library browser component. CI runs Playwright tests that verify the full stack: FastAPI serves the built frontend, the browser navigates between tabs, a scan can be triggered, and a new project can be created. If the integration between frontend and backend breaks, the E2E tests catch it before merge.",
       "use_case": "This feature addresses: Set up Playwright E2E test infrastructure for GUI. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v005",
+      "implemented_in_theme": "e2e-testing"
     },
     {
       "id": "BL-037",
@@ -1989,6 +1989,6 @@
       "implemented_in_theme": null
     }
   ],
-  "completed_count": 22,
+  "completed_count": 32,
   "cancelled_count": 0
 }

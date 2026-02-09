@@ -1,16 +1,16 @@
 # Project Backlog
 
-*Last updated: 2026-02-09 10:08*
+*Last updated: 2026-02-09 18:43*
 
-**Total completed:** 22 | **Cancelled:** 0
+**Total completed:** 32 | **Cancelled:** 0
 
 ## Priority Summary
 
 | Priority | Name | Count |
 |----------|------|-------|
 | P0 | Critical | 0 |
-| P1 | High | 20 |
-| P2 | Medium | 8 |
+| P1 | High | 14 |
+| P2 | Medium | 4 |
 | P3 | Low | 1 |
 
 ## Quick Reference
@@ -18,12 +18,6 @@
 | ID | Pri | Size | Title | Description |
 |----|-----|------|-------|-------------|
 | <a id="bl-019-ref"></a>[BL-019](#bl-019) | P1 | m | Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore | Add Windows bash null redirect guidance to AGENTS.md and ... |
-| <a id="bl-028-ref"></a>[BL-028](#bl-028) | P1 | m | EXP: Frontend framework selection and Vite project setup | No frontend project exists — no `gui/` directory, package... |
-| <a id="bl-029-ref"></a>[BL-029](#bl-029) | P1 | m | Implement WebSocket endpoint for real-time events | M1.10 requires a `/ws` WebSocket endpoint for real-time e... |
-| <a id="bl-030-ref"></a>[BL-030](#bl-030) | P1 | m | Build application shell and navigation components | M1.10 specifies an application shell with navigation tabs... |
-| <a id="bl-032-ref"></a>[BL-032](#bl-032) | P1 | m | Implement thumbnail generation pipeline for video library | The library browser spec (M1.11) assumes thumbnail displa... |
-| <a id="bl-033-ref"></a>[BL-033](#bl-033) | P1 | m | Build library browser with video grid, search, and scan UI | M1.11 specifies a library browser with video grid, search... |
-| <a id="bl-035-ref"></a>[BL-035](#bl-035) | P1 | m | Build project manager with list, creation, and details views | M1.12 specifies a project manager with project list, crea... |
 | <a id="bl-037-ref"></a>[BL-037](#bl-037) | P1 | l | Implement FFmpeg filter expression engine in Rust | The current filter system (v001) handles simple key=value... |
 | <a id="bl-038-ref"></a>[BL-038](#bl-038) | P1 | l | Implement filter graph validation for pad matching | The current FilterGraph (v001) builds FFmpeg filter strin... |
 | <a id="bl-039-ref"></a>[BL-039](#bl-039) | P1 | l | Build filter composition system for chaining, branching, and merging | No support exists for composing filter chains programmati... |
@@ -37,11 +31,7 @@
 | <a id="bl-049-ref"></a>[BL-049](#bl-049) | P1 | l | Build dynamic parameter form generator from JSON schema | M2.8 specifies auto-generating parameter forms from JSON ... |
 | <a id="bl-050-ref"></a>[BL-050](#bl-050) | P1 | m | Implement live FFmpeg filter preview in effect parameter UI | M2.8 specifies showing the Rust-generated FFmpeg filter s... |
 | <a id="bl-051-ref"></a>[BL-051](#bl-051) | P1 | l | Build effect builder workflow with clip selector and effect stack | M2.9 specifies a complete effect builder workflow: select... |
-| <a id="bl-003-ref"></a>[BL-003](#bl-003) | P2 | m | EXP-003: FastAPI static file serving for GUI | Investigate serving the React/Svelte GUI from FastAPI: |
 | <a id="bl-018-ref"></a>[BL-018](#bl-018) | P2 | s | Create C4 architecture documentation | No C4 architecture documentation currently exists for the... |
-| <a id="bl-031-ref"></a>[BL-031](#bl-031) | P2 | m | Build dashboard panel with health cards and activity log | M1.10 specifies a dashboard with system health cards, rec... |
-| <a id="bl-034-ref"></a>[BL-034](#bl-034) | P2 | m | Fix pagination total count for list endpoints | Paginated list endpoints return page-based results but la... |
-| <a id="bl-036-ref"></a>[BL-036](#bl-036) | P2 | m | Set up Playwright E2E test infrastructure for GUI | The 08-gui-architecture.md quality requirements specify P... |
 | <a id="bl-042-ref"></a>[BL-042](#bl-042) | P2 | l | Create effect discovery API endpoint | M2.2 and 05-api-specification.md specify an `/effects` di... |
 | <a id="bl-043-ref"></a>[BL-043](#bl-043) | P2 | l | Create API endpoint to apply text overlay effect to clips | No API endpoint exists to apply effects to clips. The Rus... |
 | <a id="bl-052-ref"></a>[BL-052](#bl-052) | P2 | m | E2E tests for effect workshop workflow | The effect workshop comprises multiple GUI components (ca... |
@@ -51,21 +41,15 @@
 
 | Tag | Count | Items |
 |-----|-------|-------|
-| gui | 10 | BL-003, BL-028, BL-030, BL-031, ... |
-| v005 | 9 | BL-028, BL-029, BL-030, BL-031, ... |
 | v007 | 9 | BL-044, BL-045, BL-046, BL-047, ... |
 | v006 | 7 | BL-037, BL-038, BL-039, BL-040, ... |
 | rust | 7 | BL-037, BL-038, BL-039, BL-040, ... |
 | effects | 6 | BL-042, BL-047, BL-048, BL-049, ... |
-| api | 5 | BL-029, BL-034, BL-042, BL-043, ... |
+| gui | 4 | BL-048, BL-049, BL-050, BL-051 |
 | filters | 3 | BL-037, BL-038, BL-039 |
-| investigation | 2 | BL-003, BL-028 |
-| testing | 2 | BL-036, BL-052 |
-| e2e | 2 | BL-036, BL-052 |
+| api | 3 | BL-042, BL-043, BL-046 |
 | text-overlay | 2 | BL-040, BL-043 |
 | transitions | 2 | BL-045, BL-046 |
-| v005-prerequisite | 1 | BL-003 |
-| fastapi | 1 | BL-003 |
 | tooling | 1 | BL-011 |
 | build | 1 | BL-011 |
 | complexity | 1 | BL-011 |
@@ -75,14 +59,6 @@
 | windows | 1 | BL-019 |
 | agents-md | 1 | BL-019 |
 | gitignore | 1 | BL-019 |
-| websocket | 1 | BL-029 |
-| shell | 1 | BL-030 |
-| dashboard | 1 | BL-031 |
-| thumbnails | 1 | BL-032 |
-| ffmpeg | 1 | BL-032 |
-| library | 1 | BL-033 |
-| pagination | 1 | BL-034 |
-| projects | 1 | BL-035 |
 | expressions | 1 | BL-037 |
 | validation | 1 | BL-038 |
 | composition | 1 | BL-039 |
@@ -97,6 +73,8 @@
 | preview | 1 | BL-050 |
 | transparency | 1 | BL-050 |
 | builder | 1 | BL-051 |
+| testing | 1 | BL-052 |
+| e2e | 1 | BL-052 |
 
 ## Item Details
 
@@ -112,126 +90,6 @@ Add Windows bash null redirect guidance to AGENTS.md and add `nul` to .gitignore
 **Use Case:** This feature addresses: Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore. It improves the system by resolving the described requirement.
 
 [↑ Back to list](#bl-019-ref)
-
-#### 📋 BL-028: EXP: Frontend framework selection and Vite project setup
-
-**Status:** open
-**Tags:** v005, gui, investigation
-
-No frontend project exists — no `gui/` directory, package.json, or framework choice has been finalized. The 08-gui-architecture.md suggests React 18+ or Svelte 4+ with Vite and Tailwind. BL-003 covers investigating FastAPI static file serving but not the framework decision or project scaffolding. All v005 GUI milestones (M1.10–M1.12) are blocked until a frontend project is in place.
-
-**Use Case:** This feature addresses: EXP: Frontend framework selection and Vite project setup. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Framework selected (React vs Svelte) with documented rationale
-- [ ] gui/ project scaffolded with Vite, Tailwind CSS, and TypeScript
-- [ ] npm run build produces gui/dist/ with a working bundle
-- [ ] FastAPI serves the built frontend at /gui/* routes
-- [ ] Dev proxy configured for Vite HMR during development
-
-**Notes:** Use case: A user opens the application URL and expects to see a functioning web interface. Currently there is no frontend at all — no gui/ directory, no package.json, no framework. This item bootstraps the entire frontend project so that subsequent GUI features (shell, dashboard, library browser) have a foundation to build on.
-
-[↑ Back to list](#bl-028-ref)
-
-#### 📋 BL-029: Implement WebSocket endpoint for real-time events
-
-**Status:** open
-**Tags:** v005, websocket, api
-
-M1.10 requires a `/ws` WebSocket endpoint for real-time event broadcasting, but no WebSocket support exists in the current FastAPI app. The application shell needs live health status updates and the dashboard needs an activity feed. Without WebSocket support, the GUI must resort to polling, creating unnecessary load and delayed feedback.
-
-**Use Case:** This feature addresses: Implement WebSocket endpoint for real-time events. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] /ws endpoint accepts WebSocket connections with proper handshake
-- [ ] Health status changes broadcast to all connected clients
-- [ ] Activity events (scan started/completed, project created) broadcast in real time
-- [ ] Connection lifecycle tested: connect, disconnect, reconnect scenarios
-- [ ] WebSocket messages include correlation IDs from existing middleware
-
-**Notes:** Use case: A user triggers a directory scan from the library browser and sees a spinning indicator while the scan runs. When the scan completes, the video grid updates automatically without a page refresh. This real-time feedback requires WebSocket push from the server — without it, the user must manually refresh to see new videos.
-
-[↑ Back to list](#bl-029-ref)
-
-#### 📋 BL-030: Build application shell and navigation components
-
-**Status:** open
-**Tags:** v005, gui, shell
-
-M1.10 specifies an application shell with navigation tabs, status bar, and health indicator, but no frontend components exist. The shell is the frame that hosts all other GUI panels (library browser, project manager, effect workshop). Without it, individual components have no layout structure or navigation context.
-
-**Use Case:** This feature addresses: Build application shell and navigation components. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Navigation between Dashboard, Library, and Projects tabs works with URL routing
-- [ ] Health indicator polls /health/ready and displays green/yellow/red status
-- [ ] Status bar displays WebSocket connection state
-- [ ] Progressive tabs — only shows features whose backends are available
-- [ ] Component unit tests pass in Vitest
-
-**Notes:** Use case: A user navigates between the Dashboard, Library, and Projects tabs using the top navigation bar. The status bar at the bottom shows a green health indicator confirming the backend is reachable. When the server goes down, the indicator turns red and unavailable tabs are hidden, preventing the user from interacting with broken features.
-
-[↑ Back to list](#bl-030-ref)
-
-#### 📋 BL-032: Implement thumbnail generation pipeline for video library
-
-**Status:** open
-**Tags:** v005, thumbnails, ffmpeg
-
-The library browser spec (M1.11) assumes thumbnail display for videos, but no thumbnail generation pipeline exists. Videos are scanned and stored with metadata, but no representative frame is extracted. Without thumbnails, the library browser would display a text-only list, degrading the visual browsing experience that is core to a video editing tool.
-
-**Use Case:** This feature addresses: Implement thumbnail generation pipeline for video library. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Thumbnail generated during video scan or on first access
-- [ ] GET /api/videos/{id}/thumbnail returns the thumbnail image
-- [ ] Configurable thumbnail size with default 320x180
-- [ ] Graceful fallback returns a placeholder for videos where extraction fails
-- [ ] RecordingFFmpegExecutor captures thumbnail generation commands for testing
-
-**Notes:** Use case: A user browses the video library and sees thumbnail previews for each video instead of text-only filenames. When a new video is scanned, a representative frame is extracted and stored. For corrupt or unsupported files, a placeholder image is shown so the grid layout remains consistent.
-
-[↑ Back to list](#bl-032-ref)
-
-#### 📋 BL-033: Build library browser with video grid, search, and scan UI
-
-**Status:** open
-**Tags:** v005, gui, library
-
-M1.11 specifies a library browser with video grid, search, sort/filter, and scan controls. No frontend components for video display exist. The library browser is the primary entry point for working with media — users need to find, browse, and select videos before creating projects. The backend API endpoints (search, list, scan) exist from v003 but have no GUI consumer.
-
-**Use Case:** This feature addresses: Build library browser with video grid, search, and scan UI. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Video grid displays thumbnails, filename, and duration for each video
-- [ ] Search bar calls /api/videos/search with debounced input
-- [ ] Sort by date, name, or duration updates the grid
-- [ ] Scan modal triggers directory scan and shows progress feedback
-- [ ] Virtual scrolling or pagination handles libraries with 100+ videos
-
-**Notes:** Use case: A user wants to find a specific clip in a library of 200+ videos. They type a partial filename in the search bar and see results update as they type. They sort by date to find recently added clips, then click the Scan button to add videos from a new directory. The scan modal shows progress and the grid updates when new files are found.
-
-[↑ Back to list](#bl-033-ref)
-
-#### 📋 BL-035: Build project manager with list, creation, and details views
-
-**Status:** open
-**Tags:** v005, gui, projects
-
-M1.12 specifies a project manager with project list, creation modal, and details view showing Rust-calculated timeline positions. No frontend components for project management exist. The project API endpoints exist from v003, but users cannot create, browse, or inspect projects through the GUI. This is the last GUI milestone in Phase 1.
-
-**Use Case:** This feature addresses: Build project manager with list, creation, and details views. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Project list displays name, creation date, and clip count
-- [ ] New Project modal validates output settings (resolution, fps, format)
-- [ ] Project details view displays clip list with Rust-calculated timeline positions
-- [ ] Delete action requires confirmation dialog before execution
-- [ ] Component unit tests pass in Vitest
-
-**Notes:** Use case: A user clicks "New Project", enters output settings (1080p, 30fps, MP4), and creates a project. They navigate to the project list, see it alongside other projects, and click through to the details view where clips are listed with Rust-calculated timeline positions showing start/end times. They can delete old projects with a confirmation dialog to prevent accidents.
-
-[↑ Back to list](#bl-035-ref)
 
 #### 📋 BL-037: Implement FFmpeg filter expression engine in Rust
 
@@ -468,32 +326,6 @@ M2.9 specifies a complete effect builder workflow: select effect, configure para
 
 ### P2: Medium
 
-#### 📋 BL-003: EXP-003: FastAPI static file serving for GUI
-
-**Status:** open
-**Tags:** investigation, v005-prerequisite, gui, fastapi
-
-Investigate serving the React/Svelte GUI from FastAPI:
-
-- How do we configure FastAPI to serve static files from Vite build output?
-- What's the development workflow — proxy setup for hot reload?
-- How do we handle the /gui/* route mounting?
-- What about index.html fallback for SPA routing?
-
-This informs v005 (GUI shell).
-
-**Use Case:** This feature addresses: EXP-003: FastAPI static file serving for GUI. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] FastAPI StaticFiles mount configuration documented
-- [ ] Vite build output integration explained
-- [ ] Development workflow (hot reload) documented
-- [ ] Production deployment pattern shown
-
-**Notes:** Use case: A developer sets up the v005 GUI integration and needs to know how FastAPI will serve the Vite-built frontend bundle, how SPA client-side routing will work with server-side fallback, and what the dev workflow looks like with hot module replacement proxied through FastAPI.
-
-[↑ Back to list](#bl-003-ref)
-
 #### 📋 BL-018: Create C4 architecture documentation
 
 **Status:** open
@@ -506,62 +338,6 @@ No C4 architecture documentation currently exists for the project. Establish doc
 **Notes:** v004 retrospective architecture check (2026-02-09): The primary architecture doc (docs/design/02-architecture.md) was updated during v004 Theme 03 Feature 3 to reflect async scan, job queue, and updated data flows. No additional drift detected in the design docs. However, the v004 version retrospective explicitly notes that C4 documentation was skipped. v004 added: (1) AsyncioJobQueue with handler registration and background worker, (2) GET /api/v1/jobs/{job_id} status endpoint, (3) ALLOWED_SCAN_ROOTS security configuration with validate_scan_path(), (4) InMemory test doubles and create_app() DI pattern, (5) Docker multi-stage build infrastructure, (6) Rust coverage CI enforcement. These components should be captured when C4 documentation is created.
 
 [↑ Back to list](#bl-018-ref)
-
-#### 📋 BL-031: Build dashboard panel with health cards and activity log
-
-**Status:** open
-**Tags:** v005, gui, dashboard
-
-M1.10 specifies a dashboard with system health cards, recent activity log, and metrics overview. No dashboard component exists. The dashboard is the landing page and primary system health visibility tool. Without it, users have no centralized view of component status (Python, Rust core, FFmpeg) or recent system activity.
-
-**Use Case:** This feature addresses: Build dashboard panel with health cards and activity log. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Health cards display individual component status (Python, Rust core, FFmpeg)
-- [ ] Activity log receives and displays WebSocket events in real time
-- [ ] Metrics cards show API request count and Rust operation timing from /metrics
-- [ ] Dashboard auto-refreshes on a configurable interval
-
-**Notes:** Use case: A user opens the application and lands on the dashboard. They see health cards showing Python (green), Rust core (green), and FFmpeg (yellow — not installed). The activity log shows the last scan completed 5 minutes ago with 12 new videos found. This gives the user immediate system awareness without digging into logs or API responses.
-
-[↑ Back to list](#bl-031-ref)
-
-#### 📋 BL-034: Fix pagination total count for list endpoints
-
-**Status:** open
-**Tags:** v005, api, pagination
-
-Paginated list endpoints return page-based results but lack a true total count. This was identified as tech debt in the v003 retrospective. The library browser needs the total count for virtual scrolling (to size the scroll container) and for displaying "X of Y results" feedback. Without it, the frontend cannot accurately represent the full dataset size.
-
-**Use Case:** This feature addresses: Fix pagination total count for list endpoints. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] List endpoints return a total field with the full count of matching items
-- [ ] Search endpoint returns total matching results separate from page size
-- [ ] Existing pagination tests updated to verify total count accuracy
-
-**Notes:** Use case: The library browser displays "Showing 20 of ?" because the API returns paginated results without a total count. With the fix, it shows "Showing 20 of 247 videos" and the scrollbar accurately represents the full dataset size, enabling smooth virtual scrolling through large libraries.
-
-[↑ Back to list](#bl-034-ref)
-
-#### 📋 BL-036: Set up Playwright E2E test infrastructure for GUI
-
-**Status:** open
-**Tags:** v005, testing, e2e
-
-The 08-gui-architecture.md quality requirements specify Playwright for E2E testing, but no E2E test infrastructure exists. Unit tests (Vitest) cover individual components, but there are no tests verifying that the full stack (FastAPI + built frontend) works end-to-end. Without E2E tests, regressions in the integration between frontend and backend go undetected.
-
-**Use Case:** This feature addresses: Set up Playwright E2E test infrastructure for GUI. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Playwright configured with CI integration in GitHub Actions
-- [ ] At least 3 E2E tests covering navigation, scan trigger, and project creation
-- [ ] Tests run against FastAPI serving the built frontend bundle
-- [ ] Accessibility checks (WCAG AA) included in test assertions
-
-**Notes:** Use case: A developer pushes a change to the library browser component. CI runs Playwright tests that verify the full stack: FastAPI serves the built frontend, the browser navigates between tabs, a scan can be triggered, and a new project can be created. If the integration between frontend and backend breaks, the E2E tests catch it before merge.
-
-[↑ Back to list](#bl-036-ref)
 
 #### 📋 BL-042: Create effect discovery API endpoint
 
