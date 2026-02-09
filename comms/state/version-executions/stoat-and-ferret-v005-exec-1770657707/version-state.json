@@ -39,15 +39,15 @@
     {
       "number": 4,
       "name": "e2e-testing",
-      "status": "completed",
+      "status": "in_progress",
       "features_total": 2,
-      "features_complete": 1,
-      "started_at": "2026-02-09T16:48:00.328605Z",
+      "features_complete": 2,
+      "started_at": "2026-02-09T17:22:01.584134Z",
       "completed_at": "2026-02-09T16:54:01.824634Z",
       "skip_reason": null
     }
   ],
-  "current_theme": null,
-  "current_feature": null,
+  "current_theme": 4,
+  "current_feature": 2,
   "baseline_failures": []
 }
