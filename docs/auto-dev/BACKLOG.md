@@ -1,6 +1,6 @@
 # Project Backlog
 
-*Last updated: 2026-02-09 06:33*
+*Last updated: 2026-02-09 10:08*
 
 **Total completed:** 22 | **Cancelled:** 0
 
@@ -129,6 +129,8 @@ No frontend project exists — no `gui/` directory, package.json, or framework c
 - [ ] FastAPI serves the built frontend at /gui/* routes
 - [ ] Dev proxy configured for Vite HMR during development
 
+**Notes:** Use case: A user opens the application URL and expects to see a functioning web interface. Currently there is no frontend at all — no gui/ directory, no package.json, no framework. This item bootstraps the entire frontend project so that subsequent GUI features (shell, dashboard, library browser) have a foundation to build on.
+
 [↑ Back to list](#bl-028-ref)
 
 #### 📋 BL-029: Implement WebSocket endpoint for real-time events
@@ -146,6 +148,8 @@ M1.10 requires a `/ws` WebSocket endpoint for real-time event broadcasting, but 
 - [ ] Activity events (scan started/completed, project created) broadcast in real time
 - [ ] Connection lifecycle tested: connect, disconnect, reconnect scenarios
 - [ ] WebSocket messages include correlation IDs from existing middleware
+
+**Notes:** Use case: A user triggers a directory scan from the library browser and sees a spinning indicator while the scan runs. When the scan completes, the video grid updates automatically without a page refresh. This real-time feedback requires WebSocket push from the server — without it, the user must manually refresh to see new videos.
 
 [↑ Back to list](#bl-029-ref)
 
@@ -165,6 +169,8 @@ M1.10 specifies an application shell with navigation tabs, status bar, and healt
 - [ ] Progressive tabs — only shows features whose backends are available
 - [ ] Component unit tests pass in Vitest
 
+**Notes:** Use case: A user navigates between the Dashboard, Library, and Projects tabs using the top navigation bar. The status bar at the bottom shows a green health indicator confirming the backend is reachable. When the server goes down, the indicator turns red and unavailable tabs are hidden, preventing the user from interacting with broken features.
+
 [↑ Back to list](#bl-030-ref)
 
 #### 📋 BL-032: Implement thumbnail generation pipeline for video library
@@ -182,6 +188,8 @@ The library browser spec (M1.11) assumes thumbnail display for videos, but no th
 - [ ] Configurable thumbnail size with default 320x180
 - [ ] Graceful fallback returns a placeholder for videos where extraction fails
 - [ ] RecordingFFmpegExecutor captures thumbnail generation commands for testing
+
+**Notes:** Use case: A user browses the video library and sees thumbnail previews for each video instead of text-only filenames. When a new video is scanned, a representative frame is extracted and stored. For corrupt or unsupported files, a placeholder image is shown so the grid layout remains consistent.
 
 [↑ Back to list](#bl-032-ref)
 
@@ -201,6 +209,8 @@ M1.11 specifies a library browser with video grid, search, sort/filter, and scan
 - [ ] Scan modal triggers directory scan and shows progress feedback
 - [ ] Virtual scrolling or pagination handles libraries with 100+ videos
 
+**Notes:** Use case: A user wants to find a specific clip in a library of 200+ videos. They type a partial filename in the search bar and see results update as they type. They sort by date to find recently added clips, then click the Scan button to add videos from a new directory. The scan modal shows progress and the grid updates when new files are found.
+
 [↑ Back to list](#bl-033-ref)
 
 #### 📋 BL-035: Build project manager with list, creation, and details views
@@ -218,6 +228,8 @@ M1.12 specifies a project manager with project list, creation modal, and details
 - [ ] Project details view displays clip list with Rust-calculated timeline positions
 - [ ] Delete action requires confirmation dialog before execution
 - [ ] Component unit tests pass in Vitest
+
+**Notes:** Use case: A user clicks "New Project", enters output settings (1080p, 30fps, MP4), and creates a project. They navigate to the project list, see it alongside other projects, and click through to the details view where clips are listed with Rust-calculated timeline positions showing start/end times. They can delete old projects with a confirmation dialog to prevent accidents.
 
 [↑ Back to list](#bl-035-ref)
 
@@ -478,6 +490,8 @@ This informs v005 (GUI shell).
 - [ ] Development workflow (hot reload) documented
 - [ ] Production deployment pattern shown
 
+**Notes:** Use case: A developer sets up the v005 GUI integration and needs to know how FastAPI will serve the Vite-built frontend bundle, how SPA client-side routing will work with server-side fallback, and what the dev workflow looks like with hot module replacement proxied through FastAPI.
+
 [↑ Back to list](#bl-003-ref)
 
 #### 📋 BL-018: Create C4 architecture documentation
@@ -508,6 +522,8 @@ M1.10 specifies a dashboard with system health cards, recent activity log, and m
 - [ ] Metrics cards show API request count and Rust operation timing from /metrics
 - [ ] Dashboard auto-refreshes on a configurable interval
 
+**Notes:** Use case: A user opens the application and lands on the dashboard. They see health cards showing Python (green), Rust core (green), and FFmpeg (yellow — not installed). The activity log shows the last scan completed 5 minutes ago with 12 new videos found. This gives the user immediate system awareness without digging into logs or API responses.
+
 [↑ Back to list](#bl-031-ref)
 
 #### 📋 BL-034: Fix pagination total count for list endpoints
@@ -523,6 +539,8 @@ Paginated list endpoints return page-based results but lack a true total count. 
 - [ ] List endpoints return a total field with the full count of matching items
 - [ ] Search endpoint returns total matching results separate from page size
 - [ ] Existing pagination tests updated to verify total count accuracy
+
+**Notes:** Use case: The library browser displays "Showing 20 of ?" because the API returns paginated results without a total count. With the fix, it shows "Showing 20 of 247 videos" and the scrollbar accurately represents the full dataset size, enabling smooth virtual scrolling through large libraries.
 
 [↑ Back to list](#bl-034-ref)
 
@@ -540,6 +558,8 @@ The 08-gui-architecture.md quality requirements specify Playwright for E2E testi
 - [ ] At least 3 E2E tests covering navigation, scan trigger, and project creation
 - [ ] Tests run against FastAPI serving the built frontend bundle
 - [ ] Accessibility checks (WCAG AA) included in test assertions
+
+**Notes:** Use case: A developer pushes a change to the library browser component. CI runs Playwright tests that verify the full stack: FastAPI serves the built frontend, the browser navigates between tabs, a scan can be triggered, and a new project can be created. If the integration between frontend and backend breaks, the E2E tests catch it before merge.
 
 [↑ Back to list](#bl-036-ref)
 
