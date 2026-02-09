@@ -9,31 +9,31 @@
     {
       "number": 1,
       "name": "frontend-foundation",
-      "status": "pending",
+      "status": "completed",
       "features_total": 3,
-      "features_complete": 0,
-      "started_at": null,
-      "completed_at": null,
+      "features_complete": 3,
+      "started_at": "2026-02-09T11:58:31.892930Z",
+      "completed_at": "2026-02-09T12:38:41.683810Z",
       "skip_reason": null
     },
     {
       "number": 2,
       "name": "backend-services",
-      "status": "pending",
+      "status": "completed",
       "features_total": 2,
-      "features_complete": 0,
-      "started_at": null,
-      "completed_at": null,
+      "features_complete": 2,
+      "started_at": "2026-02-09T12:38:41.685776Z",
+      "completed_at": "2026-02-09T13:05:16.813305Z",
       "skip_reason": null
     },
     {
       "number": 3,
       "name": "gui-components",
-      "status": "pending",
+      "status": "completed",
       "features_total": 4,
-      "features_complete": 0,
-      "started_at": null,
-      "completed_at": null,
+      "features_complete": 4,
+      "started_at": "2026-02-09T13:05:16.815701Z",
+      "completed_at": "2026-02-09T13:49:41.277203Z",
       "skip_reason": null
     },
     {
@@ -42,7 +42,7 @@
       "status": "completed",
       "features_total": 2,
       "features_complete": 2,
-      "started_at": "2026-02-09T17:22:01.584134Z",
+      "started_at": "2026-02-09T13:49:41.280132Z",
       "completed_at": "2026-02-09T17:25:40.581836Z",
       "skip_reason": null
     }
