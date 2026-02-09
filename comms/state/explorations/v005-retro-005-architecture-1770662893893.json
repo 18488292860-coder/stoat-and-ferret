@@ -1,0 +1,15 @@
+{
+  "exploration_id": "v005-retro-005-architecture-1770662893893",
+  "results_folder": "v005-retro-005-architecture",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-09T18:48:13.893105",
+  "updated_at": "2026-02-09T18:48:13.893105",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/v005-retro-005-architecture/prompt.md",
+  "outbox_path": "comms/outbox/exploration/v005-retro-005-architecture"
+}
