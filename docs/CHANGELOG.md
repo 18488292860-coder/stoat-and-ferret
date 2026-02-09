@@ -4,6 +4,56 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v004] - 2026-02-09
+
+Testing Infrastructure & Quality Verification. Establishes test doubles, dependency injection, fixture factories, black box and contract tests, async scan infrastructure, security audit, performance benchmarks, and developer experience tooling.
+
+### Added
+
+- **Test Foundation**
+  - InMemory test doubles for all repositories with deepcopy isolation and seed helpers
+  - Constructor-based dependency injection via `create_app()` kwargs on `app.state`
+  - Builder-pattern fixture factory with `build()` (unit) and `create_via_api()` (integration) outputs
+  - `InMemoryJobQueue` for deterministic synchronous job execution in tests
+
+- **Black Box & Contract Testing**
+  - 30 REST API black box workflow tests (project CRUD, clips, error handling, edge cases)
+  - 21 parametrized FFmpeg contract tests verifying Real, Recording, and Fake executor parity
+  - `strict` mode for FFmpeg executor args verification
+  - Per-token `startswith` search in InMemory repositories matching FTS5 prefix semantics
+  - 7 search parity tests ensuring InMemory/SQLite consistency
+
+- **Async Scan Infrastructure**
+  - `AsyncioJobQueue` using `asyncio.Queue` producer-consumer pattern with background worker
+  - `POST /videos/scan` now returns `202 Accepted` with `job_id` for async processing
+  - `GET /api/v1/jobs/{job_id}` endpoint for job status polling
+  - Handler registration pattern with `make_scan_handler()` factory for DI
+  - Configurable per-job timeout (default 5 minutes)
+
+- **Security & Performance**
+  - Security audit of all 8 Rust sanitization/validation functions against OWASP vectors
+  - `ALLOWED_SCAN_ROOTS` configuration with `validate_scan_path()` enforcement
+  - 35 security tests across 5 attack categories (path traversal, null bytes, shell injection, whitelist bypass, FFmpeg filter injection)
+  - Performance benchmark suite comparing Rust vs Python across 7 operations in 4 categories
+  - Security audit document (`docs/design/09-security-audit.md`)
+  - Performance benchmark document (`docs/design/10-performance-benchmarks.md`)
+
+- **Developer Experience & Coverage**
+  - Property-based testing guidance with Hypothesis dependency and design template integration
+  - Rust code coverage via `cargo-llvm-cov` with 75% CI threshold
+  - Docker-based testing environment with multi-stage build (`Dockerfile`, `docker-compose.yml`)
+  - `@pytest.mark.requires_ffmpeg` marker for conditional CI execution
+
+### Changed
+
+- `POST /videos/scan` refactored from synchronous blocking to async job queue pattern
+- Design documents updated to reflect async scan behavior (`02-architecture.md`, `03-prototype-design.md`, `04-technical-stack.md`, `05-api-specification.md`)
+- Requirements and implementation-plan templates updated with property test (PT-xxx) sections
+
+### Fixed
+
+- Coverage exclusion audit: removed unjustified `pragma: no cover` on ImportError fallback in `__init__.py`, added fallback tests
+
 ## [v003] - 2026-01-28
 
 API Layer + Clip Model (Roadmap M1.6-1.7). Establishes FastAPI REST API, async repository layer, video library endpoints, clip/project data models with Rust validation, and CI improvements.

@@ -49,15 +49,15 @@
     {
       "number": 5,
       "name": "devex-coverage",
-      "status": "in_progress",
+      "status": "completed",
       "features_total": 4,
       "features_complete": 4,
       "started_at": "2026-02-09T01:49:28.480200Z",
-      "completed_at": null,
+      "completed_at": "2026-02-09T02:24:57.250461Z",
       "skip_reason": null
     }
   ],
-  "current_theme": 5,
-  "current_feature": 4,
+  "current_theme": 6,
+  "current_feature": 1,
   "baseline_failures": []
 }
