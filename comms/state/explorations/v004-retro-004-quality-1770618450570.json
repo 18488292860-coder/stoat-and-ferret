@@ -1,0 +1,15 @@
+{
+  "exploration_id": "v004-retro-004-quality-1770618450570",
+  "results_folder": "v004-retro-004-quality",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-09T06:27:30.570039",
+  "updated_at": "2026-02-09T06:27:30.570039",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/v004-retro-004-quality/prompt.md",
+  "outbox_path": "comms/outbox/exploration/v004-retro-004-quality"
+}
