@@ -1,6 +1,6 @@
 {
   "next_id": 53,
-  "updated_at": "2026-02-09T06:28:50.928003",
+  "updated_at": "2026-02-09T06:28:56.559255",
   "items": [
     {
       "id": "BL-001",
@@ -794,10 +794,10 @@
       "id": "BL-023",
       "title": "Implement black box test scenario catalog",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:56:54.536604",
-      "completed_at": null,
+      "completed_at": "2026-02-09T06:28:52.100090",
       "tags": [
         "v004",
         "testing",
@@ -828,17 +828,17 @@
       ],
       "notes": "Use case: After refactoring the scan endpoint to be async, a developer runs the black box test suite. Tests exercise the full scan → project → clips workflow through HTTP requests against a real FastAPI app with recording fakes. A regression where scan results no longer populate the video library is caught before it reaches main.",
       "use_case": "This feature addresses: Implement black box test scenario catalog. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v004",
+      "implemented_in_theme": "blackbox-contract"
     },
     {
       "id": "BL-024",
       "title": "Contract tests with real FFmpeg for executor fidelity",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:04.009812",
-      "completed_at": null,
+      "completed_at": "2026-02-09T06:28:53.206836",
       "tags": [
         "v004",
         "testing",
@@ -866,17 +866,17 @@
       ],
       "notes": "Use case: The RecordingFFmpegExecutor is used in all integration tests. A developer changes how FFmpeg handles concat operations in the real executor. Without contract tests, the recording fake still returns old behavior, and integration tests pass even though real FFmpeg would fail. Contract tests catch the divergence by running identical commands against both executors.",
       "use_case": "This feature addresses: Contract tests with real FFmpeg for executor fidelity. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v004",
+      "implemented_in_theme": "blackbox-contract"
     },
     {
       "id": "BL-025",
       "title": "Security audit of Rust path validation and input sanitization",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:10.187170",
-      "completed_at": null,
+      "completed_at": "2026-02-09T06:28:54.370009",
       "tags": [
         "v004",
         "security",
@@ -899,17 +899,17 @@
       ],
       "notes": "Use case: A user provides a file path like \"../../etc/passwd\" or a text overlay containing shell metacharacters. The Rust core must reject these inputs before they reach FFmpeg. The security audit documents which attack vectors are tested, which code paths handle them, and whether any gaps exist — giving the team confidence that user input cannot escape the sandbox.",
       "use_case": "This feature addresses: Security audit of Rust path validation and input sanitization. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v004",
+      "implemented_in_theme": "security-performance"
     },
     {
       "id": "BL-026",
       "title": "Rust vs Python performance benchmark for core operations",
       "priority": "P3",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:15.444447",
-      "completed_at": null,
+      "completed_at": "2026-02-09T06:28:55.484143",
       "tags": [
         "v004",
         "benchmarking",
@@ -932,17 +932,17 @@
       ],
       "notes": "Use case: A stakeholder asks whether the Rust/Python hybrid architecture is justified. The benchmark suite runs timeline calculations, filter generation, and clip validation in both pure Python and Rust, producing a comparison table showing that Rust is N× faster for each operation — providing empirical evidence for the architecture decision.",
       "use_case": "This feature addresses: Rust vs Python performance benchmark for core operations. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v004",
+      "implemented_in_theme": "security-performance"
     },
     {
       "id": "BL-027",
       "title": "Async job queue for scan operations",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:57:21.142515",
-      "completed_at": null,
+      "completed_at": "2026-02-09T06:28:56.559249",
       "tags": [
         "v004",
         "async",
@@ -969,8 +969,8 @@
       ],
       "notes": "Use case: A user starts a scan of a large media directory (10,000+ files). Instead of waiting 30 seconds for the HTTP response, they get a job ID back immediately and can poll for progress. The GUI shows a progress bar updating in real-time. If they navigate away and come back, the job status endpoint tells them the scan is 73% complete.",
       "use_case": "This feature addresses: Async job queue for scan operations. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_version": "v004",
+      "implemented_in_theme": "async-scan"
     },
     {
       "id": "BL-028",
@@ -1989,6 +1989,6 @@
       "implemented_in_theme": null
     }
   ],
-  "completed_count": 17,
+  "completed_count": 22,
   "cancelled_count": 0
 }

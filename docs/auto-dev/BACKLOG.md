@@ -2,23 +2,22 @@
 
 *Last updated: 2026-02-09 06:28*
 
-**Total completed:** 17 | **Cancelled:** 0
+**Total completed:** 22 | **Cancelled:** 0
 
 ## Priority Summary
 
 | Priority | Name | Count |
 |----------|------|-------|
 | P0 | Critical | 0 |
-| P1 | High | 21 |
-| P2 | Medium | 11 |
-| P3 | Low | 2 |
+| P1 | High | 20 |
+| P2 | Medium | 8 |
+| P3 | Low | 1 |
 
 ## Quick Reference
 
 | ID | Pri | Size | Title | Description |
 |----|-----|------|-------|-------------|
 | <a id="bl-019-ref"></a>[BL-019](#bl-019) | P1 | m | Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore | Add Windows bash null redirect guidance to AGENTS.md and ... |
-| <a id="bl-023-ref"></a>[BL-023](#bl-023) | P1 | m | Implement black box test scenario catalog | No black box integration tests exist despite the API bein... |
 | <a id="bl-028-ref"></a>[BL-028](#bl-028) | P1 | m | EXP: Frontend framework selection and Vite project setup | No frontend project exists — no `gui/` directory, package... |
 | <a id="bl-029-ref"></a>[BL-029](#bl-029) | P1 | m | Implement WebSocket endpoint for real-time events | M1.10 requires a `/ws` WebSocket endpoint for real-time e... |
 | <a id="bl-030-ref"></a>[BL-030](#bl-030) | P1 | m | Build application shell and navigation components | M1.10 specifies an application shell with navigation tabs... |
@@ -40,9 +39,6 @@
 | <a id="bl-051-ref"></a>[BL-051](#bl-051) | P1 | l | Build effect builder workflow with clip selector and effect stack | M2.9 specifies a complete effect builder workflow: select... |
 | <a id="bl-003-ref"></a>[BL-003](#bl-003) | P2 | m | EXP-003: FastAPI static file serving for GUI | Investigate serving the React/Svelte GUI from FastAPI: |
 | <a id="bl-018-ref"></a>[BL-018](#bl-018) | P2 | s | Create C4 architecture documentation | No C4 architecture documentation currently exists for the... |
-| <a id="bl-024-ref"></a>[BL-024](#bl-024) | P2 | m | Contract tests with real FFmpeg for executor fidelity | RecordingFFmpegExecutor and FakeFFmpegExecutor exist from... |
-| <a id="bl-025-ref"></a>[BL-025](#bl-025) | P2 | m | Security audit of Rust path validation and input sanitization | M1.9 specifies a security review of Rust sanitization cov... |
-| <a id="bl-027-ref"></a>[BL-027](#bl-027) | P2 | m | Async job queue for scan operations | The scan endpoint blocks the HTTP request until the entir... |
 | <a id="bl-031-ref"></a>[BL-031](#bl-031) | P2 | m | Build dashboard panel with health cards and activity log | M1.10 specifies a dashboard with system health cards, rec... |
 | <a id="bl-034-ref"></a>[BL-034](#bl-034) | P2 | m | Fix pagination total count for list endpoints | Paginated list endpoints return page-based results but la... |
 | <a id="bl-036-ref"></a>[BL-036](#bl-036) | P2 | m | Set up Playwright E2E test infrastructure for GUI | The 08-gui-architecture.md quality requirements specify P... |
@@ -50,7 +46,6 @@
 | <a id="bl-043-ref"></a>[BL-043](#bl-043) | P2 | l | Create API endpoint to apply text overlay effect to clips | No API endpoint exists to apply effects to clips. The Rus... |
 | <a id="bl-052-ref"></a>[BL-052](#bl-052) | P2 | m | E2E tests for effect workshop workflow | The effect workshop comprises multiple GUI components (ca... |
 | <a id="bl-011-ref"></a>[BL-011](#bl-011) | P3 | m | Consolidate Python/Rust build backends | v001 uses hatchling for Python package management and mat... |
-| <a id="bl-026-ref"></a>[BL-026](#bl-026) | P3 | m | Rust vs Python performance benchmark for core operations | M1.9 requires benchmarking Rust core operations against p... |
 
 ## Tags Summary
 
@@ -59,15 +54,13 @@
 | gui | 10 | BL-003, BL-028, BL-030, BL-031, ... |
 | v005 | 9 | BL-028, BL-029, BL-030, BL-031, ... |
 | v007 | 9 | BL-044, BL-045, BL-046, BL-047, ... |
-| rust | 8 | BL-026, BL-037, BL-038, BL-039, ... |
 | v006 | 7 | BL-037, BL-038, BL-039, BL-040, ... |
+| rust | 7 | BL-037, BL-038, BL-039, BL-040, ... |
 | effects | 6 | BL-042, BL-047, BL-048, BL-049, ... |
-| v004 | 5 | BL-023, BL-024, BL-025, BL-026, ... |
 | api | 5 | BL-029, BL-034, BL-042, BL-043, ... |
-| testing | 4 | BL-023, BL-024, BL-036, BL-052 |
 | filters | 3 | BL-037, BL-038, BL-039 |
 | investigation | 2 | BL-003, BL-028 |
-| ffmpeg | 2 | BL-024, BL-032 |
+| testing | 2 | BL-036, BL-052 |
 | e2e | 2 | BL-036, BL-052 |
 | text-overlay | 2 | BL-040, BL-043 |
 | transitions | 2 | BL-045, BL-046 |
@@ -82,17 +75,11 @@
 | windows | 1 | BL-019 |
 | agents-md | 1 | BL-019 |
 | gitignore | 1 | BL-019 |
-| black-box | 1 | BL-023 |
-| contract | 1 | BL-024 |
-| security | 1 | BL-025 |
-| audit | 1 | BL-025 |
-| benchmarking | 1 | BL-026 |
-| async | 1 | BL-027 |
-| scan | 1 | BL-027 |
 | websocket | 1 | BL-029 |
 | shell | 1 | BL-030 |
 | dashboard | 1 | BL-031 |
 | thumbnails | 1 | BL-032 |
+| ffmpeg | 1 | BL-032 |
 | library | 1 | BL-033 |
 | pagination | 1 | BL-034 |
 | projects | 1 | BL-035 |
@@ -125,26 +112,6 @@ Add Windows bash null redirect guidance to AGENTS.md and add `nul` to .gitignore
 **Use Case:** This feature addresses: Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore. It improves the system by resolving the described requirement.
 
 [↑ Back to list](#bl-019-ref)
-
-#### 📋 BL-023: Implement black box test scenario catalog
-
-**Status:** open
-**Tags:** v004, testing, black-box
-
-No black box integration tests exist despite the API being stable since v003. The 07-quality-architecture.md spec requires tests that exercise complete workflows through the REST API using real Rust core plus recording fakes. Without these tests, regressions in end-to-end flows (scan → project → clips) go undetected until manual testing.
-
-**Use Case:** This feature addresses: Implement black box test scenario catalog. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Core workflow test covers scan → project → clips flow through REST API
-- [ ] Error handling tests cover validation errors and FFmpeg failure scenarios
-- [ ] All tests use recording test doubles and never mock the Rust core directly
-- [ ] Tests run in CI without FFmpeg installed
-- [ ] pytest markers separate black box tests from unit tests
-
-**Notes:** Use case: After refactoring the scan endpoint to be async, a developer runs the black box test suite. Tests exercise the full scan → project → clips workflow through HTTP requests against a real FastAPI app with recording fakes. A regression where scan results no longer populate the video library is caught before it reaches main.
-
-[↑ Back to list](#bl-023-ref)
 
 #### 📋 BL-028: EXP: Frontend framework selection and Vite project setup
 
@@ -524,62 +491,6 @@ No C4 architecture documentation currently exists for the project. Establish doc
 
 [↑ Back to list](#bl-018-ref)
 
-#### 📋 BL-024: Contract tests with real FFmpeg for executor fidelity
-
-**Status:** open
-**Tags:** v004, testing, ffmpeg, contract
-
-RecordingFFmpegExecutor and FakeFFmpegExecutor exist from v001-v002, but no tests verify they produce behavior identical to RealFFmpegExecutor. This was explicitly deferred from v001 and is required by M1.9 (quality verification). Without contract tests, recording fakes may silently diverge from real FFmpeg behavior, undermining the validity of all integration tests that rely on them.
-
-**Use Case:** This feature addresses: Contract tests with real FFmpeg for executor fidelity. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Parametrized tests run the same commands against Real, Recording, and Fake executors
-- [ ] At least 5 representative FFmpeg commands tested across executor implementations
-- [ ] Tests marked with @pytest.mark.requires_ffmpeg for CI environments without FFmpeg
-- [ ] Contract violations between fake and real executor fail the test suite
-
-**Notes:** Use case: The RecordingFFmpegExecutor is used in all integration tests. A developer changes how FFmpeg handles concat operations in the real executor. Without contract tests, the recording fake still returns old behavior, and integration tests pass even though real FFmpeg would fail. Contract tests catch the divergence by running identical commands against both executors.
-
-[↑ Back to list](#bl-024-ref)
-
-#### 📋 BL-025: Security audit of Rust path validation and input sanitization
-
-**Status:** open
-**Tags:** v004, security, audit
-
-M1.9 specifies a security review of Rust sanitization covering path traversal, null bytes, and shell injection vectors. The Rust core handles user-provided file paths and filter text (via `escape_filter_text()`), but no formal audit artifact documents what has been reviewed, what attack vectors are covered, and where gaps remain. Without this audit, security coverage is implicit and unverifiable.
-
-**Use Case:** This feature addresses: Security audit of Rust path validation and input sanitization. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Review covers path traversal, null byte injection, and shell injection vectors in Rust core
-- [ ] Audit document published in docs/ with findings and coverage assessment
-- [ ] Any identified gaps addressed with new tests or code fixes
-
-**Notes:** Use case: A user provides a file path like "../../etc/passwd" or a text overlay containing shell metacharacters. The Rust core must reject these inputs before they reach FFmpeg. The security audit documents which attack vectors are tested, which code paths handle them, and whether any gaps exist — giving the team confidence that user input cannot escape the sandbox.
-
-[↑ Back to list](#bl-025-ref)
-
-#### 📋 BL-027: Async job queue for scan operations
-
-**Status:** open
-**Tags:** v004, async, scan
-
-The scan endpoint blocks the HTTP request until the entire directory scan completes. This was identified as tech debt in the v003 retrospective. For large media directories, scan can take significant time, leaving the client with no progress feedback. The black box test scenario catalog (M1.8) also requires async scan behavior to test job progress workflows.
-
-**Use Case:** This feature addresses: Async job queue for scan operations. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Scan endpoint returns job ID immediately instead of blocking
-- [ ] Job status queryable via GET endpoint with progress information
-- [ ] InMemoryJobQueue supports synchronous test execution for deterministic tests
-- [ ] Existing scan tests updated to use the async pattern
-
-**Notes:** Use case: A user starts a scan of a large media directory (10,000+ files). Instead of waiting 30 seconds for the HTTP response, they get a job ID back immediately and can poll for progress. The GUI shows a progress bar updating in real-time. If they navigate away and come back, the job status endpoint tells them the scan is 73% complete.
-
-[↑ Back to list](#bl-027-ref)
-
 #### 📋 BL-031: Build dashboard panel with health cards and activity log
 
 **Status:** open
@@ -702,21 +613,3 @@ v001 uses hatchling for Python package management and maturin for Rust/PyO3 buil
 - [ ] Update developer documentation
 
 [↑ Back to list](#bl-011-ref)
-
-#### 📋 BL-026: Rust vs Python performance benchmark for core operations
-
-**Status:** open
-**Tags:** v004, benchmarking, rust
-
-M1.9 requires benchmarking Rust core operations against pure-Python equivalents to validate the performance justification for the hybrid architecture. No benchmark infrastructure exists. Without measured speedup ratios, the decision to use Rust for timeline math and filter generation lacks empirical backing.
-
-**Use Case:** This feature addresses: Rust vs Python performance benchmark for core operations. It improves the system by resolving the described requirement.
-
-**Acceptance Criteria:**
-- [ ] Benchmark script compares Rust vs Python for at least 3 representative operations
-- [ ] Results documented with speedup ratios for each operation
-- [ ] Benchmark runnable via uv run python benchmarks/ command
-
-**Notes:** Use case: A stakeholder asks whether the Rust/Python hybrid architecture is justified. The benchmark suite runs timeline calculations, filter generation, and clip validation in both pure Python and Rust, producing a comparison table showing that Rust is N× faster for each operation — providing empirical evidence for the architecture decision.
-
-[↑ Back to list](#bl-026-ref)
