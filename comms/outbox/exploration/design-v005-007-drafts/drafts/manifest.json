@@ -1,0 +1,65 @@
+{
+  "version": "v005",
+  "description": "GUI Shell, Library Browser & Project Manager. Build the frontend from scratch: create a React/TypeScript/Vite frontend project, add WebSocket support for real-time events, build the application shell with navigation, implement library browser with thumbnail generation, and create the project manager. Completes Phase 1 (Milestones M1.10-M1.12).",
+  "backlog_ids": ["BL-003", "BL-028", "BL-029", "BL-030", "BL-031", "BL-032", "BL-033", "BL-034", "BL-035", "BL-036"],
+  "context": {
+    "rationale": "v005 is the first version introducing a user-facing GUI. All prior versions (v001-v004) built backend infrastructure: API, database, FFmpeg integration, job queue, and testing foundation. The frontend is greenfield with no existing code. Framework selection (React) was confirmed through design research. This version completes Phase 1 by delivering the GUI shell, library browser, and project manager.",
+    "constraints": [
+      "Frontend is greenfield - no existing frontend code or framework choice prior to v005",
+      "Framework selection (BL-028) must be resolved first as all GUI work depends on it",
+      "Static file serving (BL-003) is a prerequisite for serving the frontend from FastAPI",
+      "WebSocket support was deferred from v003 and must be implemented for real-time features",
+      "Playwright E2E tests require all GUI components to exist before meaningful tests can be written",
+      "CI build time must be managed with caching and parallel jobs"
+    ],
+    "assumptions": [
+      "React 18+ with TypeScript selected based on design document alignment and ecosystem analysis",
+      "Zustand for state management as recommended in design docs",
+      "StaticFiles(html=True) sufficient for flat v005 SPA routes",
+      "On-scan thumbnail generation acceptable for v005 library sizes",
+      "Playwright E2E runs on ubuntu-latest only, not full OS matrix"
+    ],
+    "deferred_items": []
+  },
+  "themes": [
+    {
+      "number": 1,
+      "slug": "frontend-foundation",
+      "goal": "Scaffold the frontend project, configure static file serving from FastAPI, set up CI pipeline integration, and add WebSocket real-time event support.",
+      "features": [
+        {"number": 1, "slug": "frontend-scaffolding", "goal": "Scaffold React/Vite/TypeScript project in gui/, configure FastAPI static file serving with StaticFiles(html=True), and update CI pipeline with new frontend job"},
+        {"number": 2, "slug": "websocket-endpoint", "goal": "Implement /ws WebSocket endpoint with ConnectionManager, event broadcasting, heartbeat (30s default), and correlation ID support"},
+        {"number": 3, "slug": "settings-and-docs", "goal": "Add new settings fields (thumbnail_dir, gui_static_path, ws_heartbeat_interval) and update architecture/API/AGENTS docs"}
+      ]
+    },
+    {
+      "number": 2,
+      "slug": "backend-services",
+      "goal": "Add backend capabilities that the GUI components consume: thumbnail generation pipeline and pagination total count fix.",
+      "features": [
+        {"number": 1, "slug": "thumbnail-pipeline", "goal": "Implement thumbnail generation service using FFmpeg executor pattern, add GET /api/videos/{id}/thumbnail endpoint, integrate with scan service, store thumbnails in configurable thumbnail_dir"},
+        {"number": 2, "slug": "pagination-total-count", "goal": "Add count() to async repository protocol and implementations, fix list_videos and search endpoints to return true total via SELECT COUNT(*)"}
+      ]
+    },
+    {
+      "number": 3,
+      "slug": "gui-components",
+      "goal": "Build the four main GUI panels: application shell with navigation, dashboard, library browser, and project manager.",
+      "features": [
+        {"number": 1, "slug": "application-shell", "goal": "Build application shell with navigation tabs, health indicator, status bar, progressive tab disclosure, and WebSocket reconnection via useWebSocket hook"},
+        {"number": 2, "slug": "dashboard-panel", "goal": "Build dashboard with health cards, real-time activity log via WebSocket, and metrics overview"},
+        {"number": 3, "slug": "library-browser", "goal": "Build library browser with video grid, thumbnails, search (300ms debounce), sort/filter, scan modal, and pagination or virtual scrolling"},
+        {"number": 4, "slug": "project-manager", "goal": "Build project manager with list, creation modal, details view with timeline positions, and delete confirmation"}
+      ]
+    },
+    {
+      "number": 4,
+      "slug": "e2e-testing",
+      "goal": "Establish Playwright E2E test infrastructure with CI integration, covering navigation, scan trigger, project creation, and WCAG AA accessibility checks.",
+      "features": [
+        {"number": 1, "slug": "playwright-setup", "goal": "Configure Playwright with CI integration (ubuntu-latest only), webServer config for FastAPI, browser installation with caching"},
+        {"number": 2, "slug": "e2e-test-suite", "goal": "Write E2E tests for navigation, scan trigger, project creation, and WCAG AA accessibility checks via @axe-core/playwright"}
+      ]
+    }
+  ]
+}
