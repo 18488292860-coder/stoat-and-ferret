@@ -1,0 +1,15 @@
+{
+  "exploration_id": "v005-retro-007-proposals-1770663658486",
+  "results_folder": "v005-retro-007-proposals",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-09T19:00:58.486969",
+  "updated_at": "2026-02-09T19:00:58.486969",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/v005-retro-007-proposals/prompt.md",
+  "outbox_path": "comms/outbox/exploration/v005-retro-007-proposals"
+}
