@@ -38,30 +38,6 @@ Track explorations that must complete before version design.
 
 ## Planned Versions
 
-### v004 - Testing Infrastructure & Quality Verification (Planned)
-
-**Goal:** Black box testing harness, recording test doubles, contract tests, quality verification suite. Milestones M1.8–1.9.
-**Estimated scope:** 8 new items + 5 existing items retagged
-
-**New Items (BL-020–027):**
-- BL-020 (P1): Implement InMemory test doubles for projects and jobs
-- BL-021 (P1): Add dependency injection to create_app()
-- BL-022 (P1): Build fixture factory with builder pattern
-- BL-023 (P1): Implement black box test scenario catalog
-- BL-024 (P2): Contract tests with real FFmpeg
-- BL-025 (P2): Security audit of Rust sanitization
-- BL-026 (P3): Rust vs Python performance benchmark
-- BL-027 (P2): Async job queue for scan operations
-
-**Existing Items Retagged:**
-- BL-009 (P2): Add property test guidance to feature design template
-- BL-010 (P3): Configure Rust code coverage with llvm-cov
-- BL-012 (P3): Fix coverage reporting gaps for ImportError fallback
-- BL-014 (P2): Add Docker-based local testing option
-- BL-016 (P3): Unify InMemory vs FTS5 search behavior
-
-**Dependencies:** BL-021→BL-020, BL-022→BL-021, BL-023→BL-022, BL-027→BL-020
-
 ### v005 - GUI Shell, Library Browser & Project Manager (Planned)
 
 **Goal:** Frontend project from scratch, WebSocket support, application shell, library browser with thumbnails, project manager. Milestones M1.10–1.12.
@@ -118,6 +94,13 @@ Track explorations that must complete before version design.
 
 ## Completed Versions
 
+### v004 - Testing Infrastructure & Quality Verification (2026-02-09)
+- **Themes:** test-foundation, blackbox-contract, async-scan, security-performance, devex-coverage
+- **Features:** 15 completed across 5 themes
+- **Backlog Resolved:** BL-020, BL-021, BL-022, BL-023, BL-024, BL-025, BL-026, BL-027, BL-009, BL-010, BL-012, BL-014, BL-016
+- **Key Changes:** InMemory test doubles with DI via create_app(), fixture factory with builder pattern, 30 black box REST API tests, 21 FFmpeg contract tests, async scan via asyncio.Queue job queue, security audit of Rust sanitization, Rust vs Python performance benchmarks, property test guidance, Rust code coverage with cargo-llvm-cov, Docker testing environment
+- **Deferred:** Rust coverage threshold at 75% (target 90%), scan endpoint blackbox tests (requires real FFmpeg)
+
 ### v003 - API Layer + Clip Model (2026-01-28)
 - **Themes:** process-improvements, api-foundation, library-api, clip-model
 - **Features:** 15 completed across 4 themes
@@ -164,6 +147,7 @@ Query: `list_backlog_items(project="stoat-and-ferret", status="open")`
 
 | Date | Change |
 |------|--------|
+| 2026-02-09 | v004 complete: Testing Infrastructure & Quality Verification delivered (5 themes, 15 features, 13 backlog items completed). Moved v004 from Planned to Completed. Updated Current Focus to v005. |
 | 2026-02-08 | Rewrote plan.md to match auto-dev-mcp format. Added Planned Versions sections for v004–v007 with full backlog item listings and dependency chains. |
 | 2026-02-08 | Gap analysis completed (backlog-gap-analysis exploration). Created 33 new backlog items (BL-020–052) for v004–v007. Retagged 5 existing items to v004. Updated plan with backlog coverage and scoping decisions for v006/v007. |
 | 2026-01-28 | v003 complete: API layer + Clip model delivered (4 themes, 15 features, BL-013/015/017 completed) |
