@@ -1,0 +1,658 @@
+openapi: "3.1.0"
+info:
+  title: stoat-and-ferret API
+  description: AI-driven video editor REST API
+  version: "0.3.0"
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /health/live:
+    get:
+      operationId: liveness
+      summary: Liveness probe
+      tags: [Health]
+      responses:
+        "200":
+          description: Service is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /health/ready:
+    get:
+      operationId: readiness
+      summary: Readiness probe with dependency checks
+      tags: [Health]
+      responses:
+        "200":
+          description: All dependencies healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadinessResponse"
+        "503":
+          description: One or more dependencies degraded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadinessResponse"
+
+  /api/v1/videos:
+    get:
+      operationId: listVideos
+      summary: List videos with pagination
+      tags: [Videos]
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: Paginated video list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoListResponse"
+
+  /api/v1/videos/search:
+    get:
+      operationId: searchVideos
+      summary: Search videos by filename or path
+      tags: [Videos]
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoSearchResponse"
+
+  /api/v1/videos/{video_id}:
+    get:
+      operationId: getVideo
+      summary: Get video by ID
+      tags: [Videos]
+      parameters:
+        - $ref: "#/components/parameters/VideoId"
+      responses:
+        "200":
+          description: Video details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteVideo
+      summary: Delete video from library
+      tags: [Videos]
+      parameters:
+        - $ref: "#/components/parameters/VideoId"
+        - name: delete_file
+          in: query
+          description: Also delete source file from disk
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "204":
+          description: Video deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/videos/{video_id}/thumbnail:
+    get:
+      operationId: getVideoThumbnail
+      summary: Get thumbnail image for a video
+      tags: [Videos]
+      parameters:
+        - $ref: "#/components/parameters/VideoId"
+      responses:
+        "200":
+          description: JPEG thumbnail image
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/videos/scan:
+    post:
+      operationId: scanDirectory
+      summary: Submit directory scan as async job
+      tags: [Videos]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScanRequest"
+      responses:
+        "202":
+          description: Scan job submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobSubmitResponse"
+        "400":
+          description: Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Path not in allowed scan roots
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/projects:
+    get:
+      operationId: listProjects
+      summary: List all projects
+      tags: [Projects]
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: Paginated project list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectListResponse"
+    post:
+      operationId: createProject
+      summary: Create a new project
+      tags: [Projects]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectCreate"
+      responses:
+        "201":
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectResponse"
+
+  /api/v1/projects/{project_id}:
+    get:
+      operationId: getProject
+      summary: Get project by ID
+      tags: [Projects]
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      responses:
+        "200":
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteProject
+      summary: Delete project
+      tags: [Projects]
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      responses:
+        "204":
+          description: Project deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/projects/{project_id}/clips:
+    get:
+      operationId: listClips
+      summary: List clips in project
+      tags: [Clips]
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      responses:
+        "200":
+          description: Clip list for project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClipListResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    post:
+      operationId: addClip
+      summary: Add clip to project
+      tags: [Clips]
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClipCreate"
+      responses:
+        "201":
+          description: Clip added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClipResponse"
+        "400":
+          description: Validation error (clip fails Rust validation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/projects/{project_id}/clips/{clip_id}:
+    patch:
+      operationId: updateClip
+      summary: Update clip
+      tags: [Clips]
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+        - $ref: "#/components/parameters/ClipId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClipUpdate"
+      responses:
+        "200":
+          description: Clip updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClipResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteClip
+      summary: Delete clip
+      tags: [Clips]
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+        - $ref: "#/components/parameters/ClipId"
+      responses:
+        "204":
+          description: Clip deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/jobs/{job_id}:
+    get:
+      operationId: getJobStatus
+      summary: Get job status
+      tags: [Jobs]
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobStatusResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+components:
+  parameters:
+    VideoId:
+      name: video_id
+      in: path
+      required: true
+      schema:
+        type: string
+    ProjectId:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+    ClipId:
+      name: clip_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+  schemas:
+    VideoResponse:
+      type: object
+      required: [id, path, filename, duration_frames, frame_rate_numerator, frame_rate_denominator, width, height, video_codec, file_size, created_at, updated_at]
+      properties:
+        id:
+          type: string
+        path:
+          type: string
+        filename:
+          type: string
+        duration_frames:
+          type: integer
+        frame_rate_numerator:
+          type: integer
+        frame_rate_denominator:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+        video_codec:
+          type: string
+        audio_codec:
+          type: string
+          nullable: true
+        file_size:
+          type: integer
+        thumbnail_path:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    VideoListResponse:
+      type: object
+      required: [videos, total, limit, offset]
+      properties:
+        videos:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoResponse"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+
+    VideoSearchResponse:
+      type: object
+      required: [videos, total, query]
+      properties:
+        videos:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoResponse"
+        total:
+          type: integer
+        query:
+          type: string
+
+    ScanRequest:
+      type: object
+      required: [path]
+      properties:
+        path:
+          type: string
+        recursive:
+          type: boolean
+          default: true
+
+    ProjectCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        output_width:
+          type: integer
+          minimum: 1
+          default: 1920
+        output_height:
+          type: integer
+          minimum: 1
+          default: 1080
+        output_fps:
+          type: integer
+          minimum: 1
+          maximum: 120
+          default: 30
+
+    ProjectResponse:
+      type: object
+      required: [id, name, output_width, output_height, output_fps, created_at, updated_at]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        output_width:
+          type: integer
+        output_height:
+          type: integer
+        output_fps:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ProjectListResponse:
+      type: object
+      required: [projects, total]
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectResponse"
+        total:
+          type: integer
+
+    ClipCreate:
+      type: object
+      required: [source_video_id, in_point, out_point, timeline_position]
+      properties:
+        source_video_id:
+          type: string
+        in_point:
+          type: integer
+          minimum: 0
+        out_point:
+          type: integer
+          minimum: 0
+        timeline_position:
+          type: integer
+          minimum: 0
+
+    ClipUpdate:
+      type: object
+      properties:
+        in_point:
+          type: integer
+          minimum: 0
+          nullable: true
+        out_point:
+          type: integer
+          minimum: 0
+          nullable: true
+        timeline_position:
+          type: integer
+          minimum: 0
+          nullable: true
+
+    ClipResponse:
+      type: object
+      required: [id, project_id, source_video_id, in_point, out_point, timeline_position, created_at, updated_at]
+      properties:
+        id:
+          type: string
+        project_id:
+          type: string
+        source_video_id:
+          type: string
+        in_point:
+          type: integer
+        out_point:
+          type: integer
+        timeline_position:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ClipListResponse:
+      type: object
+      required: [clips, total]
+      properties:
+        clips:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClipResponse"
+        total:
+          type: integer
+
+    JobSubmitResponse:
+      type: object
+      required: [job_id]
+      properties:
+        job_id:
+          type: string
+
+    JobStatusResponse:
+      type: object
+      required: [job_id, status]
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+          enum: [PENDING, RUNNING, COMPLETE, FAILED, TIMEOUT]
+        progress:
+          type: number
+          nullable: true
+        result: {}
+        error:
+          type: string
+          nullable: true
+
+    ReadinessResponse:
+      type: object
+      required: [status, checks]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded]
+        checks:
+          type: object
+          required: [database, ffmpeg]
+          properties:
+            database:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                latency_ms:
+                  type: number
+                error:
+                  type: string
+            ffmpeg:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                version:
+                  type: string
+                error:
+                  type: string
+
+    ErrorResponse:
+      type: object
+      required: [detail]
+      properties:
+        detail:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
