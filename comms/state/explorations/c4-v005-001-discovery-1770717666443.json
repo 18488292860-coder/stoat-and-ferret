@@ -1,0 +1,15 @@
+{
+  "exploration_id": "c4-v005-001-discovery-1770717666443",
+  "results_folder": "c4-v005-001-discovery",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-10T10:01:06.443211",
+  "updated_at": "2026-02-10T10:01:06.443211",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/c4-v005-001-discovery/prompt.md",
+  "outbox_path": "comms/outbox/exploration/c4-v005-001-discovery"
+}

@@ -1,10 +1,10 @@
 {
   "exploration_id": "c4-v005-orchestrator-1770717624966",
   "results_folder": "c4-v005-orchestrator",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 22380,
   "started_at": "2026-02-10T10:00:24.966268",
-  "updated_at": "2026-02-10T10:00:24.966268",
+  "updated_at": "2026-02-10T10:00:27.496931",
   "completed_at": null,
   "error": null,
   "documents": [],
