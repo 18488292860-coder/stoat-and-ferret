@@ -108,9 +108,8 @@ For EACH feature, create requirements.md:
 - Background (context, backlog items)
 - Functional Requirements (FR-001, FR-002, etc. with acceptance criteria)
 - Non-Functional Requirements (NFR-001, etc. with metrics)
-- Property Test Invariants (PT-001, etc. — plain-language properties that must always hold; include when the feature has pure functions, round-trips, or domain invariants; see `docs/auto-dev/PROCESS/generic/02-REQUIREMENTS.md` for guidance)
 - Out of Scope (explicit boundaries)
-- Test Requirements (from Task 005/006 test strategy, including expected property test count)
+- Test Requirements (from Task 005/006 test strategy)
 - Reference: `See comms/outbox/versions/design/${VERSION}/004-research/ for supporting evidence`
 
 **CRITICAL — Backlog ID Cross-Reference:**
@@ -128,6 +127,20 @@ For EACH feature, create implementation-plan.md:
 - Commit Message (template)
 
 Use evidence from Task 004 research for specific approaches and values.
+
+### 6a. Verify All File Paths (MANDATORY)
+
+After drafting all implementation plans, you MUST verify every path in every "Files to Modify" table:
+
+1. Collect all unique source file paths from all implementation plan "Files to Modify" tables
+2. Call `request_clarification` with a `structure` query to list all files under the relevant source directories (e.g., `src/auto_dev_mcp/**/*.py`)
+3. Compare each "Files to Modify" path against the structure listing
+4. Any path NOT found in the listing must be corrected using the actual path from the listing
+5. "Files to Create" paths are exempt — for these, verify only that the parent directory exists in the listing
+
+You MUST NOT finalize implementation plans until all "Files to Modify" paths have been verified. Skipping this step has caused recurring errors in prior versions (v058: 6/10 plans had incorrect paths).
+
+**Constraint:** `request_clarification` may ONLY be used for file path verification in this task. Do not use it for codebase research — that is Task 004's responsibility.
 
 ## Output Requirements
 
@@ -224,12 +237,14 @@ Verification checklist:
 - [ ] All backlog IDs from manifest appear in at least one requirements.md
 - [ ] No theme or feature slug starts with a digit prefix (`^\d+-`)
 - [ ] Backlog IDs in each requirements.md cross-referenced against Task 002 backlog analysis (no mismatches)
+- [ ] All "Files to Modify" paths verified via `request_clarification` structure query (no unverified paths)
 
 ## Allowed MCP Tools
 
 - `read_document`
+- `request_clarification` (path verification only — see Section 6a)
 
-(All content should come from the design artifact store)
+(All content should come from the design artifact store. request_clarification is permitted solely for verifying file paths in implementation plans.)
 
 ## Guidelines
 
