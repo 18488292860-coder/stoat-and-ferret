@@ -1,10 +1,10 @@
 {
   "exploration_id": "c4-v005-005-context-1770719119857",
   "results_folder": "c4-v005-005-context",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 22380,
   "started_at": "2026-02-10T10:25:19.857964",
-  "updated_at": "2026-02-10T10:25:19.857964",
+  "updated_at": "2026-02-10T10:25:21.674748",
   "completed_at": null,
   "error": null,
   "documents": [],
