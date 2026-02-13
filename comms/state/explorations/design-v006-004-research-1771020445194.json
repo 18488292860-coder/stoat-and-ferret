@@ -1,10 +1,10 @@
 {
   "exploration_id": "design-v006-004-research-1771020445194",
   "results_folder": "design-v006-004-research",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 25532,
   "started_at": "2026-02-13T22:07:25.194818",
-  "updated_at": "2026-02-13T22:07:25.194818",
+  "updated_at": "2026-02-13T22:07:26.983413",
   "completed_at": null,
   "error": null,
   "documents": [],
