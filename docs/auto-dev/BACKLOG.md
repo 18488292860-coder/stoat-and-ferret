@@ -1,6 +1,6 @@
 # Project Backlog
 
-*Last updated: 2026-02-09 18:49*
+*Last updated: 2026-02-15 01:19*
 
 **Total completed:** 32 | **Cancelled:** 0
 
@@ -9,7 +9,7 @@
 | Priority | Name | Count |
 |----------|------|-------|
 | P0 | Critical | 0 |
-| P1 | High | 14 |
+| P1 | High | 16 |
 | P2 | Medium | 4 |
 | P3 | Low | 1 |
 
@@ -31,6 +31,8 @@
 | <a id="bl-049-ref"></a>[BL-049](#bl-049) | P1 | l | Build dynamic parameter form generator from JSON schema | M2.8 specifies auto-generating parameter forms from JSON ... |
 | <a id="bl-050-ref"></a>[BL-050](#bl-050) | P1 | m | Implement live FFmpeg filter preview in effect parameter UI | M2.8 specifies showing the Rust-generated FFmpeg filter s... |
 | <a id="bl-051-ref"></a>[BL-051](#bl-051) | P1 | l | Build effect builder workflow with clip selector and effect stack | M2.9 specifies a complete effect builder workflow: select... |
+| <a id="bl-053-ref"></a>[BL-053](#bl-053) | P1 | l | Add PR vs BL routing guidance to AGENTS.md (stoat-and-ferret) | AGENTS.md in the stoat-and-ferret project lists both add_... |
+| <a id="bl-054-ref"></a>[BL-054](#bl-054) | P1 | l | Add WebFetch safety rules to AGENTS.md | Mirror of auto-dev-mcp BL-517. Add WebFetch safety block ... |
 | <a id="bl-018-ref"></a>[BL-018](#bl-018) | P2 | s | Create C4 architecture documentation | No C4 architecture documentation currently exists for the... |
 | <a id="bl-042-ref"></a>[BL-042](#bl-042) | P2 | l | Create effect discovery API endpoint | M2.2 and 05-api-specification.md specify an `/effects` di... |
 | <a id="bl-043-ref"></a>[BL-043](#bl-043) | P2 | l | Create API endpoint to apply text overlay effect to clips | No API endpoint exists to apply effects to clips. The Rus... |
@@ -46,18 +48,18 @@
 | rust | 7 | BL-037, BL-038, BL-039, BL-040, ... |
 | effects | 6 | BL-042, BL-047, BL-048, BL-049, ... |
 | gui | 4 | BL-048, BL-049, BL-050, BL-051 |
+| agents-md | 3 | BL-019, BL-053, BL-054 |
 | filters | 3 | BL-037, BL-038, BL-039 |
 | api | 3 | BL-042, BL-043, BL-046 |
+| documentation | 2 | BL-018, BL-053 |
 | text-overlay | 2 | BL-040, BL-043 |
 | transitions | 2 | BL-045, BL-046 |
 | tooling | 1 | BL-011 |
 | build | 1 | BL-011 |
 | complexity | 1 | BL-011 |
-| documentation | 1 | BL-018 |
 | architecture | 1 | BL-018 |
 | c4 | 1 | BL-018 |
 | windows | 1 | BL-019 |
-| agents-md | 1 | BL-019 |
 | gitignore | 1 | BL-019 |
 | expressions | 1 | BL-037 |
 | validation | 1 | BL-038 |
@@ -75,6 +77,11 @@
 | builder | 1 | BL-051 |
 | testing | 1 | BL-052 |
 | e2e | 1 | BL-052 |
+| product-requests | 1 | BL-053 |
+| decision-framework | 1 | BL-053 |
+| webfetch | 1 | BL-054 |
+| safety | 1 | BL-054 |
+| hang-prevention | 1 | BL-054 |
 
 ## Item Details
 
@@ -323,6 +330,52 @@ M2.9 specifies a complete effect builder workflow: select effect, configure para
 - [ ] Remove action deletes an effect from a clip's effect stack with confirmation
 
 [↑ Back to list](#bl-051-ref)
+
+#### 📋 BL-053: Add PR vs BL routing guidance to AGENTS.md (stoat-and-ferret)
+
+**Status:** open
+**Tags:** agents-md, product-requests, documentation, decision-framework
+
+AGENTS.md in the stoat-and-ferret project lists both add_product_request and add_backlog_item in the tool inventory but provides no guidance on when to use which. Claude Code sessions following AGENTS.md have no routing guidance for capturing ideas vs filing structured bugs.
+
+The exploration pr-vs-bl-guidance on auto-dev-mcp (Gap 4) identified that AGENTS.md across all managed projects has zero PR vs BL routing guidance. Since AGENTS.md is the first document Claude Code reads in every session, it is the highest-leverage location for this guidance.
+
+Without this, Claude Code defaults to add_backlog_item for all discoveries, bypassing the lightweight product request pathway entirely.
+
+**Use Case:** During any Claude Code session on stoat-and-ferret, the agent reads AGENTS.md first. When it discovers an improvement opportunity mid-implementation, it currently has no guidance on whether to file a PR or BL. With this change, AGENTS.md tells it to default to product requests for ideas and reserve backlog items for structured problems.
+
+**Acceptance Criteria:**
+- [ ] AGENTS.md contains a section documenting when to create a Product Request vs a Backlog Item
+- [ ] Section includes the maturity gradient: PR for ideas/observations, BL for structured problems with acceptance criteria
+- [ ] Section includes the default rule: when in doubt, start with a Product Request
+- [ ] Section cross-references add_product_request and add_backlog_item tool_help for detailed guidance
+
+**Notes:** Mirror of BL-510 (auto-dev-mcp). Keep the AGENTS.md addition concise — 3-5 lines max. Content should be identical across all managed projects for consistency.
+
+[↑ Back to list](#bl-053-ref)
+
+#### 📋 BL-054: Add WebFetch safety rules to AGENTS.md
+
+**Status:** open
+**Tags:** agents-md, webfetch, safety, hang-prevention
+
+Mirror of auto-dev-mcp BL-517. Add WebFetch safety block to AGENTS.md. Exact text:
+
+## WebFetch Safety (mandatory)
+- NEVER WebFetch a URL you generated from memory — only WebFetch URLs returned by WebSearch
+- Prefer WebSearch over WebFetch for research
+- MANDATORY: Before every WebFetch call you MUST run: curl -sL --max-time 10 -o /dev/null -w "%{http_code}" &lt;url&gt; and ONLY proceed with WebFetch if curl returns 2xx/3xx
+
+stoat-and-ferret v006 Task 004 was the first incident — 2 hung WebFetch calls froze the session for 3 hours.
+
+**Use Case:** Same as BL-517: prevent WebFetch hangs from freezing sessions by requiring URL verification before every WebFetch call.
+
+**Acceptance Criteria:**
+- [ ] AGENTS.md contains a '## WebFetch Safety (mandatory)' section with all 3 rules verbatim
+- [ ] The section is placed near top-level instructions, not buried at the end
+- [ ] No other changes to AGENTS.md beyond the insertion
+
+[↑ Back to list](#bl-054-ref)
 
 ### P2: Medium
 

@@ -1,6 +1,6 @@
 {
-  "next_id": 53,
-  "updated_at": "2026-02-09T18:49:57.217438",
+  "next_id": 55,
+  "updated_at": "2026-02-15T01:19:06.391694",
   "items": [
     {
       "id": "BL-001",
@@ -38,7 +38,8 @@
       "notes": "Exploration complete. Results in comms/outbox/exploration/rust-python-hybrid/",
       "use_case": "This feature addresses: EXP-001: PyO3/maturin hybrid build workflow investigation. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-002",
@@ -54,7 +55,7 @@
         "testing",
         "ffmpeg"
       ],
-      "description": "Investigate the recording fake pattern for FFmpeg integration testing:\n\n- How does RecordingFFmpegExecutor capture commands?\n- How do we verify captured commands against expected FFmpeg syntax?\n- What's the contract test pattern — run against real FFmpeg periodically?\n- How does this integrate with the black box testing harness?\n\nThis informs v001 (basic structure) and v004 (full testing infrastructure).",
+      "description": "Investigate the recording fake pattern for FFmpeg integration testing:\n\n- How does RecordingFFmpegExecutor capture commands?\n- How do we verify captured commands against expected FFmpeg syntax?\n- What's the contract test pattern \u2014 run against real FFmpeg periodically?\n- How does this integrate with the black box testing harness?\n\nThis informs v001 (basic structure) and v004 (full testing infrastructure).",
       "acceptance_criteria": [
         {
           "text": "Concrete RecordingFFmpegExecutor implementation documented",
@@ -76,7 +77,8 @@
       "notes": "Exploration complete. Results in comms/outbox/exploration/recording-fake-pattern/",
       "use_case": "This feature addresses: EXP-002: Recording fake pattern for FFmpeg executor. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-003",
@@ -92,7 +94,7 @@
         "gui",
         "fastapi"
       ],
-      "description": "Investigate serving the React/Svelte GUI from FastAPI:\n\n- How do we configure FastAPI to serve static files from Vite build output?\n- What's the development workflow — proxy setup for hot reload?\n- How do we handle the /gui/* route mounting?\n- What about index.html fallback for SPA routing?\n\nThis informs v005 (GUI shell).",
+      "description": "Investigate serving the React/Svelte GUI from FastAPI:\n\n- How do we configure FastAPI to serve static files from Vite build output?\n- What's the development workflow \u2014 proxy setup for hot reload?\n- How do we handle the /gui/* route mounting?\n- What about index.html fallback for SPA routing?\n\nThis informs v005 (GUI shell).",
       "acceptance_criteria": [
         {
           "text": "FastAPI StaticFiles mount configuration documented",
@@ -114,7 +116,8 @@
       "notes": "Use case: A developer sets up the v005 GUI integration and needs to know how FastAPI will serve the Vite-built frontend bundle, how SPA client-side routing will work with server-side fallback, and what the dev workflow looks like with hot module replacement proxied through FastAPI.",
       "use_case": "This feature addresses: EXP-003: FastAPI static file serving for GUI. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "frontend-foundation"
+      "implemented_in_theme": "frontend-foundation",
+      "upvotes": 0
     },
     {
       "id": "BL-004",
@@ -152,7 +155,8 @@
       "notes": null,
       "use_case": "This feature addresses: Expose Clip and ValidationError types to Python. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v002",
-      "implemented_in_theme": "01-rust-python-bindings"
+      "implemented_in_theme": "01-rust-python-bindings",
+      "upvotes": 0
     },
     {
       "id": "BL-005",
@@ -194,7 +198,8 @@
       "notes": null,
       "use_case": "This feature addresses: Expose TimeRange and list operations to Python. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v002",
-      "implemented_in_theme": "01-rust-python-bindings"
+      "implemented_in_theme": "01-rust-python-bindings",
+      "upvotes": 0
     },
     {
       "id": "BL-006",
@@ -231,7 +236,8 @@
       "notes": null,
       "use_case": "This feature addresses: Update AGENTS.md with PyO3 bindings guidance. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v002",
-      "implemented_in_theme": "02-tooling-process"
+      "implemented_in_theme": "02-tooling-process",
+      "upvotes": 0
     },
     {
       "id": "BL-007",
@@ -269,7 +275,8 @@
       "notes": null,
       "use_case": "This feature addresses: Automate type stub generation in CI. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v002",
-      "implemented_in_theme": "01-rust-python-bindings"
+      "implemented_in_theme": "01-rust-python-bindings",
+      "upvotes": 0
     },
     {
       "id": "BL-008",
@@ -306,7 +313,8 @@
       "notes": null,
       "use_case": "This feature addresses: Clean up Python API naming inconsistencies. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v002",
-      "implemented_in_theme": "01-rust-python-bindings"
+      "implemented_in_theme": "01-rust-python-bindings",
+      "upvotes": 0
     },
     {
       "id": "BL-009",
@@ -341,10 +349,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A developer designing a new Rust type (e.g., AudioMixer) opens the feature design template and sees a property test section. Following the guidance, they write proptest invariants first — \"mixing two silent tracks produces silence\", \"output duration equals longest input\" — then implement the type to satisfy them. The invariants serve as executable specifications that catch edge cases unit tests would miss.",
+      "notes": "Use case: A developer designing a new Rust type (e.g., AudioMixer) opens the feature design template and sees a property test section. Following the guidance, they write proptest invariants first \u2014 \"mixing two silent tracks produces silence\", \"output duration equals longest input\" \u2014 then implement the type to satisfy them. The invariants serve as executable specifications that catch edge cases unit tests would miss.",
       "use_case": "This feature addresses: Add property test guidance to feature design template. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "devex-coverage"
+      "implemented_in_theme": "devex-coverage",
+      "upvotes": 0
     },
     {
       "id": "BL-010",
@@ -380,10 +389,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: After merging a PR that adds new Rust code, the CI pipeline runs llvm-cov and reports that Rust coverage dropped from 92% to 85%. The developer sees the uncovered lines in the CI artifact, adds tests for the missing paths, and pushes a fix — maintaining the 90% threshold before the PR can merge.",
+      "notes": "Use case: After merging a PR that adds new Rust code, the CI pipeline runs llvm-cov and reports that Rust coverage dropped from 92% to 85%. The developer sees the uncovered lines in the CI artifact, adds tests for the missing paths, and pushes a fix \u2014 maintaining the 90% threshold before the PR can merge.",
       "use_case": "This feature addresses: Configure Rust code coverage with llvm-cov. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "devex-coverage"
+      "implemented_in_theme": "devex-coverage",
+      "upvotes": 0
     },
     {
       "id": "BL-011",
@@ -420,7 +430,8 @@
       "notes": null,
       "use_case": "This feature addresses: Consolidate Python/Rust build backends. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-012",
@@ -458,7 +469,8 @@
       "notes": "Use case: A developer notices the coverage report shows 93% but suspects some lines are excluded via pragmas. They audit all # pragma: no cover comments and find the ImportError fallback for the Rust extension is excluded but could be tested by running without the compiled module. After removing unjustified exclusions and adding targeted tests, the coverage number reflects actual test quality.",
       "use_case": "This feature addresses: Fix coverage reporting gaps for ImportError fallback. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "devex-coverage"
+      "implemented_in_theme": "devex-coverage",
+      "upvotes": 0
     },
     {
       "id": "BL-013",
@@ -496,7 +508,8 @@
       "notes": "Completed in v003/01-process-improvements",
       "use_case": "This feature addresses: Add async repository implementation for FastAPI (aiosqlite). It improves the system by resolving the described requirement.",
       "implemented_in_version": "v003",
-      "implemented_in_theme": "01-process-improvements"
+      "implemented_in_theme": "01-process-improvements",
+      "upvotes": 0
     },
     {
       "id": "BL-014",
@@ -531,7 +544,8 @@
       "notes": "Use case: A contributor on Windows with Application Control policies enabled cannot run pytest locally because the policy blocks Python execution. They run docker-compose up test and the full test suite executes inside a Linux container, bypassing host restrictions and providing the same environment as CI.",
       "use_case": "This feature addresses: Add Docker-based local testing option. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "devex-coverage"
+      "implemented_in_theme": "devex-coverage",
+      "upvotes": 0
     },
     {
       "id": "BL-015",
@@ -565,7 +579,8 @@
       "notes": "Completed in v003/01-process-improvements",
       "use_case": "This feature addresses: Add migration verification to CI (upgrade/downgrade/upgrade). It improves the system by resolving the described requirement.",
       "implemented_in_version": "v003",
-      "implemented_in_theme": "01-process-improvements"
+      "implemented_in_theme": "01-process-improvements",
+      "upvotes": 0
     },
     {
       "id": "BL-016",
@@ -600,7 +615,8 @@
       "notes": "Use case: A test uses InMemoryVideoRepository and searches for \"sunset beach\". It finds the video because substring match hits. The same test against SQLite with FTS5 would not find it because FTS5 tokenizes differently. This inconsistency means tests pass with the in-memory double but fail in production. Unifying search semantics ensures test results predict production behavior.",
       "use_case": "This feature addresses: Unify InMemory vs FTS5 search behavior. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "blackbox-contract"
+      "implemented_in_theme": "blackbox-contract",
+      "upvotes": 0
     },
     {
       "id": "BL-017",
@@ -637,7 +653,8 @@
       "notes": "Completed in v003/01-process-improvements",
       "use_case": "This feature addresses: Optimize CI to skip heavy steps for docs-only commits. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v003",
-      "implemented_in_theme": "01-process-improvements"
+      "implemented_in_theme": "01-process-improvements",
+      "upvotes": 0
     },
     {
       "id": "BL-018",
@@ -657,7 +674,8 @@
       "notes": "v004 retrospective architecture check (2026-02-09): The primary architecture doc (docs/design/02-architecture.md) was updated during v004 Theme 03 Feature 3 to reflect async scan, job queue, and updated data flows. No additional drift detected in the design docs. However, the v004 version retrospective explicitly notes that C4 documentation was skipped. v004 added: (1) AsyncioJobQueue with handler registration and background worker, (2) GET /api/v1/jobs/{job_id} status endpoint, (3) ALLOWED_SCAN_ROOTS security configuration with validate_scan_path(), (4) InMemory test doubles and create_app() DI pattern, (5) Docker multi-stage build infrastructure, (6) Rust coverage CI enforcement. These components should be captured when C4 documentation is created.\n\nv005 retrospective architecture check (2026-02-09): The design doc (docs/design/02-architecture.md) already includes /ws and /gui endpoint groups and high-level WebSocket/frontend descriptions added during v004. No C4 documentation exists (docs/C4-Documentation/ not found). v005 added significant frontend architecture not yet documented at the component level: (1) React/TypeScript/Vite frontend with Tailwind CSS v4, (2) ConnectionManager for WebSocket with lazy dead-connection cleanup, (3) ThumbnailService with GET /api/v1/videos/{id}/thumbnail endpoint, (4) AsyncVideoRepository.count() protocol method, (5) GUI components: Shell layout, Dashboard panel, Library Browser, Project Manager, (6) Zustand state management with 3 stores (activityStore, libraryStore, projectStore), (7) Playwright E2E testing infrastructure with CI job, (8) New settings: thumbnail_dir, gui_static_path, ws_heartbeat_interval. The design doc captures the high-level architecture correctly but lacks frontend component-level detail. C4 documentation would address this gap comprehensively.",
       "use_case": "This feature addresses: Create C4 architecture documentation. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-019",
@@ -677,7 +695,8 @@
       "notes": null,
       "use_case": "This feature addresses: Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-020",
@@ -711,10 +730,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A developer writing integration tests for the project management API needs to verify that creating a project, adding clips, and rendering produces the correct FFmpeg command — without touching the real database or file system. They instantiate InMemoryProjectStorage and InMemoryJobQueue, seed them with test data, wire them into the app, and assert on outcomes deterministically.",
+      "notes": "Use case: A developer writing integration tests for the project management API needs to verify that creating a project, adding clips, and rendering produces the correct FFmpeg command \u2014 without touching the real database or file system. They instantiate InMemoryProjectStorage and InMemoryJobQueue, seed them with test data, wire them into the app, and assert on outcomes deterministically.",
       "use_case": "This feature addresses: Implement InMemory test doubles for Projects and Jobs. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "test-foundation"
+      "implemented_in_theme": "test-foundation",
+      "upvotes": 0
     },
     {
       "id": "BL-021",
@@ -736,7 +756,7 @@
           "done": false
         },
         {
-          "text": "Default behavior unchanged — production uses real implementations when None passed",
+          "text": "Default behavior unchanged \u2014 production uses real implementations when None passed",
           "done": false
         },
         {
@@ -748,10 +768,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A test author needs to verify end-to-end API behavior with recording fakes. They call create_app(executor=RecordingFFmpegExecutor(), repository=InMemoryVideoRepository()) and get a fully wired FastAPI app where every dependency is a test double — no monkey-patching, no module-level globals to swap.",
+      "notes": "Use case: A test author needs to verify end-to-end API behavior with recording fakes. They call create_app(executor=RecordingFFmpegExecutor(), repository=InMemoryVideoRepository()) and get a fully wired FastAPI app where every dependency is a test double \u2014 no monkey-patching, no module-level globals to swap.",
       "use_case": "This feature addresses: Add dependency injection to create_app() for test wiring. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "test-foundation"
+      "implemented_in_theme": "test-foundation",
+      "upvotes": 0
     },
     {
       "id": "BL-022",
@@ -785,10 +806,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A developer writes a test for clip reordering. Instead of 15 lines of manual dict construction, they write ProjectBuilder().with_clip(start=0, end=5).with_clip(start=5, end=10).build() and get a valid Project with two clips. When the Clip model adds a new required field next version, only the builder needs updating — not every test.",
+      "notes": "Use case: A developer writes a test for clip reordering. Instead of 15 lines of manual dict construction, they write ProjectBuilder().with_clip(start=0, end=5).with_clip(start=5, end=10).build() and get a valid Project with two clips. When the Clip model adds a new required field next version, only the builder needs updating \u2014 not every test.",
       "use_case": "This feature addresses: Build fixture factory with builder pattern for test data. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "test-foundation"
+      "implemented_in_theme": "test-foundation",
+      "upvotes": 0
     },
     {
       "id": "BL-023",
@@ -803,10 +825,10 @@
         "testing",
         "black-box"
       ],
-      "description": "No black box integration tests exist despite the API being stable since v003. The 07-quality-architecture.md spec requires tests that exercise complete workflows through the REST API using real Rust core plus recording fakes. Without these tests, regressions in end-to-end flows (scan → project → clips) go undetected until manual testing.",
+      "description": "No black box integration tests exist despite the API being stable since v003. The 07-quality-architecture.md spec requires tests that exercise complete workflows through the REST API using real Rust core plus recording fakes. Without these tests, regressions in end-to-end flows (scan \u2192 project \u2192 clips) go undetected until manual testing.",
       "acceptance_criteria": [
         {
-          "text": "Core workflow test covers scan → project → clips flow through REST API",
+          "text": "Core workflow test covers scan \u2192 project \u2192 clips flow through REST API",
           "done": false
         },
         {
@@ -826,10 +848,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: After refactoring the scan endpoint to be async, a developer runs the black box test suite. Tests exercise the full scan → project → clips workflow through HTTP requests against a real FastAPI app with recording fakes. A regression where scan results no longer populate the video library is caught before it reaches main.",
+      "notes": "Use case: After refactoring the scan endpoint to be async, a developer runs the black box test suite. Tests exercise the full scan \u2192 project \u2192 clips workflow through HTTP requests against a real FastAPI app with recording fakes. A regression where scan results no longer populate the video library is caught before it reaches main.",
       "use_case": "This feature addresses: Implement black box test scenario catalog. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "blackbox-contract"
+      "implemented_in_theme": "blackbox-contract",
+      "upvotes": 0
     },
     {
       "id": "BL-024",
@@ -867,7 +890,8 @@
       "notes": "Use case: The RecordingFFmpegExecutor is used in all integration tests. A developer changes how FFmpeg handles concat operations in the real executor. Without contract tests, the recording fake still returns old behavior, and integration tests pass even though real FFmpeg would fail. Contract tests catch the divergence by running identical commands against both executors.",
       "use_case": "This feature addresses: Contract tests with real FFmpeg for executor fidelity. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "blackbox-contract"
+      "implemented_in_theme": "blackbox-contract",
+      "upvotes": 0
     },
     {
       "id": "BL-025",
@@ -897,10 +921,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A user provides a file path like \"../../etc/passwd\" or a text overlay containing shell metacharacters. The Rust core must reject these inputs before they reach FFmpeg. The security audit documents which attack vectors are tested, which code paths handle them, and whether any gaps exist — giving the team confidence that user input cannot escape the sandbox.",
+      "notes": "Use case: A user provides a file path like \"../../etc/passwd\" or a text overlay containing shell metacharacters. The Rust core must reject these inputs before they reach FFmpeg. The security audit documents which attack vectors are tested, which code paths handle them, and whether any gaps exist \u2014 giving the team confidence that user input cannot escape the sandbox.",
       "use_case": "This feature addresses: Security audit of Rust path validation and input sanitization. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "security-performance"
+      "implemented_in_theme": "security-performance",
+      "upvotes": 0
     },
     {
       "id": "BL-026",
@@ -930,10 +955,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A stakeholder asks whether the Rust/Python hybrid architecture is justified. The benchmark suite runs timeline calculations, filter generation, and clip validation in both pure Python and Rust, producing a comparison table showing that Rust is N× faster for each operation — providing empirical evidence for the architecture decision.",
+      "notes": "Use case: A stakeholder asks whether the Rust/Python hybrid architecture is justified. The benchmark suite runs timeline calculations, filter generation, and clip validation in both pure Python and Rust, producing a comparison table showing that Rust is N\u00d7 faster for each operation \u2014 providing empirical evidence for the architecture decision.",
       "use_case": "This feature addresses: Rust vs Python performance benchmark for core operations. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "security-performance"
+      "implemented_in_theme": "security-performance",
+      "upvotes": 0
     },
     {
       "id": "BL-027",
@@ -970,7 +996,8 @@
       "notes": "Use case: A user starts a scan of a large media directory (10,000+ files). Instead of waiting 30 seconds for the HTTP response, they get a job ID back immediately and can poll for progress. The GUI shows a progress bar updating in real-time. If they navigate away and come back, the job status endpoint tells them the scan is 73% complete.",
       "use_case": "This feature addresses: Async job queue for scan operations. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v004",
-      "implemented_in_theme": "async-scan"
+      "implemented_in_theme": "async-scan",
+      "upvotes": 0
     },
     {
       "id": "BL-028",
@@ -985,7 +1012,7 @@
         "gui",
         "investigation"
       ],
-      "description": "No frontend project exists — no `gui/` directory, package.json, or framework choice has been finalized. The 08-gui-architecture.md suggests React 18+ or Svelte 4+ with Vite and Tailwind. BL-003 covers investigating FastAPI static file serving but not the framework decision or project scaffolding. All v005 GUI milestones (M1.10–M1.12) are blocked until a frontend project is in place.",
+      "description": "No frontend project exists \u2014 no `gui/` directory, package.json, or framework choice has been finalized. The 08-gui-architecture.md suggests React 18+ or Svelte 4+ with Vite and Tailwind. BL-003 covers investigating FastAPI static file serving but not the framework decision or project scaffolding. All v005 GUI milestones (M1.10\u2013M1.12) are blocked until a frontend project is in place.",
       "acceptance_criteria": [
         {
           "text": "Framework selected (React vs Svelte) with documented rationale",
@@ -1008,10 +1035,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A user opens the application URL and expects to see a functioning web interface. Currently there is no frontend at all — no gui/ directory, no package.json, no framework. This item bootstraps the entire frontend project so that subsequent GUI features (shell, dashboard, library browser) have a foundation to build on.",
+      "notes": "Use case: A user opens the application URL and expects to see a functioning web interface. Currently there is no frontend at all \u2014 no gui/ directory, no package.json, no framework. This item bootstraps the entire frontend project so that subsequent GUI features (shell, dashboard, library browser) have a foundation to build on.",
       "use_case": "This feature addresses: EXP: Frontend framework selection and Vite project setup. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "frontend-foundation"
+      "implemented_in_theme": "frontend-foundation",
+      "upvotes": 0
     },
     {
       "id": "BL-029",
@@ -1049,10 +1077,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A user triggers a directory scan from the library browser and sees a spinning indicator while the scan runs. When the scan completes, the video grid updates automatically without a page refresh. This real-time feedback requires WebSocket push from the server — without it, the user must manually refresh to see new videos.",
+      "notes": "Use case: A user triggers a directory scan from the library browser and sees a spinning indicator while the scan runs. When the scan completes, the video grid updates automatically without a page refresh. This real-time feedback requires WebSocket push from the server \u2014 without it, the user must manually refresh to see new videos.",
       "use_case": "This feature addresses: Implement WebSocket endpoint for real-time events. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "frontend-foundation"
+      "implemented_in_theme": "frontend-foundation",
+      "upvotes": 0
     },
     {
       "id": "BL-030",
@@ -1082,7 +1111,7 @@
           "done": false
         },
         {
-          "text": "Progressive tabs — only shows features whose backends are available",
+          "text": "Progressive tabs \u2014 only shows features whose backends are available",
           "done": false
         },
         {
@@ -1093,7 +1122,8 @@
       "notes": "Use case: A user navigates between the Dashboard, Library, and Projects tabs using the top navigation bar. The status bar at the bottom shows a green health indicator confirming the backend is reachable. When the server goes down, the indicator turns red and unavailable tabs are hidden, preventing the user from interacting with broken features.",
       "use_case": "This feature addresses: Build application shell and navigation components. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "gui-components"
+      "implemented_in_theme": "gui-components",
+      "upvotes": 0
     },
     {
       "id": "BL-031",
@@ -1127,10 +1157,11 @@
           "done": false
         }
       ],
-      "notes": "Use case: A user opens the application and lands on the dashboard. They see health cards showing Python (green), Rust core (green), and FFmpeg (yellow — not installed). The activity log shows the last scan completed 5 minutes ago with 12 new videos found. This gives the user immediate system awareness without digging into logs or API responses.",
+      "notes": "Use case: A user opens the application and lands on the dashboard. They see health cards showing Python (green), Rust core (green), and FFmpeg (yellow \u2014 not installed). The activity log shows the last scan completed 5 minutes ago with 12 new videos found. This gives the user immediate system awareness without digging into logs or API responses.",
       "use_case": "This feature addresses: Build dashboard panel with health cards and activity log. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "gui-components"
+      "implemented_in_theme": "gui-components",
+      "upvotes": 0
     },
     {
       "id": "BL-032",
@@ -1171,7 +1202,8 @@
       "notes": "Use case: A user browses the video library and sees thumbnail previews for each video instead of text-only filenames. When a new video is scanned, a representative frame is extracted and stored. For corrupt or unsupported files, a placeholder image is shown so the grid layout remains consistent.",
       "use_case": "This feature addresses: Implement thumbnail generation pipeline for video library. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "backend-services"
+      "implemented_in_theme": "backend-services",
+      "upvotes": 0
     },
     {
       "id": "BL-033",
@@ -1186,7 +1218,7 @@
         "gui",
         "library"
       ],
-      "description": "M1.11 specifies a library browser with video grid, search, sort/filter, and scan controls. No frontend components for video display exist. The library browser is the primary entry point for working with media — users need to find, browse, and select videos before creating projects. The backend API endpoints (search, list, scan) exist from v003 but have no GUI consumer.",
+      "description": "M1.11 specifies a library browser with video grid, search, sort/filter, and scan controls. No frontend components for video display exist. The library browser is the primary entry point for working with media \u2014 users need to find, browse, and select videos before creating projects. The backend API endpoints (search, list, scan) exist from v003 but have no GUI consumer.",
       "acceptance_criteria": [
         {
           "text": "Video grid displays thumbnails, filename, and duration for each video",
@@ -1212,7 +1244,8 @@
       "notes": "Use case: A user wants to find a specific clip in a library of 200+ videos. They type a partial filename in the search bar and see results update as they type. They sort by date to find recently added clips, then click the Scan button to add videos from a new directory. The scan modal shows progress and the grid updates when new files are found.",
       "use_case": "This feature addresses: Build library browser with video grid, search, and scan UI. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "gui-components"
+      "implemented_in_theme": "gui-components",
+      "upvotes": 0
     },
     {
       "id": "BL-034",
@@ -1245,7 +1278,8 @@
       "notes": "Use case: The library browser displays \"Showing 20 of ?\" because the API returns paginated results without a total count. With the fix, it shows \"Showing 20 of 247 videos\" and the scrollbar accurately represents the full dataset size, enabling smooth virtual scrolling through large libraries.",
       "use_case": "This feature addresses: Fix pagination total count for list endpoints. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "backend-services"
+      "implemented_in_theme": "backend-services",
+      "upvotes": 0
     },
     {
       "id": "BL-035",
@@ -1286,7 +1320,8 @@
       "notes": "Use case: A user clicks \"New Project\", enters output settings (1080p, 30fps, MP4), and creates a project. They navigate to the project list, see it alongside other projects, and click through to the details view where clips are listed with Rust-calculated timeline positions showing start/end times. They can delete old projects with a confirmation dialog to prevent accidents.",
       "use_case": "This feature addresses: Build project manager with list, creation, and details views. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "gui-components"
+      "implemented_in_theme": "gui-components",
+      "upvotes": 0
     },
     {
       "id": "BL-036",
@@ -1323,7 +1358,8 @@
       "notes": "Use case: A developer pushes a change to the library browser component. CI runs Playwright tests that verify the full stack: FastAPI serves the built frontend, the browser navigates between tabs, a scan can be triggered, and a new project can be created. If the integration between frontend and backend breaks, the E2E tests catch it before merge.",
       "use_case": "This feature addresses: Set up Playwright E2E test infrastructure for GUI. It improves the system by resolving the described requirement.",
       "implemented_in_version": "v005",
-      "implemented_in_theme": "e2e-testing"
+      "implemented_in_theme": "e2e-testing",
+      "upvotes": 0
     },
     {
       "id": "BL-037",
@@ -1365,7 +1401,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement FFmpeg filter expression engine in Rust. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-038",
@@ -1407,7 +1444,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement filter graph validation for pad matching. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-039",
@@ -1449,7 +1487,8 @@
       "notes": null,
       "use_case": "This feature addresses: Build filter composition system for chaining, branching, and merging. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-040",
@@ -1464,7 +1503,7 @@
         "rust",
         "text-overlay"
       ],
-      "description": "The `escape_filter_text()` function exists in the Rust sanitize module, but no structured drawtext builder handles position, font, color, shadow, box background, or alpha animation parameters. M2.2 requires a type-safe text overlay system. Without a builder, constructing drawtext filters requires manually assembling complex parameter strings with correct escaping — a frequent source of FFmpeg errors.",
+      "description": "The `escape_filter_text()` function exists in the Rust sanitize module, but no structured drawtext builder handles position, font, color, shadow, box background, or alpha animation parameters. M2.2 requires a type-safe text overlay system. Without a builder, constructing drawtext filters requires manually assembling complex parameter strings with correct escaping \u2014 a frequent source of FFmpeg errors.",
       "acceptance_criteria": [
         {
           "text": "Position options support absolute coordinates, centered, and margin-based placement",
@@ -1490,7 +1529,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement drawtext filter builder for text overlays. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-041",
@@ -1505,10 +1545,10 @@
         "rust",
         "speed-control"
       ],
-      "description": "No Rust types exist for video speed (setpts) or audio speed (atempo) control. M2.3 requires speed adjustment from 0.25x to 4.0x. The atempo filter maxes at 2.0x and requires automatic chaining for higher speeds — a non-obvious FFmpeg detail that should be encapsulated in the builder. Without these builders, speed control must be hand-coded with raw filter strings for each speed value.",
+      "description": "No Rust types exist for video speed (setpts) or audio speed (atempo) control. M2.3 requires speed adjustment from 0.25x to 4.0x. The atempo filter maxes at 2.0x and requires automatic chaining for higher speeds \u2014 a non-obvious FFmpeg detail that should be encapsulated in the builder. Without these builders, speed control must be hand-coded with raw filter strings for each speed value.",
       "acceptance_criteria": [
         {
-          "text": "Video speed adjustable via setpts with factor range 0.25x–4.0x",
+          "text": "Video speed adjustable via setpts with factor range 0.25x\u20134.0x",
           "done": false
         },
         {
@@ -1531,7 +1571,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement speed control filter builders (setpts/atempo). It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-042",
@@ -1573,7 +1614,8 @@
       "notes": null,
       "use_case": "This feature addresses: Create effect discovery API endpoint. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-043",
@@ -1607,14 +1649,15 @@
           "done": false
         },
         {
-          "text": "Black box test covers the apply → verify filter string flow",
+          "text": "Black box test covers the apply \u2192 verify filter string flow",
           "done": false
         }
       ],
       "notes": null,
       "use_case": "This feature addresses: Create API endpoint to apply text overlay effect to clips. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-044",
@@ -1637,7 +1680,7 @@
           "done": false
         },
         {
-          "text": "Per-track volume control validates range 0.0–10.0 using existing validate_volume",
+          "text": "Per-track volume control validates range 0.0\u201310.0 using existing validate_volume",
           "done": false
         },
         {
@@ -1656,7 +1699,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement audio mixing filter builders (amix/volume/fade). It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-045",
@@ -1697,7 +1741,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement transition filter builders (fade/xfade). It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-046",
@@ -1738,7 +1783,8 @@
       "notes": null,
       "use_case": "This feature addresses: Create transition API endpoint for clip-to-clip transitions. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-047",
@@ -1754,7 +1800,7 @@
         "effects",
         "schema"
       ],
-      "description": "M2.6 specifies a central effect registry where each effect is registered with its JSON schema, Rust validation functions, and builder protocol. The v006 discovery endpoint provides basic listing, but the full registry pattern — schema validation, effect builder injection, and metrics tracking — is missing. Without a registry, each effect is independently wired, making the Effect Workshop GUI unable to dynamically generate forms or validate parameters.",
+      "description": "M2.6 specifies a central effect registry where each effect is registered with its JSON schema, Rust validation functions, and builder protocol. The v006 discovery endpoint provides basic listing, but the full registry pattern \u2014 schema validation, effect builder injection, and metrics tracking \u2014 is missing. Without a registry, each effect is independently wired, making the Effect Workshop GUI unable to dynamically generate forms or validate parameters.",
       "acceptance_criteria": [
         {
           "text": "Registry stores effect metadata, parameter JSON schemas, and builder references",
@@ -1780,7 +1826,8 @@
       "notes": null,
       "use_case": "This feature addresses: Build effect registry with JSON schema validation and builder protocol. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-048",
@@ -1822,7 +1869,8 @@
       "notes": null,
       "use_case": "This feature addresses: Build effect catalog UI component. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-049",
@@ -1864,7 +1912,8 @@
       "notes": null,
       "use_case": "This feature addresses: Build dynamic parameter form generator from JSON schema. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-050",
@@ -1880,7 +1929,7 @@
         "preview",
         "transparency"
       ],
-      "description": "M2.8 specifies showing the Rust-generated FFmpeg filter string in real time as users adjust effect parameters. This is the core transparency feature — users see exactly what commands Rust generates. No such preview component exists. Without live preview, the tool's key differentiator (transparency into FFmpeg command generation) is invisible during effect configuration.",
+      "description": "M2.8 specifies showing the Rust-generated FFmpeg filter string in real time as users adjust effect parameters. This is the core transparency feature \u2014 users see exactly what commands Rust generates. No such preview component exists. Without live preview, the tool's key differentiator (transparency into FFmpeg command generation) is invisible during effect configuration.",
       "acceptance_criteria": [
         {
           "text": "Filter string panel displays the current FFmpeg filter and updates on parameter change",
@@ -1902,7 +1951,8 @@
       "notes": null,
       "use_case": "This feature addresses: Implement live FFmpeg filter preview in effect parameter UI. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-051",
@@ -1944,7 +1994,8 @@
       "notes": null,
       "use_case": "This feature addresses: Build effect builder workflow with clip selector and effect stack. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
     },
     {
       "id": "BL-052",
@@ -1986,7 +2037,82 @@
       "notes": null,
       "use_case": "This feature addresses: E2E tests for effect workshop workflow. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
-      "implemented_in_theme": null
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-053",
+      "title": "Add PR vs BL routing guidance to AGENTS.md (stoat-and-ferret)",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-14T11:57:14.106367",
+      "completed_at": null,
+      "tags": [
+        "agents-md",
+        "product-requests",
+        "documentation",
+        "decision-framework"
+      ],
+      "description": "AGENTS.md in the stoat-and-ferret project lists both add_product_request and add_backlog_item in the tool inventory but provides no guidance on when to use which. Claude Code sessions following AGENTS.md have no routing guidance for capturing ideas vs filing structured bugs.\n\nThe exploration pr-vs-bl-guidance on auto-dev-mcp (Gap 4) identified that AGENTS.md across all managed projects has zero PR vs BL routing guidance. Since AGENTS.md is the first document Claude Code reads in every session, it is the highest-leverage location for this guidance.\n\nWithout this, Claude Code defaults to add_backlog_item for all discoveries, bypassing the lightweight product request pathway entirely.",
+      "acceptance_criteria": [
+        {
+          "text": "AGENTS.md contains a section documenting when to create a Product Request vs a Backlog Item",
+          "done": false
+        },
+        {
+          "text": "Section includes the maturity gradient: PR for ideas/observations, BL for structured problems with acceptance criteria",
+          "done": false
+        },
+        {
+          "text": "Section includes the default rule: when in doubt, start with a Product Request",
+          "done": false
+        },
+        {
+          "text": "Section cross-references add_product_request and add_backlog_item tool_help for detailed guidance",
+          "done": false
+        }
+      ],
+      "notes": "Mirror of BL-510 (auto-dev-mcp). Keep the AGENTS.md addition concise \u2014 3-5 lines max. Content should be identical across all managed projects for consistency.",
+      "use_case": "During any Claude Code session on stoat-and-ferret, the agent reads AGENTS.md first. When it discovers an improvement opportunity mid-implementation, it currently has no guidance on whether to file a PR or BL. With this change, AGENTS.md tells it to default to product requests for ideas and reserve backlog items for structured problems.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-054",
+      "title": "Add WebFetch safety rules to AGENTS.md",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-15T01:19:06.391688",
+      "completed_at": null,
+      "tags": [
+        "agents-md",
+        "webfetch",
+        "safety",
+        "hang-prevention"
+      ],
+      "description": "Mirror of auto-dev-mcp BL-517. Add WebFetch safety block to AGENTS.md. Exact text:\n\n## WebFetch Safety (mandatory)\n- NEVER WebFetch a URL you generated from memory \u2014 only WebFetch URLs returned by WebSearch\n- Prefer WebSearch over WebFetch for research\n- MANDATORY: Before every WebFetch call you MUST run: curl -sL --max-time 10 -o /dev/null -w \"%{http_code}\" &lt;url&gt; and ONLY proceed with WebFetch if curl returns 2xx/3xx\n\nstoat-and-ferret v006 Task 004 was the first incident \u2014 2 hung WebFetch calls froze the session for 3 hours.",
+      "acceptance_criteria": [
+        {
+          "text": "AGENTS.md contains a '## WebFetch Safety (mandatory)' section with all 3 rules verbatim",
+          "done": false
+        },
+        {
+          "text": "The section is placed near top-level instructions, not buried at the end",
+          "done": false
+        },
+        {
+          "text": "No other changes to AGENTS.md beyond the insertion",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": "Same as BL-517: prevent WebFetch hangs from freezing sessions by requiring URL verification before every WebFetch call.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
     }
   ],
   "completed_count": 32,
