@@ -4,6 +4,81 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v007] - 2026-02-19
+
+Effect Workshop GUI. Implements Rust filter builders for audio mixing and video transitions, refactors the effect registry to builder-protocol dispatch with JSON schema validation, builds the complete GUI effect workshop (catalog, parameter forms, live preview, builder workflow), and validates with E2E tests and accessibility compliance. Covers milestones M2.4–M2.6, M2.8–M2.9.
+
+### Added
+
+- **Audio Mixing Builders (Rust)**
+  - `AmixBuilder` for multi-input audio mixing with weighted inputs and dropout handling
+  - `VolumeBuilder` for audio level adjustment with expression support
+  - `AfadeBuilder` for audio fade-in/fade-out with configurable curves (FadeCurve enum)
+  - `DuckingPattern` for multi-filter audio ducking using FilterGraph composition API
+  - 54 Rust unit tests + 42 Python parity tests
+
+- **Transition Filter Builders (Rust)**
+  - `FadeBuilder` for video fade-in/fade-out with alpha channel support
+  - `XfadeBuilder` with `TransitionType` enum covering all 59 FFmpeg xfade variants
+  - `AcrossfadeBuilder` for combined audio crossfade + video xfade transitions
+  - Reused `FadeCurve` enum from audio module for cross-domain consistency
+  - 35 Rust unit tests + 46 Python parity tests
+
+- **Effect Registry Refactor**
+  - Builder-protocol dispatch via `build_fn` field on `EffectDefinition`, replacing if/elif monolith
+  - JSON schema validation using `jsonschema.Draft7Validator` with structured error messages
+  - 9 effects registered with self-contained build functions and parameter schemas
+  - Prometheus counter for effect build operations
+
+- **Transition API**
+  - `POST /api/v1/effects/transition` endpoint with clip adjacency validation
+  - Specific error codes: `SAME_CLIP`, `EMPTY_TIMELINE`, `NOT_ADJACENT`
+  - Persistent transition storage via `transitions_json` column on Project model
+
+- **Effect Catalog UI**
+  - Grid/list view of available effects with search (300ms debounce) and category filter
+  - AI hint tooltips from effect registry metadata
+  - Effect selection dispatched to parameter form
+
+- **Dynamic Parameter Forms**
+  - Schema-driven `SchemaField` dispatcher rendering typed sub-components
+  - Input widgets: number/range slider, string, enum dropdown, boolean toggle, color picker
+  - Validation from JSON schema constraints with dirty-state tracking
+
+- **Live Filter Preview**
+  - `POST /api/v1/effects/preview` endpoint returning built filter strings
+  - Debounced preview panel with regex-based FFmpeg syntax highlighting
+  - Copy-to-clipboard functionality
+
+- **Effect Builder Workflow**
+  - Clip selector component for choosing target clips
+  - Effect stack visualization with ordering
+  - `PATCH /api/v1/projects/{id}/clips/{id}/effects/{index}` for editing effects
+  - `DELETE /api/v1/projects/{id}/clips/{id}/effects/{index}` for removing effects
+  - Full CRUD lifecycle: browse catalog → configure parameters → preview → apply → edit/remove
+
+- **E2E Testing & Accessibility**
+  - 8 Playwright E2E tests covering catalog browse, parameter config, apply/edit/remove workflow
+  - Keyboard navigation test (Tab, Enter, Space through full workflow)
+  - axe-core WCAG AA accessibility scans on effect workshop pages
+  - Serial test mode for stateful CRUD test group
+
+- **Documentation Updates**
+  - API specification updated with 3 new endpoints (preview, PATCH, DELETE)
+  - Roadmap milestones M2.4, M2.5, M2.6, M2.8, M2.9 marked complete
+  - GUI architecture document updated with Effect Workshop components
+  - C4 architecture documentation regenerated at all levels
+
+### Changed
+
+- Effect registry dispatch refactored from monolithic if/elif to per-definition `build_fn` callables
+- Project model extended with `transitions_json` column for persistent transition storage
+- Effects router simplified — dispatch delegated to registry lookup
+
+### Fixed
+
+- Parameter validation errors now return structured messages from JSON schema validation instead of opaque PyO3 type coercion failures
+
 ## [v006] - 2026-02-19
 
 Effects Engine Foundation. Builds a greenfield Rust filter expression engine with graph validation, composition system, text overlay and speed control builders, effect discovery API, and clip effect application endpoint. Completes Phase 2 core milestones (M2.1-M2.3).
