@@ -12,12 +12,12 @@
 ### Functions/Methods
 
 - `App(): JSX.Element`
-  - Description: Root component defining application routes — Dashboard (index), Library, and Projects — wrapped in Shell layout
+  - Description: Root component defining application routes -- Dashboard (index), Library, Projects, and Effects -- wrapped in Shell layout
   - Location: `gui/src/App.tsx:1`
-  - Dependencies: `react-router-dom.Route`, `react-router-dom.Routes`, `Shell`, `DashboardPage`, `LibraryPage`, `ProjectsPage`
+  - Dependencies: `react-router-dom.Route`, `react-router-dom.Routes`, `Shell`, `DashboardPage`, `LibraryPage`, `ProjectsPage`, `EffectsPage`
 
 - `main.tsx` (entry point)
-  - Description: Application bootstrap — creates React root, wraps in StrictMode and BrowserRouter with `/gui` basename
+  - Description: Application bootstrap -- creates React root, wraps in StrictMode and BrowserRouter with `/gui` basename
   - Location: `gui/src/main.tsx:1`
   - Dependencies: `react.StrictMode`, `react-dom/client.createRoot`, `react-router-dom.BrowserRouter`, `App`
 
@@ -28,12 +28,13 @@
 | `/` (index) | DashboardPage | Real-time health, metrics, and activity monitoring |
 | `/library` | LibraryPage | Video browsing with search, sort, and pagination |
 | `/projects` | ProjectsPage | Project management with create/delete/detail views |
+| `/effects` | EffectsPage | Effect workshop with catalog, parameter forms, and effect stack |
 
 All routes are nested under `Shell` which provides the application chrome (header, navigation, status bar).
 
 ### Styles
 
-- `gui/src/index.css`: Global styles — Tailwind CSS import, dark color scheme, system font stack, optimized text rendering, full-viewport body
+- `gui/src/index.css`: Global styles -- Tailwind CSS import, dark color scheme, system font stack, optimized text rendering, full-viewport body
 - `gui/src/App.css`: Empty placeholder (all styles managed by Tailwind utility classes)
 
 ### Test
@@ -48,10 +49,11 @@ All routes are nested under `Shell` which provides the application chrome (heade
 ## Dependencies
 
 ### Internal Dependencies
-- `gui/src/components/Shell` — layout wrapper
-- `gui/src/pages/DashboardPage` — index route
-- `gui/src/pages/LibraryPage` — `/library` route
-- `gui/src/pages/ProjectsPage` — `/projects` route
+- `gui/src/components/Shell` -- layout wrapper
+- `gui/src/pages/DashboardPage` -- index route
+- `gui/src/pages/LibraryPage` -- `/library` route
+- `gui/src/pages/ProjectsPage` -- `/projects` route
+- `gui/src/pages/EffectsPage` -- `/effects` route
 
 ### External Dependencies
 - `react` (StrictMode)
@@ -60,7 +62,7 @@ All routes are nested under `Shell` which provides the application chrome (heade
 - Tailwind CSS (via `@import "tailwindcss"` in index.css)
 
 ## Configuration
-- **Router basename**: `/gui` — all routes are served under the `/gui` path prefix
+- **Router basename**: `/gui` -- all routes are served under the `/gui` path prefix
 - **Color scheme**: Dark mode (`color-scheme: dark`)
 - **Minimum viewport**: 320px width, 100vh height
 
@@ -93,6 +95,9 @@ classDiagram
     class ProjectsPage {
         <<route: /projects>>
     }
+    class EffectsPage {
+        <<route: /effects>>
+    }
     class index_css {
         <<styles>>
         Tailwind import
@@ -105,5 +110,6 @@ classDiagram
     Shell --> DashboardPage : index route
     Shell --> LibraryPage : /library route
     Shell --> ProjectsPage : /projects route
+    Shell --> EffectsPage : /effects route
     main_tsx ..> index_css : imports
 ```

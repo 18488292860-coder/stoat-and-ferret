@@ -2,201 +2,145 @@
 
 ## Overview
 
-- **Name**: Effects System - Definition and Discovery
-- **Description**: Python module for discovering, registering, and describing effects with JSON schemas and AI hints
-- **Location**: src/stoat_ferret/effects/
+- **Name**: Effects System -- Definition, Validation, and Discovery
+- **Description**: Python module for defining, registering, validating, and describing effects with JSON schemas and AI hints
+- **Location**: `src/stoat_ferret/effects/`
 - **Language**: Python
-- **Purpose**: Provides effect definitions with parameter schemas and enables AI-driven effect parameter generation
+- **Purpose**: Provides 9 built-in effect definitions with parameter schemas, AI hints, build functions, and preview functions, plus a registry for effect discovery and JSON schema validation
+- **Parent Component**: TBD
 
 ## Code Elements
 
 ### Classes/Modules
 
 #### EffectDefinition (definitions.py)
-- **File**: definitions.py:15-32
 - **Type**: dataclass (frozen)
-- **Purpose**: Immutable definition of an available effect
+- **Location**: `src/stoat_ferret/effects/definitions.py:27`
 - **Attributes**:
-  - `name: str` - Human-readable effect name
-  - `description: str` - What the effect does
-  - `parameter_schema: dict[str, object]` - JSON Schema describing parameters
-  - `ai_hints: dict[str, str]` - Map of parameter names to AI guidance strings
-  - `preview_fn: Callable[[], str]` - Function returning filter preview string
-- **Key Built-in Effects**:
-  - `TEXT_OVERLAY` - Text overlay with positioning and styling
-  - `SPEED_CONTROL` - Video/audio speed adjustment
+  - `name: str` -- Human-readable effect name
+  - `description: str` -- What the effect does
+  - `parameter_schema: dict[str, object]` -- JSON Schema describing parameters
+  - `ai_hints: dict[str, str]` -- Map of parameter names to AI guidance strings
+  - `preview_fn: Callable[[], str]` -- Function returning filter preview string
+  - `build_fn: Callable[[dict[str, Any]], str]` -- Function receiving params, returning filter string
+
+#### EffectValidationError (registry.py)
+- **Type**: Class
+- **Location**: `src/stoat_ferret/effects/registry.py:15`
+- **Attributes**: `path: str`, `message: str`
+- **Purpose**: Structured validation error from JSON schema validation
 
 #### EffectRegistry (registry.py)
-- **File**: registry.py:12-49
 - **Type**: Class
-- **Purpose**: Registry pattern for discovered effects
+- **Location**: `src/stoat_ferret/effects/registry.py:31`
 - **Methods**:
-  - `__init__() -> None` - Creates empty registry
-  - `register(effect_type: str, definition: EffectDefinition) -> None` - Registers effect by type
-  - `get(effect_type: str) -> EffectDefinition | None` - Retrieves effect definition
-  - `list_all() -> list[tuple[str, EffectDefinition]]` - Lists all registered effects
-- **Logging**: Uses structlog to log effect registration events
-- **Pattern Reference**: Follows register_handler() pattern from job queue (LRN-009)
+  - `__init__() -> None` -- Creates empty registry
+  - `register(effect_type: str, definition: EffectDefinition) -> None` -- Registers effect by type
+  - `get(effect_type: str) -> EffectDefinition | None` -- Retrieves effect definition
+  - `list_all() -> list[tuple[str, EffectDefinition]]` -- Lists all registered effects
+  - `validate(effect_type: str, parameters: dict) -> list[EffectValidationError]` -- Validate params via JSON schema
+- **Dependencies**: `jsonschema.Draft7Validator`, `structlog`
 
 ### Functions
 
-#### _text_overlay_preview() (definitions.py:35-44)
-- **Signature**: `def _text_overlay_preview() -> str`
-- **Return**: FFmpeg drawtext filter string with default parameters
-- **Implementation**:
-  ```
-  DrawtextBuilder("Sample Text")
-    .fontsize(48)
-    .fontcolor("white")
-    .position("bottom_center", margin=20)
-    .build()
-  ```
-- **Purpose**: Generates preview for TEXT_OVERLAY effect
-
-#### _speed_control_preview() (definitions.py:47-54)
-- **Signature**: `def _speed_control_preview() -> str`
-- **Return**: FFmpeg setpts and atempo filter string with 2.0x speed
-- **Implementation**: Uses SpeedControl(2.0) to generate video and audio filters
-- **Purpose**: Generates preview for SPEED_CONTROL effect
-
-#### create_default_registry() (definitions.py:141-151)
+#### create_default_registry() (definitions.py:702)
 - **Signature**: `def create_default_registry() -> EffectRegistry`
-- **Return**: New EffectRegistry with text_overlay and speed_control registered
-- **Implementation**:
-  ```
-  registry = EffectRegistry()
-  registry.register("text_overlay", TEXT_OVERLAY)
-  registry.register("speed_control", SPEED_CONTROL)
-  return registry
-  ```
-- **Purpose**: Factory function for default effect discovery
+- **Return**: New EffectRegistry with all 9 built-in effects registered
 
-## Schema and Hints Reference
+### Built-in Effects (9 total)
 
-### TEXT_OVERLAY Effect (definitions.py:57-108)
+| Constant | Name | Builder | Required Params |
+|----------|------|---------|-----------------|
+| `TEXT_OVERLAY` | Text Overlay | `DrawtextBuilder` | text |
+| `SPEED_CONTROL` | Speed Control | `SpeedControl` | factor |
+| `AUDIO_MIX` | Audio Mix | `AmixBuilder` | inputs |
+| `VOLUME` | Volume | `VolumeBuilder` | volume |
+| `AUDIO_FADE` | Audio Fade | `AfadeBuilder` | fade_type, duration |
+| `AUDIO_DUCKING` | Audio Ducking | `DuckingPattern` | (all optional) |
+| `VIDEO_FADE` | Video Fade | `FadeBuilder` | fade_type, duration |
+| `XFADE` | Crossfade (Video) | `XfadeBuilder` | transition, duration, offset |
+| `ACROSSFADE` | Crossfade (Audio) | `AcrossfadeBuilder` | duration |
 
-**Parameter Schema**:
-- `text` (string, required) - Text to display
-- `fontsize` (integer, default: 48) - Font size in pixels
-- `fontcolor` (string, default: "white") - Color name or hex
-- `position` (enum, default: "bottom_center") - Placement preset
-- `margin` (integer, default: 10) - Edge margin in pixels
-- `font` (string, optional) - Fontconfig font name
-
-**AI Hints**:
-- `text`: "The text content to overlay on the video"
-- `fontsize`: "Font size in pixels, typical range 12-72"
-- `fontcolor`: "Color name (white, yellow) or hex (#FF0000), append @0.5 for transparency"
-- `position`: "Where to place the text on screen"
-- `margin`: "Distance from screen edge in pixels, typical range 5-50"
-- `font`: "Fontconfig font name (e.g., 'monospace', 'Sans', 'Serif')"
-
-### SPEED_CONTROL Effect (definitions.py:110-138)
-
-**Parameter Schema**:
-- `factor` (number, required, range: 0.25-4.0, default: 2.0) - Speed multiplier
-- `drop_audio` (boolean, default: false) - Skip audio speed adjustment
-
-**AI Hints**:
-- `factor`: "Speed multiplier: 0.25-4.0. Values <1 slow down, >1 speed up. 2.0 = double speed"
-- `drop_audio`: "Set true for timelapse effects where audio is not needed"
+Each effect has a `_build_*` function (receives parameters dict, returns filter string) and a `_*_preview` function (returns filter string with default parameters).
 
 ## Dependencies
 
 ### Internal Dependencies
-- `stoat_ferret_core.DrawtextBuilder` - For text overlay preview generation
-- `stoat_ferret_core.SpeedControl` - For speed control preview generation
-- Type hints: uses `TYPE_CHECKING` guard for circular import prevention
+- `stoat_ferret_core.DrawtextBuilder` -- Text overlay filter generation
+- `stoat_ferret_core.SpeedControl` -- Speed adjustment filter generation
+- `stoat_ferret_core.VolumeBuilder` -- Volume filter generation
+- `stoat_ferret_core.AfadeBuilder` -- Audio fade filter generation
+- `stoat_ferret_core.AmixBuilder` -- Audio mix filter generation
+- `stoat_ferret_core.DuckingPattern` -- Sidechain compression filter generation
+- `stoat_ferret_core.FadeBuilder` -- Video fade filter generation
+- `stoat_ferret_core.TransitionType` -- Transition type enum
+- `stoat_ferret_core.XfadeBuilder` -- Video crossfade filter generation
+- `stoat_ferret_core.AcrossfadeBuilder` -- Audio crossfade filter generation
 
 ### External Dependencies
-- `dataclasses` - dataclass decorator for EffectDefinition
-- `collections.abc.Callable` - Type hint for preview function
-- `typing.TYPE_CHECKING` - Conditional imports for type annotations
-- `structlog` - Structured logging in EffectRegistry
+- `dataclasses` -- dataclass decorator for EffectDefinition
+- `collections.abc.Callable` -- Type hint for preview and build functions
+- `jsonschema` -- Draft7Validator for parameter validation in EffectRegistry
+- `structlog` -- Structured logging in EffectRegistry
 
 ## Relationships
 
 ```mermaid
 ---
-title: Code Diagram - Effects Module
+title: Code Diagram -- Effects Module
 ---
 classDiagram
-    namespace EffectDefinitions {
-        class EffectDefinition {
-            +name: str
-            +description: str
-            +parameter_schema: dict
-            +ai_hints: dict
-            +preview_fn: Callable
-        }
-
-        class PreviewFunctions {
-            -_text_overlay_preview()
-            -_speed_control_preview()
-        }
-
-        class BuiltInEffects {
-            TEXT_OVERLAY: EffectDefinition
-            SPEED_CONTROL: EffectDefinition
-        }
+    class EffectDefinition {
+        +name: str
+        +description: str
+        +parameter_schema: dict
+        +ai_hints: dict
+        +preview_fn: Callable
+        +build_fn: Callable
     }
 
-    namespace EffectDiscovery {
-        class EffectRegistry {
-            -_effects: dict
-            +register(type, definition)
-            +get(type) EffectDefinition
-            +list_all() list
-        }
-
-        class RegistryFactory {
-            +create_default_registry() EffectRegistry
-        }
+    class EffectValidationError {
+        +path: str
+        +message: str
     }
 
-    namespace ExternalTypes {
-        class DrawtextBuilder {
-            <<external>>
-            +new(text)
-            +fontsize()
-            +fontcolor()
-            +position()
-            +build()
-        }
-
-        class SpeedControl {
-            <<external>>
-            +new(factor)
-            +setpts_filter()
-            +atempo_filters()
-        }
+    class EffectRegistry {
+        -_effects: dict
+        +register(type, definition)
+        +get(type) EffectDefinition
+        +list_all() list
+        +validate(type, params) list~EffectValidationError~
     }
 
-    EffectDefinition --> PreviewFunctions : contains
-    BuiltInEffects --> EffectDefinition : instances of
+    class BuiltInEffects {
+        TEXT_OVERLAY
+        SPEED_CONTROL
+        AUDIO_MIX
+        VOLUME
+        AUDIO_FADE
+        AUDIO_DUCKING
+        VIDEO_FADE
+        XFADE
+        ACROSSFADE
+    }
+
+    class RustBuilders {
+        <<stoat_ferret_core>>
+        DrawtextBuilder
+        SpeedControl
+        VolumeBuilder
+        AfadeBuilder
+        AmixBuilder
+        DuckingPattern
+        FadeBuilder
+        XfadeBuilder
+        AcrossfadeBuilder
+    }
+
     EffectRegistry --> EffectDefinition : stores
-    RegistryFactory --> BuiltInEffects : uses
-    RegistryFactory --> EffectRegistry : creates
-    PreviewFunctions --> DrawtextBuilder : uses
-    PreviewFunctions --> SpeedControl : uses
+    EffectRegistry --> EffectValidationError : returns
+    BuiltInEffects --> EffectDefinition : instances of
+    BuiltInEffects --> RustBuilders : build_fn uses
+    create_default_registry --> BuiltInEffects : registers all
+    create_default_registry --> EffectRegistry : creates
 ```
-
-## Design Patterns
-
-1. **Registry Pattern**: EffectRegistry provides dynamic effect discovery
-2. **Dataclass**: EffectDefinition uses frozen dataclass for immutability
-3. **Factory Pattern**: create_default_registry() bootstraps the registry
-4. **Type Hints with TYPE_CHECKING**: Avoids circular imports while maintaining type safety
-5. **Callable Types**: preview_fn enables lazy evaluation of filter previews
-
-## AI Integration Points
-
-- JSON Schema parameter_schema enables AI model understanding of effect structure
-- ai_hints dictionary provides semantic guidance for parameter values
-- preview_fn callable allows AI to see example output format
-- This design supports AI-driven effect parameter generation (mentioned in requirements)
-
-## Parent Component
-
-[Effects Engine](./c4-component-effects-engine.md)
-

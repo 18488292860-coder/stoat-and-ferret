@@ -5,54 +5,64 @@
 - **Description**: Top-level page components that compose hooks, stores, and UI components into complete application views
 - **Location**: `gui/src/pages/`
 - **Language**: TypeScript (TSX)
-- **Purpose**: Orchestrates data flow between hooks/stores and presentation components for each route in the application
+- **Purpose**: Each page implements a major application feature by orchestrating data fetching, state management, and component composition
 
 ## Code Elements
 
 ### Functions/Methods
 
-- `DashboardPage(): JSX.Element`
-  - Description: Real-time monitoring dashboard displaying health cards, metrics cards, and WebSocket activity log; polls at 30-second intervals
-  - Location: `gui/src/pages/DashboardPage.tsx:1`
-  - Dependencies: `useHealth`, `useMetrics`, `useWebSocket`, `HealthCards`, `MetricsCards`, `ActivityLog`
+#### `DashboardPage(): JSX.Element`
+- **Location**: `gui/src/pages/DashboardPage.tsx`
+- **Description**: Real-time monitoring dashboard composing HealthCards, MetricsCards, and ActivityLog. Polls health and metrics at 30-second intervals.
+- **State Management**: Uses `useHealth(30_000)` and `useMetrics(30_000)` for polling
+- **Components Used**: `HealthCards`, `MetricsCards`, `ActivityLog`
+- **Test ID**: Renders as index route (`/`)
 
-- `wsUrl(): string` (in DashboardPage)
-  - Description: Constructs WebSocket URL with protocol matching (ws:/wss:) based on current window location
-  - Location: `gui/src/pages/DashboardPage.tsx`
-  - Dependencies: `window.location`
+#### `LibraryPage(): JSX.Element`
+- **Location**: `gui/src/pages/LibraryPage.tsx`
+- **Description**: Video library browser with search, sort, and pagination. Features directory scanning via modal dialog. Uses Zustand library store for search/sort state.
+- **State Management**: `useVideos()` for data, `libraryStore` for search/sort/page state
+- **Components Used**: `SearchBar`, `SortControls`, `VideoGrid`, `ScanModal`
+- **User Flows**: Search videos, change sort field/order, navigate pages, scan new directory
 
-- `LibraryPage(): JSX.Element`
-  - Description: Video library browser with debounced search, sort controls, paginated video grid, and directory scan modal
-  - Location: `gui/src/pages/LibraryPage.tsx:1`
-  - Dependencies: `useLibraryStore`, `useDebounce`, `useVideos`, `SearchBar`, `SortControls`, `VideoGrid`, `ScanModal`
+#### `ProjectsPage(): JSX.Element`
+- **Location**: `gui/src/pages/ProjectsPage.tsx`
+- **Description**: Project management with list/detail views, create/delete modals, and clip count fetching. Switches between list view and detail view based on selection.
+- **State Management**: `useProjects()` for data, `projectStore` for modal/selection state, local state for clip counts
+- **Components Used**: `ProjectList`, `ProjectDetails`, `CreateProjectModal`, `DeleteConfirmation`
+- **User Flows**: Browse projects, create new project, view project details with clips, delete project with confirmation
 
-- `ProjectsPage(): JSX.Element`
-  - Description: Project management page with list/detail views, create/delete modals, and clip count aggregation
-  - Location: `gui/src/pages/ProjectsPage.tsx:1`
-  - Dependencies: `useProjects`, `useProjectStore`, `fetchClips`, `ProjectList`, `ProjectDetails`, `CreateProjectModal`, `DeleteConfirmation`
+#### `EffectsPage(): JSX.Element`
+- **Location**: `gui/src/pages/EffectsPage.tsx`
+- **Description**: Full effect workshop integrating project/clip selection, effect catalog browsing, schema-driven parameter forms, filter preview, apply/edit/remove operations, and the effect stack. Handles both POST (apply new) and PATCH (update existing) API calls.
+- **State Management**:
+  - `useEffects()` for effect definitions
+  - `useProjects()` for project list
+  - `useEffectCatalogStore` for selected effect
+  - `useEffectFormStore` for parameter schema and values
+  - `useEffectStackStore` for applied effects on selected clip
+  - `useEffectPreview()` for debounced filter preview
+  - Local state: `selectedProjectId`, `clips`, `applyStatus`, `editIndex`
+- **Components Used**: `ClipSelector`, `EffectCatalog`, `EffectParameterForm`, `FilterPreview`, `EffectStack`
+- **User Flows**:
+  1. Select project (auto-selects first) and clip
+  2. Browse/search/filter effect catalog
+  3. Select effect, configure parameters via schema-driven form
+  4. Preview FFmpeg filter string in real-time
+  5. Apply effect to clip (POST) or update existing (PATCH)
+  6. View effect stack, edit applied effects, remove with confirmation
+- **API Interactions**:
+  - GET `/api/v1/projects/{id}/clips` -- fetch clips on project change
+  - POST `/api/v1/projects/{id}/clips/{id}/effects` -- apply new effect
+  - PATCH `/api/v1/projects/{id}/clips/{id}/effects/{idx}` -- update existing effect
+- **Test ID**: `effects-page`
 
 ## Dependencies
 
 ### Internal Dependencies
-- `gui/src/components/ActivityLog` — DashboardPage
-- `gui/src/components/HealthCards` — DashboardPage
-- `gui/src/components/MetricsCards` — DashboardPage
-- `gui/src/components/SearchBar` — LibraryPage
-- `gui/src/components/SortControls` — LibraryPage
-- `gui/src/components/VideoGrid` — LibraryPage
-- `gui/src/components/ScanModal` — LibraryPage
-- `gui/src/components/CreateProjectModal` — ProjectsPage
-- `gui/src/components/DeleteConfirmation` — ProjectsPage
-- `gui/src/components/ProjectDetails` — ProjectsPage
-- `gui/src/components/ProjectList` — ProjectsPage
-- `gui/src/hooks/useHealth` — DashboardPage
-- `gui/src/hooks/useMetrics` — DashboardPage
-- `gui/src/hooks/useWebSocket` — DashboardPage
-- `gui/src/hooks/useDebounce` — LibraryPage
-- `gui/src/hooks/useVideos` — LibraryPage
-- `gui/src/hooks/useProjects` — ProjectsPage (useProjects hook + fetchClips, Project type)
-- `gui/src/stores/libraryStore` — LibraryPage
-- `gui/src/stores/projectStore` — ProjectsPage
+- `gui/src/components/` -- all UI components (HealthCards, MetricsCards, ActivityLog, SearchBar, SortControls, VideoGrid, ScanModal, ProjectList, ProjectDetails, CreateProjectModal, DeleteConfirmation, ClipSelector, EffectCatalog, EffectParameterForm, FilterPreview, EffectStack)
+- `gui/src/hooks/` -- useHealth, useMetrics, useVideos, useProjects, useEffects, useEffectPreview
+- `gui/src/stores/` -- libraryStore, projectStore, effectCatalogStore, effectFormStore, effectStackStore
 
 ### External Dependencies
 - `react` (useState, useEffect, useCallback)
@@ -62,44 +72,65 @@
 ```mermaid
 classDiagram
     class DashboardPage {
-        +DashboardPage() JSX.Element
-        -wsUrl() string
-        -REFRESH_INTERVAL: 30000
+        +DashboardPage() JSX
+        useHealth(30s)
+        useMetrics(30s)
     }
     class LibraryPage {
-        +LibraryPage() JSX.Element
-        -scanOpen: boolean
-        -totalPages: number
+        +LibraryPage() JSX
+        useVideos()
+        libraryStore
     }
     class ProjectsPage {
-        +ProjectsPage() JSX.Element
-        -clipCounts: Record
-        -deleteTargetId: string
-        -handleSelect(id) void
-        -handleDelete(id) void
-        -handleDeleted() void
-        -handleCreated() void
+        +ProjectsPage() JSX
+        useProjects()
+        projectStore
+    }
+    class EffectsPage {
+        +EffectsPage() JSX
+        useEffects()
+        useProjects()
+        useEffectPreview()
+        effectCatalogStore
+        effectFormStore
+        effectStackStore
+        editIndex state
     }
 
-    DashboardPage --> HealthCards : renders
-    DashboardPage --> MetricsCards : renders
-    DashboardPage --> ActivityLog : renders
-    DashboardPage ..> useHealth : data
-    DashboardPage ..> useMetrics : data
-    DashboardPage ..> useWebSocket : connection
+    class HealthCards { }
+    class MetricsCards { }
+    class ActivityLog { }
+    class SearchBar { }
+    class SortControls { }
+    class VideoGrid { }
+    class ScanModal { }
+    class ProjectList { }
+    class ProjectDetails { }
+    class CreateProjectModal { }
+    class DeleteConfirmation { }
+    class ClipSelector { }
+    class EffectCatalog { }
+    class EffectParameterForm { }
+    class FilterPreview { }
+    class EffectStack { }
 
-    LibraryPage --> SearchBar : renders
-    LibraryPage --> SortControls : renders
-    LibraryPage --> VideoGrid : renders
-    LibraryPage --> ScanModal : renders
-    LibraryPage ..> useLibraryStore : state
-    LibraryPage ..> useDebounce : utility
-    LibraryPage ..> useVideos : data
+    DashboardPage --> HealthCards
+    DashboardPage --> MetricsCards
+    DashboardPage --> ActivityLog
 
-    ProjectsPage --> ProjectList : renders
-    ProjectsPage --> ProjectDetails : renders
-    ProjectsPage --> CreateProjectModal : renders
-    ProjectsPage --> DeleteConfirmation : renders
-    ProjectsPage ..> useProjects : data
-    ProjectsPage ..> useProjectStore : state
+    LibraryPage --> SearchBar
+    LibraryPage --> SortControls
+    LibraryPage --> VideoGrid
+    LibraryPage --> ScanModal
+
+    ProjectsPage --> ProjectList
+    ProjectsPage --> ProjectDetails
+    ProjectsPage --> CreateProjectModal
+    ProjectsPage --> DeleteConfirmation
+
+    EffectsPage --> ClipSelector
+    EffectsPage --> EffectCatalog
+    EffectsPage --> EffectParameterForm
+    EffectsPage --> FilterPreview
+    EffectsPage --> EffectStack
 ```

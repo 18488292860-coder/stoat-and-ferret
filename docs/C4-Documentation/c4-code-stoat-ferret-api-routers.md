@@ -2,10 +2,11 @@
 
 ## Overview
 - **Name**: API Routers
-- **Description**: FastAPI route handlers for health, videos, projects, clips, jobs, and WebSocket endpoints
+- **Description**: FastAPI route handlers for health, videos, projects, clips, jobs, effects, transitions, and WebSocket endpoints
 - **Location**: `src/stoat_ferret/api/routers/`
-- **Language**: Python
-- **Purpose**: Define all REST API and WebSocket endpoints, map HTTP requests to business logic
+- **Language**: Python (async/await)
+- **Purpose**: Define all REST API and WebSocket endpoints, map HTTP requests to business logic via dependency injection
+- **Parent Component**: TBD
 
 ## Code Elements
 
@@ -14,12 +15,12 @@
 #### health.py
 
 - `async liveness() -> dict[str, str]`
-  - Description: Liveness probe - returns 200 if the server is running
+  - Description: Liveness probe -- returns 200 if the server is running (GET /health/live)
   - Location: `src/stoat_ferret/api/routers/health.py:17`
   - Dependencies: None
 
 - `async readiness(request: Request) -> JSONResponse`
-  - Description: Readiness probe - checks database and FFmpeg availability
+  - Description: Readiness probe -- checks database and FFmpeg availability (GET /health/ready)
   - Location: `src/stoat_ferret/api/routers/health.py:30`
   - Dependencies: `_check_database`, `_check_ffmpeg`
 
@@ -36,130 +37,136 @@
 #### videos.py
 
 - `async get_repository(request: Request) -> AsyncVideoRepository`
-  - Description: FastAPI dependency - get video repository from app state
+  - Description: FastAPI dependency -- get video repository from app state
   - Location: `src/stoat_ferret/api/routers/videos.py:34`
-  - Dependencies: `AsyncVideoRepository`, `AsyncSQLiteVideoRepository`
 
-- `async list_videos(repo: RepoDep, limit: int, offset: int) -> VideoListResponse`
+- `async list_videos(repo, limit, offset) -> VideoListResponse`
   - Description: List videos with pagination (GET /api/v1/videos)
   - Location: `src/stoat_ferret/api/routers/videos.py:57`
-  - Dependencies: `AsyncVideoRepository`
 
-- `async search_videos(repo: RepoDep, q: str, limit: int) -> VideoSearchResponse`
+- `async search_videos(repo, q, limit) -> VideoSearchResponse`
   - Description: Search videos by filename or path (GET /api/v1/videos/search)
   - Location: `src/stoat_ferret/api/routers/videos.py:84`
-  - Dependencies: `AsyncVideoRepository`
 
-- `async get_thumbnail(video_id: str, repo: RepoDep) -> FileResponse`
+- `async get_thumbnail(video_id, repo) -> FileResponse`
   - Description: Get thumbnail image for a video (GET /api/v1/videos/{id}/thumbnail)
   - Location: `src/stoat_ferret/api/routers/videos.py:109`
-  - Dependencies: `AsyncVideoRepository`, `FileResponse`
 
-- `async get_video(video_id: str, repo: RepoDep) -> VideoResponse`
+- `async get_video(video_id, repo) -> VideoResponse`
   - Description: Get video by ID (GET /api/v1/videos/{id})
   - Location: `src/stoat_ferret/api/routers/videos.py:142`
-  - Dependencies: `AsyncVideoRepository`
 
-- `async scan_videos(scan_request: ScanRequest, request: Request) -> JobSubmitResponse`
+- `async scan_videos(scan_request, request) -> JobSubmitResponse`
   - Description: Submit directory scan as async job (POST /api/v1/videos/scan)
   - Location: `src/stoat_ferret/api/routers/videos.py:168`
-  - Dependencies: `validate_scan_path`, `get_settings`, `job_queue`
 
-- `async delete_video(video_id: str, repo: RepoDep, delete_file: bool) -> Response`
+- `async delete_video(video_id, repo, delete_file) -> Response`
   - Description: Delete video from library (DELETE /api/v1/videos/{id})
   - Location: `src/stoat_ferret/api/routers/videos.py:211`
-  - Dependencies: `AsyncVideoRepository`
 
 #### projects.py
 
-- `async get_project_repository(request: Request) -> AsyncProjectRepository`
-  - Description: FastAPI dependency - get project repository from app state
-  - Location: `src/stoat_ferret/api/routers/projects.py:32`
-  - Dependencies: `AsyncProjectRepository`, `AsyncSQLiteProjectRepository`
-
-- `async get_clip_repository(request: Request) -> AsyncClipRepository`
-  - Description: FastAPI dependency - get clip repository from app state
-  - Location: `src/stoat_ferret/api/routers/projects.py:50`
-  - Dependencies: `AsyncClipRepository`, `AsyncSQLiteClipRepository`
-
-- `async get_video_repository(request: Request) -> AsyncVideoRepository`
-  - Description: FastAPI dependency - get video repository from app state
-  - Location: `src/stoat_ferret/api/routers/projects.py:68`
-  - Dependencies: `AsyncVideoRepository`, `AsyncSQLiteVideoRepository`
-
-- `async list_projects(repo: ProjectRepoDep, limit: int, offset: int) -> ProjectListResponse`
+- `async list_projects(repo, limit, offset) -> ProjectListResponse`
   - Description: List all projects (GET /api/v1/projects)
   - Location: `src/stoat_ferret/api/routers/projects.py:95`
-  - Dependencies: `AsyncProjectRepository`
 
-- `async create_project(request: ProjectCreate, repo: ProjectRepoDep) -> ProjectResponse`
+- `async create_project(request, repo) -> ProjectResponse`
   - Description: Create a new project (POST /api/v1/projects)
   - Location: `src/stoat_ferret/api/routers/projects.py:118`
-  - Dependencies: `AsyncProjectRepository`, `Project`
 
-- `async get_project(project_id: str, repo: ProjectRepoDep) -> ProjectResponse`
+- `async get_project(project_id, repo) -> ProjectResponse`
   - Description: Get project by ID (GET /api/v1/projects/{id})
   - Location: `src/stoat_ferret/api/routers/projects.py:146`
-  - Dependencies: `AsyncProjectRepository`
 
-- `async delete_project(project_id: str, repo: ProjectRepoDep) -> Response`
+- `async delete_project(project_id, repo) -> Response`
   - Description: Delete project (DELETE /api/v1/projects/{id})
   - Location: `src/stoat_ferret/api/routers/projects.py:172`
-  - Dependencies: `AsyncProjectRepository`
 
-- `async list_clips(project_id: str, project_repo: ProjectRepoDep, clip_repo: ClipRepoDep) -> ClipListResponse`
+- `async list_clips(project_id, project_repo, clip_repo) -> ClipListResponse`
   - Description: List clips in project (GET /api/v1/projects/{id}/clips)
   - Location: `src/stoat_ferret/api/routers/projects.py:198`
-  - Dependencies: `AsyncProjectRepository`, `AsyncClipRepository`
 
-- `async add_clip(project_id: str, request: ClipCreate, ...) -> ClipResponse`
+- `async add_clip(project_id, request, ...) -> ClipResponse`
   - Description: Add clip to project with Rust validation (POST /api/v1/projects/{id}/clips)
   - Location: `src/stoat_ferret/api/routers/projects.py:233`
-  - Dependencies: `AsyncProjectRepository`, `AsyncClipRepository`, `AsyncVideoRepository`, `Clip.validate`
 
-- `async update_clip(project_id: str, clip_id: str, request: ClipUpdate, ...) -> ClipResponse`
+- `async update_clip(project_id, clip_id, request, ...) -> ClipResponse`
   - Description: Update clip with Rust validation (PATCH /api/v1/projects/{id}/clips/{clip_id})
   - Location: `src/stoat_ferret/api/routers/projects.py:299`
-  - Dependencies: `AsyncProjectRepository`, `AsyncClipRepository`, `AsyncVideoRepository`, `Clip.validate`
 
-- `async delete_clip(project_id: str, clip_id: str, clip_repo: ClipRepoDep) -> Response`
+- `async delete_clip(project_id, clip_id, clip_repo) -> Response`
   - Description: Delete clip (DELETE /api/v1/projects/{id}/clips/{clip_id})
   - Location: `src/stoat_ferret/api/routers/projects.py:371`
-  - Dependencies: `AsyncClipRepository`
+
+#### effects.py
+
+- `async get_effect_registry(request: Request) -> EffectRegistry`
+  - Description: FastAPI dependency -- get effect registry from app state, falls back to default registry
+  - Location: `src/stoat_ferret/api/routers/effects.py:50`
+
+- `async list_effects(registry) -> EffectListResponse`
+  - Description: List all available effects with metadata, schemas, and previews (GET /api/v1/effects)
+  - Location: `src/stoat_ferret/api/routers/effects.py:94`
+
+- `async preview_effect(request, registry) -> EffectPreviewResponse`
+  - Description: Preview the filter string without applying (POST /api/v1/effects/preview)
+  - Location: `src/stoat_ferret/api/routers/effects.py:117`
+
+- `async apply_effect_to_clip(project_id, clip_id, request, ...) -> EffectApplyResponse`
+  - Description: Apply an effect to a clip (POST /api/v1/projects/{id}/clips/{id}/effects)
+  - Location: `src/stoat_ferret/api/routers/effects.py:180`
+
+- `async update_clip_effect(project_id, clip_id, index, request, ...) -> EffectApplyResponse`
+  - Description: Update effect at index on a clip (PATCH /api/v1/projects/{id}/clips/{id}/effects/{index})
+  - Location: `src/stoat_ferret/api/routers/effects.py:293`
+
+- `async delete_clip_effect(project_id, clip_id, index, ...) -> EffectDeleteResponse`
+  - Description: Remove effect at index from a clip (DELETE /api/v1/projects/{id}/clips/{id}/effects/{index})
+  - Location: `src/stoat_ferret/api/routers/effects.py:411`
+
+- `async apply_transition(project_id, request, ...) -> TransitionResponse`
+  - Description: Apply transition between adjacent clips (POST /api/v1/projects/{id}/effects/transition)
+  - Location: `src/stoat_ferret/api/routers/effects.py:483`
 
 #### jobs.py
 
-- `async get_job_status(job_id: str, request: Request) -> JobStatusResponse`
+- `async get_job_status(job_id, request) -> JobStatusResponse`
   - Description: Get status of a submitted job (GET /api/v1/jobs/{id})
   - Location: `src/stoat_ferret/api/routers/jobs.py:13`
-  - Dependencies: `job_queue`
 
 #### ws.py
 
-- `async _heartbeat_loop(ws: WebSocket, interval: float) -> None`
+- `async _heartbeat_loop(ws, interval) -> None`
   - Description: Send periodic heartbeat messages over WebSocket
   - Location: `src/stoat_ferret/api/routers/ws.py:18`
-  - Dependencies: `build_event`, `EventType`
 
-- `async websocket_endpoint(websocket: WebSocket) -> None`
+- `async websocket_endpoint(websocket) -> None`
   - Description: Handle WebSocket connections at /ws with heartbeat
   - Location: `src/stoat_ferret/api/routers/ws.py:30`
-  - Dependencies: `ConnectionManager`, `build_event`, `EventType`
+
+### Module-Level Variables
+
+#### effects.py
+
+- `effect_applications_total` -- Prometheus Counter for effect applications by type
+- `transition_applications_total` -- Prometheus Counter for transition applications by type
 
 ## Dependencies
 
 ### Internal Dependencies
-- `stoat_ferret.api.schemas` - Request/response Pydantic models
-- `stoat_ferret.api.services.scan` - Scan path validation, job type constant
-- `stoat_ferret.api.settings` - Application settings
-- `stoat_ferret.api.websocket` - ConnectionManager, EventType, build_event
-- `stoat_ferret.db` - Repository protocols and implementations, models
-- `stoat_ferret.ffmpeg.probe` - Used indirectly via scan service
+- `stoat_ferret.api.schemas` -- Request/response Pydantic models (video, project, clip, job, effect)
+- `stoat_ferret.api.services.scan` -- Scan path validation, job type constant
+- `stoat_ferret.api.settings` -- Application settings
+- `stoat_ferret.api.websocket` -- ConnectionManager, EventType, build_event
+- `stoat_ferret.db` -- Repository protocols and implementations, models
+- `stoat_ferret.effects.definitions` -- create_default_registry
+- `stoat_ferret.effects.registry` -- EffectRegistry
 
 ### External Dependencies
-- `fastapi` - APIRouter, Request, Response, HTTPException, Depends, Query
-- `starlette` - WebSocket, WebSocketDisconnect
-- `structlog` - Structured logging
+- `fastapi` -- APIRouter, Request, Response, HTTPException, Depends, Query
+- `starlette` -- WebSocket, WebSocketDisconnect
+- `structlog` -- Structured logging
+- `prometheus_client` -- Counter for metrics
 
 ## Relationships
 
@@ -170,9 +177,10 @@ title: Code Diagram for API Routers
 flowchart TB
     subgraph Routers
         health[health.py<br/>GET /health/live<br/>GET /health/ready]
-        videos[videos.py<br/>GET/POST/DELETE /api/v1/videos]
-        projects[projects.py<br/>CRUD /api/v1/projects<br/>CRUD /api/v1/projects/.../clips]
-        jobs[jobs.py<br/>GET /api/v1/jobs]
+        videos[videos.py<br/>GET/POST/DELETE /api/v1/videos<br/>GET /api/v1/videos/search<br/>GET /api/v1/videos/{id}/thumbnail]
+        projects[projects.py<br/>CRUD /api/v1/projects<br/>CRUD .../clips]
+        effects[effects.py<br/>GET /api/v1/effects<br/>POST .../effects/preview<br/>CRUD .../clips/{id}/effects<br/>POST .../effects/transition]
+        jobs[jobs.py<br/>GET /api/v1/jobs/{id}]
         ws[ws.py<br/>WS /ws]
     end
 
@@ -182,6 +190,7 @@ flowchart TB
         settings[api/settings]
         db[db repositories]
         websocket[api/websocket]
+        registry[effects.registry]
     end
 
     videos --> schemas
@@ -190,6 +199,9 @@ flowchart TB
     videos --> db
     projects --> schemas
     projects --> db
+    effects --> schemas
+    effects --> db
+    effects --> registry
     jobs --> schemas
     ws --> websocket
     health --> db

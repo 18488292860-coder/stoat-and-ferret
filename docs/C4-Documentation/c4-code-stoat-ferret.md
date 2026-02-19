@@ -2,10 +2,11 @@
 
 ## Overview
 - **Name**: Stoat Ferret Package Root
-- **Description**: Top-level Python package providing version info and structured logging configuration
+- **Description**: Top-level Python package providing version metadata and structured logging configuration.
 - **Location**: `src/stoat_ferret/`
 - **Language**: Python
-- **Purpose**: Define the package root, expose version metadata, and provide centralized logging configuration
+- **Purpose**: Defines the package namespace, exports the version string, and provides centralized structured logging using structlog with JSON/console output modes.
+- **Parent Component**: TBD
 
 ## Code Elements
 
@@ -14,9 +15,9 @@
 #### logging.py
 
 - `configure_logging(json_format: bool = True, level: int = logging.INFO) -> None`
-  - Description: Configure structlog for the application with JSON (production) or console (development) output format
+  - Description: Configures structlog for the application with shared processors (log level, logger name, timestamps, stack info), JSON or console rendering, and stdlib integration via ProcessorFormatter.
   - Location: `src/stoat_ferret/logging.py:15`
-  - Dependencies: `structlog`, `logging`
+  - Dependencies: `structlog`, `logging`, `sys`
 
 ### Module-Level Variables
 
@@ -32,25 +33,30 @@
 - None (package root)
 
 ### External Dependencies
-- `structlog` - Structured logging framework (BoundLogger, ProcessorFormatter, JSONRenderer, ConsoleRenderer)
-- `logging` - Standard library logging (StreamHandler, getLogger)
+- `structlog` -- Structured logging framework (BoundLogger, ProcessorFormatter, JSONRenderer, ConsoleRenderer, TimeStamper)
+- `logging` (stdlib) -- Python standard logging (StreamHandler, getLogger)
+- `sys` (stdlib) -- System module for stdout stream
 
 ## Relationships
 
 ```mermaid
----
-title: Code Diagram for Stoat Ferret Package Root
----
-classDiagram
-    class stoat_ferret {
-        <<module>>
-        +__version__: str
-    }
-    class logging_module {
-        <<module>>
-        +configure_logging(json_format: bool, level: int) None
-    }
-    stoat_ferret --> logging_module : contains
-    logging_module --> structlog : configures
-    logging_module --> stdlib_logging : configures handlers
+flowchart TB
+    subgraph "src/stoat_ferret"
+        init["__init__.py<br/>__version__ = '0.1.0'"]
+        log_mod["logging.py<br/>configure_logging()"]
+    end
+
+    log_mod --> structlog["structlog"]
+    log_mod --> stdlib["logging stdlib"]
+    log_mod --> sys_mod["sys.stdout"]
+
+    subgraph "Sub-packages"
+        api["stoat_ferret.api"]
+        db["stoat_ferret.db"]
+        effects["stoat_ferret.effects"]
+    end
+
+    init -.->|"contains"| api
+    init -.->|"contains"| db
+    init -.->|"contains"| effects
 ```

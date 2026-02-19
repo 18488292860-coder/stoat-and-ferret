@@ -5,7 +5,8 @@
 - **Description**: SQLite-based persistence layer with repository pattern for videos, projects, clips, and audit logging
 - **Location**: `src/stoat_ferret/db/`
 - **Language**: Python
-- **Purpose**: Provide data access abstractions (sync and async) for all domain entities with full CRUD, FTS search, and audit trail support
+- **Purpose**: Provide data access abstractions (sync and async) for all domain entities with full CRUD, FTS5 search, and audit trail support
+- **Parent Component**: TBD
 
 ## Code Elements
 
@@ -33,36 +34,36 @@
   - Description: Exception wrapping Rust clip validation errors with field, message, actual, expected
   - Location: `src/stoat_ferret/db/models.py:14`
   - Methods:
-    - `__init__(field: str, message: str, actual: str | None, expected: str | None) -> None`
-    - `from_rust(err: RustClipValidationError) -> ClipValidationError` (classmethod)
+    - `__init__(field, message, actual, expected) -> None`
+    - `from_rust(err) -> ClipValidationError` (classmethod)
   - Dependencies: `stoat_ferret_core.ClipValidationError` (Rust, TYPE_CHECKING only)
 
 - `Clip` (dataclass)
-  - Description: Video clip within a project - segment of a source video placed on a timeline
+  - Description: Video clip within a project -- segment of a source video placed on a timeline
   - Location: `src/stoat_ferret/db/models.py:60`
-  - Fields: id, project_id, source_video_id, in_point, out_point, timeline_position, created_at, updated_at
+  - Fields: id, project_id, source_video_id, in_point, out_point, timeline_position, created_at, updated_at, effects (list[dict] | None)
   - Methods:
-    - `new_id() -> str` (static) - Generate UUID
-    - `validate(source_path: str, source_duration_frames: int | None) -> None` - Validate via Rust core
+    - `new_id() -> str` (static) -- Generate UUID
+    - `validate(source_path, source_duration_frames) -> None` -- Validate via Rust core
   - Dependencies: `stoat_ferret_core` (Clip, Position, Duration, validate_clip)
 
 - `Project` (dataclass)
   - Description: Video editing project with output settings
-  - Location: `src/stoat_ferret/db/models.py:112`
-  - Fields: id, name, output_width, output_height, output_fps, created_at, updated_at
+  - Location: `src/stoat_ferret/db/models.py:110`
+  - Fields: id, name, output_width, output_height, output_fps, created_at, updated_at, transitions (list[dict] | None)
   - Methods:
     - `new_id() -> str` (static)
 
 - `AuditEntry` (dataclass)
   - Description: Audit log entry tracking data modifications
-  - Location: `src/stoat_ferret/db/models.py:134`
+  - Location: `src/stoat_ferret/db/models.py:132`
   - Fields: id, timestamp, operation, entity_type, entity_id, changes_json, context
   - Methods:
     - `new_id() -> str` (static)
 
 - `Video` (dataclass)
   - Description: Video metadata entity with all file information
-  - Location: `src/stoat_ferret/db/models.py:155`
+  - Location: `src/stoat_ferret/db/models.py:154`
   - Fields: id, path, filename, duration_frames, frame_rate_numerator, frame_rate_denominator, width, height, video_codec, file_size, created_at, updated_at, audio_codec, thumbnail_path
   - Properties:
     - `frame_rate -> float`
@@ -148,22 +149,22 @@
   - Location: `src/stoat_ferret/db/audit.py:12`
   - Methods:
     - `__init__(conn: sqlite3.Connection) -> None`
-    - `log_change(operation: str, entity_type: str, entity_id: str, changes: dict | None, context: str | None) -> AuditEntry`
-    - `get_history(entity_id: str, limit: int) -> list[AuditEntry]`
-    - `_row_to_entry(row: tuple) -> AuditEntry`
+    - `log_change(operation, entity_type, entity_id, changes, context) -> AuditEntry`
+    - `get_history(entity_id, limit) -> list[AuditEntry]`
+    - `_row_to_entry(row) -> AuditEntry`
   - Dependencies: `sqlite3`, `AuditEntry`
 
 ## Dependencies
 
 ### Internal Dependencies
-- `stoat_ferret_core` - Rust Clip, Position, Duration, validate_clip (used in Clip.validate)
+- `stoat_ferret_core` -- Rust Clip, Position, Duration, validate_clip (used in Clip.validate)
 
 ### External Dependencies
-- `sqlite3` - Sync database operations
-- `aiosqlite` - Async database operations
-- `json` - Audit change serialization
-- `copy` - Deep copy for in-memory repository isolation
-- `re` - Token splitting for in-memory search
+- `sqlite3` -- Sync database operations
+- `aiosqlite` -- Async database operations
+- `json` -- Audit change serialization, effects/transitions JSON storage
+- `copy` -- Deep copy for in-memory repository isolation
+- `re` -- Token splitting for in-memory search
 
 ## Relationships
 
@@ -202,6 +203,7 @@ classDiagram
         +add(project) Project
         +get(id) Project
         +list_projects(limit, offset) list
+        +update(project) Project
         +delete(id) bool
     }
     class SQLiteVideoRepository {

@@ -5,116 +5,138 @@
 - **Description**: Crate entry point that defines the PyO3 Python module and registers all types and functions
 - **Location**: `rust/stoat_ferret_core/src/`
 - **Language**: Rust
-- **Purpose**: Serves as the crate root, declaring public modules, defining custom Python exceptions, the `_core` PyO3 module, the health check function, and the stub info gatherer
+- **Purpose**: Bootstraps the `_core` Python extension module, registers all PyO3 types/exceptions, and re-exports public API for the FFmpeg command builder library
 
 ## Code Elements
 
-### Functions/Methods
+### Modules Declared
 
-- `health_check() -> String`
-  - Description: Returns `"stoat_ferret_core OK"` to verify the Rust module is loaded correctly from Python
-  - Location: `rust/stoat_ferret_core/src/lib.rs:43`
-  - Dependencies: None
+- `mod clip` -- Clip, FrameRate, Position, Duration, TimeRange types for video timeline manipulation
+- `mod ffmpeg` -- FFmpeg command builder and filter graph construction (see `c4-code-rust-stoat-ferret-core-ffmpeg.md`)
+- `mod sanitize` -- Input validation (volume ranges, string sanitization)
+- `mod timeline` -- Timeline assembly operations
 
-- `_core(m: &Bound<PyModule>) -> PyResult<()>`
-  - Description: PyO3 module definition that registers all classes, functions, and exceptions into the Python module
-  - Location: `rust/stoat_ferret_core/src/lib.rs:49`
-  - Registers:
-    - Timeline types: `FrameRate`, `Position`, `Duration`, `TimeRange`
-    - Timeline functions: `find_gaps`, `merge_ranges`, `total_coverage`
-    - Clip types: `Clip`, `ClipValidationError`
-    - Clip functions: `validate_clip`, `validate_clips`
-    - FFmpeg types: `FFmpegCommand`, `Filter`, `FilterChain`, `FilterGraph`
-    - FFmpeg functions: `scale_filter`, `concat_filter`
-    - Sanitization functions: `escape_filter_text`, `validate_path`, `validate_crf`, `validate_speed`, `validate_volume`, `validate_video_codec`, `validate_audio_codec`, `validate_preset`
-    - Exception types: `ValidationError`, `CommandError`, `SanitizationError`
-  - Dependencies: All submodules
+### Python Exceptions
 
-- `stub_info() -> pyo3_stub_gen::Result<pyo3_stub_gen::StubInfo>`
-  - Description: Locates `pyproject.toml` at the project root (navigating up from `CARGO_MANIFEST_DIR`) and creates stub generation info
-  - Location: `rust/stoat_ferret_core/src/lib.rs:105`
-  - Dependencies: `pyo3_stub_gen::StubInfo`, `std::path::Path`
+- `ValidationError` -- raised on input validation failures (inherits `PyValueError`)
+- `CommandError` -- raised on FFmpeg command construction errors (inherits `PyValueError`)
+- `SanitizationError` -- raised on text sanitization failures (inherits `PyValueError`)
 
-### Custom Exception Types
+### Functions
 
-- `ValidationError` (Python exception)
-  - Description: Custom Python exception for validation failures, created via `pyo3::create_exception!`
-  - Location: `rust/stoat_ferret_core/src/lib.rs:22`
-  - Base class: `pyo3::exceptions::PyException`
+#### `health_check() -> PyResult<String>`
+- **Location**: `rust/stoat_ferret_core/src/lib.rs`
+- **Description**: Returns `"ok"` as a simple Python-callable health check to verify the Rust extension is loaded
+- **PyO3**: `#[pyfunction]`
 
-- `CommandError` (Python exception)
-  - Description: Custom Python exception for FFmpeg command building failures
-  - Location: `rust/stoat_ferret_core/src/lib.rs:27`
-  - Base class: `pyo3::exceptions::PyException`
+#### `_core(m: &Bound<'_, PyModule>) -> PyResult<()>`
+- **Location**: `rust/stoat_ferret_core/src/lib.rs`
+- **Description**: PyO3 module initialization function. Registers all classes and functions in the `_core` Python module.
+- **PyO3**: `#[pymodule]`
 
-- `SanitizationError` (Python exception)
-  - Description: Custom Python exception for input sanitization failures
-  - Location: `rust/stoat_ferret_core/src/lib.rs:32`
-  - Base class: `pyo3::exceptions::PyException`
+#### `stub_info() -> ...`
+- **Location**: `rust/stoat_ferret_core/src/lib.rs`
+- **Description**: Generates stub information for pyo3-stub-gen (`cargo run --bin stub_gen`)
 
-### Module Declarations
+### Registered Python Types
 
-- `pub mod clip` - Video clip representation and validation
-- `pub mod ffmpeg` - FFmpeg command building and filter graphs
-- `pub mod sanitize` - Input sanitization and validation
-- `pub mod timeline` - Frame-accurate timeline mathematics
+| Type | Module | Description |
+|------|--------|-------------|
+| `FrameRate` | clip | Frame rate representation (numerator/denominator) |
+| `Position` | drawtext | Text position on video frame (enum with variants) |
+| `Duration` | clip | Duration representation |
+| `TimeRange` | clip | Time range with in/out points |
+| `Clip` | clip | Video clip with timeline position |
+| `ValidationError` | lib | Input validation exception |
+| `FFmpegCommand` | command | Command builder for FFmpeg CLI arguments |
+| `Filter` | filter | Single FFmpeg filter with name and parameters |
+| `FilterChain` | filter | Chain of filters with input/output pad labels |
+| `FilterGraph` | filter | Complete filter graph with multiple chains |
+| `PyExpr` | expression | FFmpeg expression tree builder |
+| `DrawtextBuilder` | drawtext | Text overlay filter builder |
+| `SpeedControl` | speed | Speed adjustment filter builder |
+| `VolumeBuilder` | audio | Audio volume filter builder |
+| `AfadeBuilder` | audio | Audio fade filter builder |
+| `AmixBuilder` | audio | Audio mix filter builder |
+| `DuckingPattern` | audio | Speech ducking pattern builder |
+| `TransitionType` | transitions | 59-variant xfade transition enum |
+| `FadeBuilder` | transitions | Video fade filter builder |
+| `XfadeBuilder` | transitions | Video crossfade filter builder |
+| `AcrossfadeBuilder` | transitions | Audio crossfade filter builder |
+| `health_check` | lib | Health check function |
 
 ## Dependencies
 
 ### Internal Dependencies
-- `crate::clip` - Clip types and validation functions
-- `crate::ffmpeg` - FFmpegCommand and filter types
-- `crate::sanitize` - Sanitization functions
-- `crate::timeline` - Timeline types and range operations
+- `clip` module -- FrameRate, Position, Duration, TimeRange, Clip
+- `ffmpeg` module -- all builder types and filter graph types
+- `sanitize` module -- validation functions
+- `timeline` module -- timeline assembly
 
 ### External Dependencies
-- `pyo3` - Python module definition (`pymodule`, `pyfunction`, `create_exception!`, `PyModule`, `Bound`)
-- `pyo3_stub_gen` - Stub info gathering (`StubInfo`, `Result`, `gen_stub_pyfunction`)
+- `pyo3` (pymodule, pyfunction, PyResult, Bound, PyModule)
+- `pyo3_stub_gen` (stub generation for Python type hints)
 
 ## Relationships
 
 ```mermaid
 classDiagram
     class lib_rs {
+        <<pymodule _core>>
         +health_check() String
-        +_core(m) PyResult
-        +stub_info() Result~StubInfo~
+        +stub_info()
+        register_types()
     }
-    class timeline {
+
+    class clip {
+        <<module>>
         FrameRate
         Position
         Duration
         TimeRange
-        find_gaps()
-        merge_ranges()
-        total_coverage()
-    }
-    class clip {
         Clip
-        ValidationError
-        validate_clip()
-        validate_clips()
     }
+
     class ffmpeg {
+        <<module>>
         FFmpegCommand
         Filter
         FilterChain
         FilterGraph
-        scale_filter()
-        concat_filter()
+        PyExpr
+        DrawtextBuilder
+        SpeedControl
+        VolumeBuilder
+        AfadeBuilder
+        AmixBuilder
+        DuckingPattern
+        TransitionType
+        FadeBuilder
+        XfadeBuilder
+        AcrossfadeBuilder
     }
+
     class sanitize {
-        escape_filter_text()
-        validate_path()
-        validate_crf()
-        validate_speed()
+        <<module>>
         validate_volume()
-        validate_video_codec()
-        validate_audio_codec()
-        validate_preset()
+        sanitize_text()
     }
-    lib_rs --> timeline : pub mod, registers types
-    lib_rs --> clip : pub mod, registers types
-    lib_rs --> ffmpeg : pub mod, registers types
-    lib_rs --> sanitize : pub mod, registers functions
+
+    class timeline {
+        <<module>>
+        timeline assembly
+    }
+
+    class Exceptions {
+        <<Python exceptions>>
+        ValidationError
+        CommandError
+        SanitizationError
+    }
+
+    lib_rs --> clip : registers types
+    lib_rs --> ffmpeg : registers types
+    lib_rs --> sanitize : used by builders
+    lib_rs --> timeline : module
+    lib_rs --> Exceptions : registers
 ```
