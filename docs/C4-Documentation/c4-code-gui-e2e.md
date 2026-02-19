@@ -6,6 +6,7 @@
 - **Location**: `gui/e2e/`
 - **Language**: TypeScript
 - **Purpose**: Validates full user workflows through the browser against the running application, including API interactions, DOM assertions, and accessibility audits
+- **Parent Component**: [Web GUI](./c4-component-web-gui.md)
 
 ## Code Elements
 

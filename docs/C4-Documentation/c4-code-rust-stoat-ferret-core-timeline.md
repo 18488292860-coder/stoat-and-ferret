@@ -6,6 +6,7 @@
 - **Location**: `rust/stoat_ferret_core/src/timeline/`
 - **Language**: Rust
 - **Purpose**: Provides types for precise timeline calculations using integer frame counts to avoid floating-point precision issues: frame rates, positions, durations, and time ranges with set operations
+- **Parent Component**: [Rust Core Engine](./c4-component-rust-core-engine.md)
 
 ## Code Elements
 

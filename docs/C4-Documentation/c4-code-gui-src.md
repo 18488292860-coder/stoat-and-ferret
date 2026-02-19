@@ -6,6 +6,7 @@
 - **Location**: `gui/src/`
 - **Language**: TypeScript (TSX), CSS
 - **Purpose**: Bootstraps the React application with routing, renders the shell layout, and defines global styles
+- **Parent Component**: [Web GUI](./c4-component-web-gui.md)
 
 ## Code Elements
 

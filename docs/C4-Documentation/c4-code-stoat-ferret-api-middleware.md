@@ -6,6 +6,7 @@
 - **Location**: `src/stoat_ferret/api/middleware/`
 - **Language**: Python
 - **Purpose**: Add correlation IDs and collect HTTP request metrics for all API requests
+- **Parent Component**: [API Gateway](./c4-component-api-gateway.md)
 
 ## Code Elements
 

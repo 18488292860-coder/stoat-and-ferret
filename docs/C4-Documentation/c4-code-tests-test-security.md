@@ -7,6 +7,7 @@
 - **Location**: [tests/test_security/](../../tests/test_security/)
 - **Language**: Python (pytest, async)
 - **Purpose**: Validates defense against shell injection, null byte injection, FFmpeg filter syntax injection, whitelist bypass, path traversal attacks, and scan root enforcement
+- **Parent Component**: [Test Infrastructure](./c4-component-test-infrastructure.md)
 
 ## Code Elements
 

@@ -6,6 +6,7 @@
 - **Location**: `src/stoat_ferret/api/websocket/`
 - **Language**: Python
 - **Purpose**: Manage WebSocket connections and broadcast typed events to connected clients
+- **Parent Component**: [API Gateway](./c4-component-api-gateway.md)
 
 ## Code Elements
 

@@ -6,6 +6,7 @@
 - **Location**: `rust/stoat_ferret_core/src/ffmpeg/`
 - **Language**: Rust
 - **Purpose**: Provides a safe, validated API for generating FFmpeg CLI commands and complex filter graphs, exposed to Python via PyO3 bindings
+- **Parent Component**: [Rust Core Engine](./c4-component-rust-core-engine.md)
 
 ## Code Elements
 

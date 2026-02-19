@@ -7,6 +7,7 @@
 - **Location**: `tests/test_blackbox/`
 - **Language**: Python (pytest)
 - **Purpose**: Validates full project/clip/video lifecycle, error handling, edge cases, pagination, and concurrent access through the HTTP API
+- **Parent Component**: [Test Infrastructure](./c4-component-test-infrastructure.md)
 
 ## Code Elements
 

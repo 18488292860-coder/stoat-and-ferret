@@ -6,6 +6,7 @@
 - **Location**: `rust/stoat_ferret_core/src/sanitize/`
 - **Language**: Rust
 - **Purpose**: Prevents command injection and ensures parameter safety by escaping filter text, validating paths, validating numeric bounds (CRF, speed, volume), and whitelisting codec/preset values
+- **Parent Component**: [Rust Core Engine](./c4-component-rust-core-engine.md)
 
 ## Code Elements
 

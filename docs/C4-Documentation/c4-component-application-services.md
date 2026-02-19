@@ -16,54 +16,47 @@ This layer bridges the API Gateway (which handles HTTP concerns) and the Data Ac
 - **Directory Scanning**: Recursive video file discovery with metadata extraction via ffprobe
 - **Thumbnail Generation**: FFmpeg-based thumbnail creation at the 5-second mark
 - **FFmpeg Abstraction**: Protocol-based executor with Real, Recording, Fake, and Observable implementations
-- **Metrics & Logging**: Observable executor decorator adding Prometheus metrics and structured logging
+- **Metrics and Logging**: Observable executor decorator adding Prometheus metrics and structured logging
 - **Async Job Queue**: Background task processing with timeout, status tracking, and handler registration
 - **Path Security**: Scan path validation against allowed root directories
+- **Rust Command Bridge**: Integration layer connecting Rust FFmpegCommand builder with Python executor
 
 ## Code Elements
 
 This component contains:
-- [c4-code-stoat-ferret-api-services.md](./c4-code-stoat-ferret-api-services.md) — Scan service (directory scanning, path validation) and ThumbnailService
-- [c4-code-stoat-ferret-ffmpeg.md](./c4-code-stoat-ferret-ffmpeg.md) — FFmpegExecutor protocol, Real/Recording/Fake/Observable implementations, ffprobe, metrics
-- [c4-code-stoat-ferret-jobs.md](./c4-code-stoat-ferret-jobs.md) — AsyncJobQueue protocol, AsyncioJobQueue (production), InMemoryJobQueue (testing)
+- [c4-code-stoat-ferret-api-services.md](./c4-code-stoat-ferret-api-services.md) -- Scan service (directory scanning, path validation) and ThumbnailService
+- [c4-code-stoat-ferret-ffmpeg.md](./c4-code-stoat-ferret-ffmpeg.md) -- FFmpegExecutor protocol, Real/Recording/Fake/Observable implementations, ffprobe, metrics, integration bridge
+- [c4-code-stoat-ferret-jobs.md](./c4-code-stoat-ferret-jobs.md) -- AsyncJobQueue protocol, AsyncioJobQueue (production), InMemoryJobQueue (testing)
 
 ## Interfaces
 
 ### Scan Service
 - **Protocol**: Function calls (internal)
-- **Description**: Video directory scanning with metadata extraction
 - **Operations**:
-  - `validate_scan_path(path: str, allowed_roots: list[str]) -> str | None` — Validate scan path against allowed roots
-  - `scan_directory(path, recursive, repository, thumbnail_service) -> ScanResponse` — Scan directory for videos
-  - `make_scan_handler(repository, thumbnail_service) -> Callable` — Factory for job queue handler
+  - `validate_scan_path(path: str, allowed_roots: list[str]) -> str | None`
+  - `scan_directory(path, recursive, repository, thumbnail_service) -> ScanResponse`
+  - `make_scan_handler(repository, thumbnail_service) -> Callable`
 
 ### FFmpeg Executor
 - **Protocol**: Python protocol (function calls)
-- **Description**: Abstraction for FFmpeg process execution
 - **Operations**:
-  - `run(args: list[str], *, stdin: bytes | None, timeout: float | None) -> ExecutionResult` — Execute FFmpeg command
-  - `execute_command(executor, command: FFmpegCommand, *, timeout) -> ExecutionResult` — Bridge Rust command to Python executor
+  - `run(args: list[str], *, stdin: bytes | None, timeout: float | None) -> ExecutionResult`
+  - `execute_command(executor, command: FFmpegCommand, *, timeout) -> ExecutionResult`
 
 ### FFprobe
-- **Protocol**: Function call (subprocess)
-- **Description**: Video metadata extraction
-- **Operations**:
-  - `ffprobe_video(path: str) -> VideoMetadata` — Extract video metadata (dimensions, duration, codecs, frame rate)
+- **Operations**: `ffprobe_video(path: str) -> VideoMetadata`
 
 ### Thumbnail Service
-- **Protocol**: Function calls (internal)
-- **Description**: Video thumbnail generation and retrieval
 - **Operations**:
-  - `generate(video_path: str, video_id: str) -> str | None` — Generate JPEG thumbnail
-  - `get_thumbnail_path(video_id: str) -> str | None` — Check if thumbnail exists
+  - `generate(video_path: str, video_id: str) -> str | None`
+  - `get_thumbnail_path(video_id: str) -> str | None`
 
 ### Job Queue
-- **Protocol**: Python protocol (async function calls)
-- **Description**: Asynchronous background job processing
+- **Protocol**: Python protocol (async)
 - **Operations**:
-  - `submit(job_type: str, payload: dict) -> str` — Submit job, returns job ID
-  - `get_status(job_id: str) -> JobStatus` — Get job status (PENDING/RUNNING/COMPLETE/FAILED/TIMEOUT)
-  - `get_result(job_id: str) -> JobResult` — Get job result with status, value, and error
+  - `submit(job_type: str, payload: dict) -> str`
+  - `get_status(job_id: str) -> JobStatus`
+  - `get_result(job_id: str) -> JobResult`
 
 ## Dependencies
 

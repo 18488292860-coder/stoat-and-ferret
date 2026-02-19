@@ -1,18 +1,20 @@
-# C4 Context Level: System Context
+# C4 Context Level: System Overview
 
 ## System Overview
 
 ### Short Description
 
-stoat-and-ferret is an AI-driven video editor that exposes a REST API for managing a video library, building editing projects, applying visual effects, and rendering output files.
+stoat-and-ferret is an AI-driven video editor that provides a REST API and web GUI for managing video libraries, assembling editing projects, applying 9 built-in effects and transitions, and rendering output files.
 
 ### Long Description
 
-stoat-and-ferret is a self-hosted video editing system designed for programmatic control. It provides a structured REST API that allows human users (via a web browser) and AI agents (via HTTP calls) to scan a local video library, assemble editing projects from clips on a timeline, apply visual effects such as text overlays and speed changes, and render the result to an output file.
+stoat-and-ferret is a self-hosted video editing system designed for programmatic control. It provides a REST API and a React web GUI through which human users and AI agents can scan local video directories into a searchable library, assemble editing projects from clips on a timeline, apply visual and audio effects, configure transitions between clips, and render the result to an output file.
 
-The system is intentionally designed so that an AI agent can discover what operations are available — the effects endpoint returns machine-readable schemas and plain-language hints — and then issue the same API calls a human would make. This makes the system usable by natural-language-driven automation without requiring custom integrations.
+The system is designed so that an AI agent can discover what operations are available -- the effects endpoint returns machine-readable parameter schemas and plain-language AI hints -- and then issue the same API calls a human would make through the GUI. This makes the system usable by natural-language-driven automation without custom integrations.
 
-Video processing is handled by FFmpeg, which the system invokes as a background subprocess. All safety-critical work — path validation to prevent directory traversal, FFmpeg filter text sanitization to prevent command injection, and timeline arithmetic — is performed in a Rust library compiled into the server process, providing compile-time correctness guarantees.
+The editing model is non-destructive: source video files are never modified. Instead, the system builds a description of the desired output (clips, effects, transitions) and translates it into FFmpeg filter chains for rendering. All safety-critical operations -- path validation, filter text sanitization, and timeline arithmetic -- are performed by a compiled Rust library loaded into the server process, providing compile-time correctness guarantees.
+
+Nine built-in effects are available: text overlay, speed control, volume, audio fade, audio mix, audio ducking, video fade, video crossfade (59 transition types), and audio crossfade. Each effect is backed by a Rust builder that generates validated FFmpeg filter strings.
 
 The system is currently in alpha and targets single-user, single-machine deployment.
 
@@ -20,119 +22,128 @@ The system is currently in alpha and targets single-user, single-machine deploym
 
 ```mermaid
 C4Context
-    title System Context Diagram — stoat-and-ferret
+    title System Context Diagram for stoat-and-ferret
 
-    Person(human, "Video Editor", "Uses the web GUI to manage videos, build projects, apply effects, and monitor system health")
-    Person(ai_agent, "AI Agent", "Calls the REST API programmatically to discover effects, assemble timelines, apply effects, and trigger rendering")
-    Person(operator, "Operator / Developer", "Deploys and configures the system, monitors metrics, and maintains the codebase")
+    Person(editor, "Editor User", "Manages video library, builds projects, applies effects via web browser")
+    Person(ai_agent, "AI Agent", "Discovers and drives editing operations programmatically via REST API")
+    Person(maintainer, "Developer / Maintainer", "Develops, tests, and deploys the system using CLI tools and CI")
 
-    System(system, "stoat-and-ferret", "Self-hosted video editor providing a REST API and web GUI for library management, timeline editing, effect application, and video rendering")
+    System(stoat, "stoat-and-ferret", "AI-driven video editor with REST API, web GUI, and Rust-powered processing")
 
-    System_Ext(ffmpeg, "FFmpeg / ffprobe", "Processes video files: extracts metadata, generates thumbnails, and renders the final output")
-    System_Ext(prometheus, "Prometheus", "Optional metrics collection system that scrapes the /metrics endpoint")
-    SystemDb(filesystem, "Local File Storage", "Stores source video files, the SQLite database, and generated thumbnails")
+    System_Ext(ffmpeg, "FFmpeg / ffprobe", "Video processing, thumbnail generation, and metadata extraction")
+    System_Ext(prometheus, "Prometheus", "Metrics collection from /metrics endpoint (optional)")
+    SystemDb(filesystem, "Local File Storage", "Source video files, thumbnails, database, and rendered output")
+    System_Ext(ci, "GitHub Actions CI", "Automated testing across 3 OS and 3 Python versions")
 
-    Rel(human, system, "Browses and edits via web browser", "HTTPS")
-    Rel(ai_agent, system, "Discovers effects and controls editing via REST API", "HTTP/JSON")
-    Rel(operator, system, "Deploys, configures, and monitors")
-    Rel(system, ffmpeg, "Invokes for metadata extraction, thumbnail generation, and rendering", "subprocess")
-    Rel(system, filesystem, "Reads video files, writes thumbnails and database")
-    Rel(prometheus, system, "Scrapes metrics endpoint", "HTTP")
+    Rel(editor, stoat, "Browses web GUI, manages projects and effects", "HTTPS")
+    Rel(ai_agent, stoat, "Discovers API, applies effects, triggers renders", "REST API / JSON")
+    Rel(maintainer, stoat, "Develops, tests, deploys", "CLI, git, Docker")
+    Rel(stoat, ffmpeg, "Generates and executes video processing commands", "subprocess")
+    Rel(stoat, filesystem, "Reads source videos, writes thumbnails and rendered output", "file I/O")
+    Rel(prometheus, stoat, "Scrapes application metrics", "HTTP /metrics")
+    Rel(ci, stoat, "Runs test suites and quality checks", "pytest, cargo test, vitest")
 ```
 
 ## Personas
 
-### Video Editor (Human User)
+### Editor User (Human)
 
-- **Type**: Human User
-- **Description**: A person who wants to manage a local collection of video files, cut and arrange clips into a project, add text or speed effects, and export a finished video. Uses the React web GUI in a browser.
-- **Goals**: Scan folders of source footage into a searchable library, build an editing project by assembling clips on a timeline, apply visual effects, and render the project to an output file.
-- **Key Features Used**: Video Library Management, Video Search, Project and Timeline Management, Clip Editing, Effect Application, Real-Time Dashboard
+A person who uses the web GUI to manage a personal video library and create editing projects. They browse videos, organize clips into projects, apply effects like text overlays and transitions, and export finished videos. They interact through the web browser at `http://localhost:8000/gui`.
 
-### AI Agent (Programmatic User)
+- **Goals:** Build video projects from existing footage, apply creative effects, produce finished video files.
+- **Key features used:** Video Library, Project Management, Effect Workshop, Dashboard.
+- **Constraints:** Single-user, local deployment only. No multi-user or cloud features.
 
-- **Type**: Programmatic User
-- **Description**: A software agent (such as a Claude Code session or a script) that drives the editing workflow through the REST API, guided by natural language instructions from a person. The API is deliberately designed so agents can discover what is available and what parameters effects accept before issuing commands.
-- **Goals**: Discover available effects and their parameter schemas, assemble clips on a timeline through sequential API calls, apply effects using the machine-readable AI hints, trigger rendering, and poll for job completion.
-- **Key Features Used**: Effect Discovery, Project and Timeline Management, Clip Editing, Effect Application, Job Status Polling
+### AI Agent (Programmatic)
 
-### Operator / Developer
+An automated system (such as Claude or another LLM-based agent) that discovers the API via OpenAPI schema and drives editing operations programmatically. The API is designed with AI-first principles: self-documenting endpoints, discoverable effect catalogs with parameter schemas and AI hints, and transparent filter strings showing exactly what FFmpeg commands will be generated.
 
-- **Type**: Human User
-- **Description**: The person who installs and runs the server, sets configuration via environment variables, monitors system health and Prometheus metrics, and contributes to the codebase.
-- **Goals**: Verify the system is healthy, understand current resource usage, diagnose failures using structured logs and correlation IDs, and extend or maintain the system.
-- **Key Features Used**: Health Checks, Metrics Endpoint, Real-Time Dashboard
+- **Goals:** Translate natural language editing instructions into API calls, apply effects and transitions, orchestrate complete editing workflows.
+- **Key features used:** Effect Discovery, Project and Clip APIs, Effect Application, Transition Application, Job Polling.
+- **Constraints:** No authentication required for single-user deployment. Batch operations require sequential API calls.
+
+### Developer / Maintainer (Human)
+
+A software developer who builds, tests, and deploys the system. They work across three technology stacks (Python, Rust, TypeScript), use the CLI for development workflows, and rely on CI for quality verification. They maintain PyO3 bindings between Rust and Python, manage database migrations, and ensure test coverage meets thresholds (Python 80%, Rust 90%).
+
+- **Goals:** Extend functionality, maintain code quality, ensure cross-platform compatibility (Windows, macOS, Linux).
+- **Key features used:** Health Checks, Metrics, Structured Logging, Quality Gates, CI Pipeline.
+- **Constraints:** Hybrid build system requires Python, Rust, and Node.js toolchains.
 
 ## System Features
 
-| Feature | Description | Personas |
-|---------|-------------|----------|
-| Video Library Management | Scan one or more local directories to discover video files. Metadata (duration, resolution, codec, frame rate) is extracted and stored. Thumbnails are generated automatically. | Video Editor, AI Agent |
-| Video Search | Full-text search across filenames and paths using a SQLite full-text index. Supports pagination and sorting. | Video Editor, AI Agent |
-| Project and Timeline Management | Create named editing projects, add clips from the library to a timeline, reorder clips, and delete projects. Timeline positions are calculated by the Rust core. | Video Editor, AI Agent |
-| Clip Editing | Trim clips with in-point and out-point settings, update clip parameters, and remove clips from a project. Validation is performed by the Rust core. | Video Editor, AI Agent |
-| Effect Application | Apply visual effects to individual clips. Currently includes text overlay (positioned, styled text with optional fade) and speed control (slow motion or time-lapse with automatic audio adjustment). The Rust core generates the FFmpeg filter string for each effect and returns it transparently in the response. | Video Editor, AI Agent |
-| Effect Discovery | The effects endpoint returns all registered effects with parameter schemas, plain-language AI hints, and a sample filter preview. Designed for AI agents to learn what is available before issuing commands. | AI Agent |
-| Asynchronous Job Queue | Long-running operations (directory scanning, effect application) are submitted as jobs and processed in the background. Callers poll a job status endpoint for results. | Video Editor, AI Agent |
-| Real-Time Dashboard | The web GUI provides a live view of system health, Prometheus metrics, and a WebSocket activity log showing recent events (scans started, projects created, health checks). | Video Editor, Operator |
-| Health Checks | Liveness and readiness probes check the database connection and FFmpeg availability. The readiness probe includes the Rust core version. | Operator |
-| Metrics Endpoint | Prometheus-format metrics covering HTTP request counts, request durations, and active FFmpeg processes. | Operator |
+| Feature | Description | Personas | Containers |
+|---------|-------------|----------|------------|
+| Video Library Management | Scan local directories for video files, extract metadata via ffprobe, generate thumbnails, full-text search by filename and path | Editor, AI Agent | API Server, SQLite DB, File Storage |
+| Project Management | Create editing projects, add clips with in/out points, manage clip ordering on a timeline with Rust-calculated positions | Editor, AI Agent | API Server, Rust Core, SQLite DB |
+| Effect Application | Apply 9 built-in effects to clips: text overlay, speed control, volume, audio fade, audio mix, audio ducking, video fade, crossfade (59 types), audio crossfade | Editor, AI Agent | API Server, Rust Core, SQLite DB |
+| Transition Application | Apply transitions between adjacent clips in a project timeline with validation of clip adjacency | Editor, AI Agent | API Server, Rust Core, SQLite DB |
+| Effect Discovery | Browse all effects with JSON Schema parameter definitions, AI hints per parameter, and live filter string previews generated by Rust builders | Editor, AI Agent | API Server, Rust Core |
+| Effect Workshop (GUI) | Interactive effect builder with catalog browsing, schema-driven parameter forms, filter string preview, clip selector, and effect stack management with edit/remove | Editor | Web GUI, API Server |
+| Web Dashboard | Live system health cards, Prometheus metrics overview, and WebSocket activity log showing real-time events | Editor, Developer | Web GUI, API Server |
+| Video Library Browser (GUI) | Grid view of imported videos with search, sort, pagination, and scan directory modal | Editor | Web GUI, API Server |
+| API Discovery | Auto-generated OpenAPI schema, Swagger UI at /docs, and ReDoc at /redoc | AI Agent | API Server |
+| Health Monitoring | Liveness and readiness probes checking database, FFmpeg availability, and Rust core status | Developer | API Server, Rust Core |
+| Observability | Prometheus metrics (HTTP requests, FFmpeg execution, effect/transition counters), structured JSON logs with correlation IDs, audit trail | Developer | API Server |
+| Async Job Processing | Background job queue for directory scanning with status polling (pending, running, complete, failed, timeout) | Editor, AI Agent | API Server |
 
 ## User Journeys
 
-### Video Editor: Import and Browse the Video Library
+### Editor: Import Videos and Build a Project with Effects
 
-1. The editor opens the web GUI in a browser and navigates to the Library page.
-2. The editor enters a local folder path and triggers a directory scan. The server submits the scan as an async job and returns a job ID immediately.
-3. The GUI polls the job status endpoint until the scan completes, then shows a summary of files found.
-4. The editor browses the video grid, which shows thumbnails and metadata for each file.
-5. The editor uses the search bar to find specific clips by filename.
+1. Open the web GUI at `http://localhost:8000/gui` and confirm the Dashboard shows green health status
+2. Navigate to the **Library** tab and click "Scan Directory" to import videos from a local folder
+3. Monitor the scan via the activity feed; the scan runs as a background job (`POST /api/v1/videos/scan`)
+4. Browse imported videos in the library grid; use the search bar to find specific footage (`GET /api/v1/videos/search`)
+5. Navigate to the **Projects** tab and create a new project (`POST /api/v1/projects`)
+6. Add clips to the project by selecting videos and specifying in/out points (`POST /api/v1/projects/{id}/clips`)
+7. Navigate to the **Effects** tab (Effect Workshop)
+8. Select a clip from the clip selector, browse the effect catalog, and choose "Text Overlay"
+9. Fill in the parameter form (text, position, font size); observe the live filter preview
+10. Click "Apply Effect" to attach the effect to the clip (`POST /api/v1/projects/{id}/clips/{id}/effects`)
+11. Select another effect type (e.g., "Video Fade") and apply it; the effect stack shows both effects
+12. Apply a crossfade transition between two adjacent clips (`POST /api/v1/projects/{id}/effects/transition`)
+13. Edit or remove effects from the effect stack using the inline controls
 
-### Video Editor: Build a Project and Apply an Effect
+### AI Agent: Discover Effects and Drive an Editing Workflow
 
-1. The editor navigates to the Projects page and creates a new project with a name and output resolution.
-2. The editor adds clips from the library to the project timeline, setting in-point and out-point for each clip. The server validates that clip boundaries fall within the source video duration.
-3. The editor applies a text overlay effect to the first clip, choosing a position preset (for example, "center"). The server invokes the Rust core to generate the FFmpeg drawtext filter and stores it on the clip, returning the filter string in the response.
-4. The editor applies a speed control effect to a later clip to create a slow-motion segment.
+1. Fetch the OpenAPI schema at `GET /openapi.json` to discover available endpoints
+2. Query `GET /api/v1/effects` to receive all 9 effects with parameter schemas and AI hints
+3. Create a project via `POST /api/v1/projects` with a name
+4. Add clips via `POST /api/v1/projects/{id}/clips` with source video path and time range
+5. Preview a text overlay via `POST /api/v1/effects/preview` to verify the filter string
+6. Apply the effect via `POST /api/v1/projects/{id}/clips/{id}/effects`; the response includes the generated FFmpeg filter string for transparency
+7. Apply a dissolve transition between adjacent clips via `POST /api/v1/projects/{id}/effects/transition` with `transition_type: "xfade"` and `parameters: {transition: "dissolve", duration: 1.0, offset: 5.0}`
+8. Update an effect via `PATCH /api/v1/projects/{id}/clips/{id}/effects/{index}` with new parameters
+9. Remove an effect via `DELETE /api/v1/projects/{id}/clips/{id}/effects/{index}`
 
-### AI Agent: Discover Effects and Apply via REST API
+### Developer: Quality Verification and Deployment
 
-1. The agent calls `GET /api/v1/effects` and receives a list of all registered effects, including parameter schemas and plain-language AI hints for each field.
-2. Based on the effect schemas, the agent constructs a `POST /api/v1/effects/{effect_type}/apply` request with the desired effect type and parameters.
-3. The server validates the parameters, generates the filter string via the Rust core, stores the effect on the clip, and returns the filter string in the response.
-4. The agent polls `GET /api/v1/jobs/{job_id}` until the job status is "complete".
-
-### Operator: Monitor System Health
-
-1. The operator opens the web GUI Dashboard, which shows live health cards for the database, FFmpeg, and Rust core.
-2. The operator checks `GET /health/ready` directly to verify the system is accepting traffic.
-3. The operator views the Prometheus metrics at `/metrics` or configures Prometheus to scrape the endpoint periodically.
-4. When investigating a failure, the operator correlates structured log entries using the correlation ID present in each request and response.
+1. Clone the repository and install all toolchains (`uv sync`, `cd gui && npm install`, `maturin develop`)
+2. Run Python quality checks: `uv run ruff check .` (lint), `uv run mypy src/` (type check), `uv run pytest` (tests with 80% coverage threshold)
+3. Run Rust quality checks: `cargo clippy -- -D warnings`, `cargo test`
+4. Run frontend checks: `npx tsc -b`, `npx vitest run`
+5. Implement changes; include PyO3 bindings in the same feature (not deferred)
+6. Regenerate type stubs via `cargo run --bin stub_gen` and verify with `python scripts/verify_stubs.py`
+7. Push to GitHub; CI runs 9-matrix tests (3 OS x 3 Python), Rust coverage, E2E Playwright tests
+8. Fix any CI failures (up to 3 attempts), then merge via `gh pr merge --squash --delete-branch`
 
 ## External Systems and Dependencies
 
-### FFmpeg / ffprobe
-
-- **Type**: External binary (subprocess)
-- **Description**: Industry-standard video processing tools. ffprobe extracts video metadata (duration, resolution, codec, frame rate, audio channels). FFmpeg generates thumbnail images and renders the final project output file.
-- **Integration Type**: subprocess invocation — the server builds a command string using the Rust core and runs it as a child process.
-- **Purpose**: All actual video file processing happens in FFmpeg. stoat-and-ferret does not read or write video frames directly. Must be installed on the host machine; the readiness health check verifies FFmpeg is available.
-
-### Prometheus (optional)
-
-- **Type**: External metrics collection system
-- **Description**: A time-series database that scrapes HTTP metrics endpoints at a configured interval.
-- **Integration Type**: Pull-based HTTP scrape of `/metrics`.
-- **Purpose**: Long-term retention, alerting, and dashboarding of system metrics. Not required for core functionality — the metrics endpoint is always exposed, but Prometheus scraping it is optional.
-
-### Local File Storage
-
-- **Type**: Local filesystem
-- **Description**: The directories that hold source video files (configured by the operator via `STOAT_ALLOWED_SCAN_ROOTS`), the SQLite database file (`data/stoat.db`), and generated thumbnails (`data/thumbnails/`).
-- **Integration Type**: File I/O — the server reads video files for scanning and thumbnail generation, and writes thumbnail images.
-- **Purpose**: Persistent storage for all application data. Scan root directories are validated by the Rust core to prevent directory traversal.
+| System | Required | Integration | Purpose |
+|--------|----------|-------------|---------|
+| FFmpeg / ffprobe | Yes | Subprocess invocation | All video processing: metadata extraction, thumbnail generation, filter application, rendering. Must be installed on the host. Readiness probe verifies availability. |
+| Local Filesystem | Yes | File I/O | Source video files (user-configured scan roots), SQLite database file (`data/stoat.db`), generated thumbnails (`data/thumbnails/`). Scan paths validated by Rust to prevent directory traversal. |
+| SQLite | Yes | Embedded (aiosqlite) | In-process database for video metadata, projects, clips (with effects JSON), audit log, and FTS5 search index. Schema managed by Alembic migrations. |
+| Prometheus | No | HTTP pull (`/metrics`) | Optional metrics collection for HTTP request counts/durations, FFmpeg execution metrics, and effect/transition application counters. |
+| GitHub Actions CI | No | Git push trigger | Automated quality verification: 9-matrix test (3 OS x 3 Python versions), Rust coverage (75% minimum), frontend tests, E2E Playwright tests with axe-core accessibility audits. |
+| Docker | No | Multi-stage build | Optional containerized deployment. Builder stage compiles Rust extension with maturin; runtime stage creates slim Python environment with uv. |
 
 ## Related Documentation
 
-- [Container Documentation](./c4-container.md)
-- [Component Documentation](./c4-component.md)
+- [C4 Container Diagram](./c4-container.md) -- Deployment view of all containers and their interfaces
+- [C4 Component Overview](./c4-component.md) -- Internal component architecture and relationships
+- [System Architecture](../design/02-architecture.md) -- Detailed technical architecture
+- [API Specification](../design/05-api-specification.md) -- REST API endpoint reference
+- [GUI Architecture](../design/08-gui-architecture.md) -- Web frontend design
+- [Implementation Roadmap](../design/01-roadmap.md) -- Phased development plan

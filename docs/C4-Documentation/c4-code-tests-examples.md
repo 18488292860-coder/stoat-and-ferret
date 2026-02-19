@@ -7,6 +7,7 @@
 - **Location**: [tests/examples/](../../tests/examples/)
 - **Language**: Python (pytest, Hypothesis)
 - **Purpose**: Provides copy-paste templates for writing property tests on domain objects (Video, Clip), demonstrating the invariant-first approach to test design
+- **Parent Component**: [Test Infrastructure](./c4-component-test-infrastructure.md)
 
 ## Code Elements
 

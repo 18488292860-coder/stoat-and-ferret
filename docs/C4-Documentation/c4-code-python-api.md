@@ -10,7 +10,7 @@
 - **Location**: `src/stoat_ferret/api/`
 - **Language**: Python (FastAPI, async/await)
 - **Purpose**: HTTP/WebSocket endpoint layer orchestrating video processing operations with dependency injection.
-- **Parent Component**: TBD
+- **Parent Component**: [API Gateway](./c4-component-api-gateway.md)
 
 ## Code Elements
 

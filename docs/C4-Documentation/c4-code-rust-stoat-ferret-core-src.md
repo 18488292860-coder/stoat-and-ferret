@@ -6,6 +6,7 @@
 - **Location**: `rust/stoat_ferret_core/src/`
 - **Language**: Rust
 - **Purpose**: Bootstraps the `_core` Python extension module, registers all PyO3 types/exceptions, and re-exports public API for the FFmpeg command builder library
+- **Parent Component**: [Rust Core Engine](./c4-component-rust-core-engine.md)
 
 ## Code Elements
 

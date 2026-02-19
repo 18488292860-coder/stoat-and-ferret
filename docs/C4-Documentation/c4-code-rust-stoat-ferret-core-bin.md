@@ -6,6 +6,7 @@
 - **Location**: `rust/stoat_ferret_core/src/bin/`
 - **Language**: Rust
 - **Purpose**: Generates baseline Python `.pyi` type stubs using `pyo3-stub-gen` for the `stoat_ferret_core` crate
+- **Parent Component**: [Rust Core Engine](./c4-component-rust-core-engine.md)
 
 ## Code Elements
 

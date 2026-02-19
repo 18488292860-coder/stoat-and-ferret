@@ -6,6 +6,7 @@
 - **Location**: `gui/src/hooks/__tests__/`
 - **Language**: TypeScript
 - **Purpose**: Unit tests for 6 custom hooks covering polling behavior, WebSocket reconnection logic, debouncing, API interactions, and store integration
+- **Parent Component**: [Web GUI](./c4-component-web-gui.md)
 
 ## Code Elements
 

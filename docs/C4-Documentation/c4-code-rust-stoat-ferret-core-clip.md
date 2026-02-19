@@ -6,6 +6,7 @@
 - **Location**: `rust/stoat_ferret_core/src/clip/`
 - **Language**: Rust
 - **Purpose**: Provides the `Clip` struct for representing video clip segments and comprehensive validation logic with detailed error reporting
+- **Parent Component**: [Rust Core Engine](./c4-component-rust-core-engine.md)
 
 ## Code Elements
 

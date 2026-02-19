@@ -6,7 +6,7 @@
 - **Location**: `stubs/stoat_ferret_core/`
 - **Language**: Python (type stub files)
 - **Purpose**: Provides complete Python type annotations for the `stoat_ferret_core` Rust extension module, enabling IDE autocompletion and mypy type checking
-- **Parent Component**: TBD
+- **Parent Component**: [Python Bindings Layer](./c4-component-python-bindings.md)
 
 ## Code Elements
 

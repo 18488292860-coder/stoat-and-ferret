@@ -6,6 +6,7 @@
 - **Location**: `scripts/`
 - **Language**: Python
 - **Purpose**: CI-enforced drift detection that ensures manually maintained Python type stubs include all types defined in the Rust PyO3 bindings
+- **Parent Component**: [Python Bindings Layer](./c4-component-python-bindings.md)
 
 ## Code Elements
 

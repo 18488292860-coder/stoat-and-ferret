@@ -6,6 +6,7 @@
 - **Location**: `src/stoat_ferret/jobs/`
 - **Language**: Python
 - **Purpose**: Provide async job submission, status tracking, and background processing with asyncio for long-running operations like video scanning
+- **Parent Component**: [Application Services](./c4-component-application-services.md)
 
 ## Code Elements
 

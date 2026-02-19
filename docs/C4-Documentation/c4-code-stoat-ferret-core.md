@@ -6,7 +6,7 @@
 - **Location**: `src/stoat_ferret_core/`
 - **Language**: Python (wrapper for Rust via PyO3)
 - **Purpose**: Provide Python-accessible types for clip validation, timeline math, FFmpeg command building, filter expression engine, audio/video effect builders, and input sanitization from the Rust core library
-- **Parent Component**: TBD
+- **Parent Component**: [Python Bindings Layer](./c4-component-python-bindings.md)
 
 ## Code Elements
 

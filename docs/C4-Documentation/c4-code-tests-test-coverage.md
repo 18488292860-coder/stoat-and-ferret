@@ -7,6 +7,7 @@
 - **Location**: `tests/test_coverage/`
 - **Language**: Python (pytest)
 - **Purpose**: Verifies that stoat_ferret_core provides informative RuntimeError stubs when the native _core extension is unavailable
+- **Parent Component**: [Test Infrastructure](./c4-component-test-infrastructure.md)
 
 ## Code Elements
 

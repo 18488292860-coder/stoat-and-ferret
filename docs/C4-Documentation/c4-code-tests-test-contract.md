@@ -7,7 +7,7 @@
 - **Location**: `tests/test_contract/`
 - **Language**: Python (pytest, async)
 - **Purpose**: Guarantees that test doubles (InMemory repos) faithfully match production implementations (SQLite), and that FFmpeg executor variants (Real, Recording, Fake) produce consistent results
-- **Parent Component**: TBD
+- **Parent Component**: [Test Infrastructure](./c4-component-test-infrastructure.md)
 
 ## Code Elements
 

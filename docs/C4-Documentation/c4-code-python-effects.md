@@ -7,7 +7,7 @@
 - **Location**: `src/stoat_ferret/effects/`
 - **Language**: Python
 - **Purpose**: Provides 9 built-in effect definitions with parameter schemas, AI hints, build functions, and preview functions, plus a registry for effect discovery and JSON schema validation
-- **Parent Component**: TBD
+- **Parent Component**: [Effects Engine](./c4-component-effects-engine.md)
 
 ## Code Elements
 

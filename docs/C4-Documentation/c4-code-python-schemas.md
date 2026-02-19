@@ -11,7 +11,7 @@
 - **Location**: `src/stoat_ferret/api/schemas/`
 - **Language**: Python (Pydantic v2)
 - **Purpose**: Type-safe request/response contracts for HTTP API endpoints
-- **Parent Component**: TBD
+- **Parent Component**: [API Gateway](./c4-component-api-gateway.md)
 
 ## Code Elements
 

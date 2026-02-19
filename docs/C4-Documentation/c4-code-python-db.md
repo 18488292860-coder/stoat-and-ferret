@@ -11,7 +11,7 @@
 - **Location**: `src/stoat_ferret/db/`
 - **Language**: Python (sqlite3, aiosqlite -- no ORM)
 - **Purpose**: Data access layer abstracting database operations for projects, videos, clips, and audit logging
-- **Parent Component**: TBD
+- **Parent Component**: [Data Access Layer](./c4-component-data-access.md)
 
 ## Code Elements
 
