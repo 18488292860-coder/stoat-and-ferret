@@ -15,7 +15,8 @@
       "related_backlog": null,
       "summary": "PyO3 Method Chaining with PyRefMut",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-001-pyo3-method-chaining-with-pyrefmut.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-002",
@@ -32,7 +33,8 @@
       "related_backlog": null,
       "summary": "Frame-Accurate Timeline Math",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-002-frame-accurate-timeline-math.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-003",
@@ -48,7 +50,8 @@
       "related_backlog": null,
       "summary": "Security Validation Whitelist Pattern",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-003-security-validation-whitelist-pattern.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-004",
@@ -65,7 +68,8 @@
       "related_backlog": null,
       "summary": "InMemory test doubles must deepcopy on both read and write operations to prevent mutation leakage between tests.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-004-deepcopy-isolation-for-inmemory-test-doubles.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-005",
@@ -82,7 +86,8 @@
       "related_backlog": null,
       "summary": "Use create_app() constructor parameters instead of FastAPI dependency_overrides for cleaner, explicit test wiring without global mutable state.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-005-constructor-di-over-dependency-overrides-for-fasta.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-006",
@@ -99,7 +104,8 @@
       "related_backlog": null,
       "summary": "Test fixture factories with dual output modes (build for unit tests, create_via_api for integration tests) provide flexibility without forcing a single testing style.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-006-builder-pattern-with-dual-output-modes-for-test-fi.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-007",
@@ -117,7 +123,8 @@
       "related_backlog": null,
       "summary": "Parity tests running identical operations against InMemory fakes and real implementations catch behavioral drift automatically.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-007-parity-tests-prevent-test-double-drift.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-008",
@@ -135,7 +142,8 @@
       "related_backlog": null,
       "summary": "Three-tier executor pattern (Real/Recording/Fake) with strict argument verification enables reliable testing of external dependencies.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-008-record-replay-with-strict-mode-for-external-depend.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-009",
@@ -152,7 +160,8 @@
       "related_backlog": null,
       "summary": "Explicit handler registration with factory-based dependency injection provides clean, testable job routing without global state.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-009-handler-registration-pattern-for-generic-job-queue.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-010",
@@ -169,7 +178,8 @@
       "related_backlog": null,
       "summary": "stdlib asyncio.Queue with producer-consumer pattern eliminates external queue dependencies while meeting single-worker requirements.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-010-prefer-stdlib-asyncio-queue-over-external-queue-de.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-011",
@@ -188,7 +198,8 @@
       "related_backlog": null,
       "summary": "In hybrid Python/Rust architectures, Rust handles input sanitization and type safety while Python handles business policy and domain rules.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-011-python-business-logic-rust-input-safety-in-hybrid-.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-012",
@@ -206,7 +217,8 @@
       "related_backlog": null,
       "summary": "PyO3 FFI overhead makes Rust 7-10x slower than Python for simple operations; Rust wins only for string-heavy processing (1.9x faster).",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-012-pyo3-ffi-overhead-makes-rust-slower-for-simple-ope.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-013",
@@ -223,7 +235,8 @@
       "related_backlog": null,
       "summary": "Start with conservative coverage thresholds and ratchet up after confirming baseline, avoiding false CI failures during initial enforcement.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-013-progressive-coverage-thresholds-for-bootstrapping-.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-014",
@@ -240,7 +253,8 @@
       "related_backlog": null,
       "summary": "Embed process improvements directly into existing templates rather than standalone docs to ensure adoption in standard workflows.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-014-template-driven-process-improvements-over-standalo.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-015",
@@ -257,7 +271,8 @@
       "related_backlog": null,
       "summary": "Run expensive CI operations on a single platform in separate jobs rather than across the full test matrix to keep CI fast.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-015-single-matrix-ci-jobs-for-expensive-operations.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-016",
@@ -274,7 +289,8 @@
       "related_backlog": null,
       "summary": "Validate that acceptance criteria reference existing domain models and APIs during design phase to prevent unachievable requirements during execution.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-016-validate-acceptance-criteria-against-codebase-duri.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-017",
@@ -291,7 +307,8 @@
       "related_backlog": null,
       "summary": "Empty allowlist defaulting to unrestricted preserves backwards compatibility while letting production environments lock down access explicitly.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-017-empty-allowlist-means-unrestricted-as-backwards-co.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-018",
@@ -306,9 +323,10 @@
       "source": "v004/05-devex-coverage/003-coverage-gap-fixes",
       "source_type": "manual",
       "related_backlog": null,
-      "summary": "Catalogue all suppressions first, evaluate justification, then fix only unjustified ones — prevents unnecessary churn from blanket changes.",
+      "summary": "Catalogue all suppressions first, evaluate justification, then fix only unjustified ones \u2014 prevents unnecessary churn from blanket changes.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-018-audit-then-fix-is-more-efficient-than-blanket-chan.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-019",
@@ -325,7 +343,8 @@
       "related_backlog": null,
       "summary": "Sequence infrastructure themes before consumer themes in version planning; the upfront investment pays off when subsequent themes consume the infrastructure.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-019-build-infrastructure-first-in-sequential-version-p.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-020",
@@ -343,7 +362,8 @@
       "related_backlog": null,
       "summary": "Only mount StaticFiles when the directory exists to decouple backend testing from frontend build state; auto-load from settings for seamless production serving.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-020-conditional-static-mount-pattern-for-optional-fron.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-021",
@@ -361,7 +381,8 @@
       "related_backlog": null,
       "summary": "Vite 7 + Vitest 4 require separate vitest.config.ts; inline test config in vite.config.ts causes TypeScript errors.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-021-separate-vitest-config-for-vite-7-projects.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-022",
@@ -379,7 +400,8 @@
       "related_backlog": null,
       "summary": "Automated axe-core accessibility checks in E2E tests catch real WCAG violations cheaply; include them from the start rather than retrofitting.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-022-automated-accessibility-testing-catches-real-viola.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-023",
@@ -397,7 +419,8 @@
       "related_backlog": null,
       "summary": "SPA E2E tests must use client-side navigation (clicking UI elements) from root path when the server doesn't handle SPA fallback routing for sub-paths.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-023-client-side-navigation-for-spa-e2e-tests-without-s.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-024",
@@ -415,7 +438,8 @@
       "related_backlog": null,
       "summary": "Use multiple focused Zustand stores scoped to feature domains with bounded eviction policies for lightweight, testable state management in React apps.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-024-focused-zustand-stores-over-monolithic-state-manag.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
     },
     {
       "id": "LRN-025",
@@ -433,8 +457,122 @@
       "related_backlog": null,
       "summary": "Feature handoff documents communicating integration points and patterns enable zero-rework feature chains when combined with correct sequencing.",
       "content_path": "docs/auto-dev/LEARNINGS/LRN-025-feature-handoff-documents-enable-zero-rework-seque.md",
-      "status": "active"
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-026",
+      "title": "Opt-In Validation Preserves Backward Compatibility",
+      "tags": [
+        "pattern",
+        "backward-compatibility",
+        "validation",
+        "api-design"
+      ],
+      "created": "2026-02-19T07:01:21.665270Z",
+      "source": "v006/01-filter-engine/002-graph-validation completion-report, v006/01-filter-engine retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Make new validation opt-in via explicit methods rather than modifying existing behavior, so existing consumers continue working unchanged.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-026-opt-in-validation-preserves-backward-compatibility.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-027",
+      "title": "Property-Based Testing Catches Serialization Edge Cases",
+      "tags": [
+        "pattern",
+        "testing",
+        "proptest",
+        "serialization",
+        "rust"
+      ],
+      "created": "2026-02-19T07:01:33.286883Z",
+      "source": "v006/01-filter-engine/001-expression-engine completion-report, v006/02-filter-builders/002-speed-builders completion-report, v006 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Property-based testing catches serialization edge cases (balanced parentheses, invalid values, boundary conditions) that hand-written unit tests miss, at low marginal cost.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-027-property-based-testing-catches-serialization-edge-.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-028",
+      "title": "Repeatable Implementation Templates Across Feature Series",
+      "tags": [
+        "process",
+        "pattern",
+        "templates",
+        "scaling",
+        "consistency"
+      ],
+      "created": "2026-02-19T07:01:41.589254Z",
+      "source": "v006/01-filter-engine retrospective, v006/02-filter-builders retrospective, v006 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Establishing a consistent implementation template in the first feature of a series accelerates all subsequent features and reduces error rates.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-028-repeatable-implementation-templates-across-feature.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-029",
+      "title": "Conscious Simplicity with Documented Upgrade Paths",
+      "tags": [
+        "decision-framework",
+        "architecture",
+        "yagni",
+        "simplicity",
+        "trade-offs"
+      ],
+      "created": "2026-02-19T07:01:58.865273Z",
+      "source": "v006/03-effects-api retrospective, v006 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Choose the simplest implementation for current scope but document explicit upgrade triggers; conscious simplicity with a documented threshold is a design decision, not technical debt.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-029-conscious-simplicity-with-documented-upgrade-paths.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-030",
+      "title": "Architecture Documentation as an Explicit Feature Deliverable",
+      "tags": [
+        "process",
+        "documentation",
+        "architecture",
+        "api-design",
+        "quality"
+      ],
+      "created": "2026-02-19T07:02:10.323829Z",
+      "source": "v006/03-effects-api/003-architecture-docs completion-report, v006/03-effects-api retrospective, v006 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Dedicate an explicit feature to architecture documentation updates after implementation, ensuring docs stay in lockstep with code and catching API spec discrepancies.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-030-architecture-documentation-as-an-explicit-feature-.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-031",
+      "title": "Detailed Design Specifications Correlate with First-Iteration Success",
+      "tags": [
+        "process",
+        "design",
+        "requirements",
+        "planning",
+        "quality"
+      ],
+      "created": "2026-02-19T07:02:20.720023Z",
+      "source": "v006 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Detailed design specs with specific acceptance criteria, implementation plans, and scope boundaries lead to first-iteration feature success with no rework.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-031-detailed-design-specifications-correlate-with-firs.md",
+      "status": "active",
+      "updated_at": null
     }
   ],
-  "next_id": 26
+  "next_id": 32
 }
