@@ -1,14 +1,16 @@
 {
   "exploration_id": "v006-retro-005-arch-1771484072806",
   "results_folder": "v006-retro-005-arch",
-  "status": "running",
+  "status": "complete",
   "pid": 12828,
   "started_at": "2026-02-19T06:54:32.806217",
-  "updated_at": "2026-02-19T06:54:34.579438",
-  "completed_at": null,
+  "updated_at": "2026-02-19T06:57:12.643670",
+  "completed_at": "2026-02-19T06:57:12.643212",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/v006-retro-005-arch/prompt.md",
   "outbox_path": "comms/outbox/exploration/v006-retro-005-arch"
