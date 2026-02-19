@@ -30,9 +30,18 @@ All checks passed on the finalization run:
 
 No quality gate failures. No deferred code problems.
 
+## Commit
+
+SHA: `5751214` — `chore(v006): version closure housekeeping — finalization task complete`
+
+Files committed:
+- `comms/state/explorations/v006-retro-010-final-1771485493408.json`
+- `comms/outbox/exploration/v006-retro-010-final/README.md`
+- `comms/outbox/versions/retrospective/v006/010-finalization/` (README.md, final-summary.md)
+
 ## Version Status
 
-`complete_version(project="stoat-and-ferret", version_number=6)` — succeeded.
+`complete_version(project="stoat-and-ferret", version_number=6)` — succeeded. Version published to `docs/versions/v006/` with 8 files including VERSION_SUMMARY.md.
 
 ## Retrospective Summary
 
