@@ -7,14 +7,14 @@
 
 ## Current Focus
 
-**Recently Completed:** v006 (effects engine foundation: filter expression engine, graph validation, text overlay, speed control)
-**Upcoming:** v007 (effect workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview)
+**Recently Completed:** v007 (effect workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview)
+**Upcoming:** v008 (TBD — Phase 3: Composition Engine)
 
 ## Roadmap → Version Mapping
 
 | Version | Roadmap Reference | Focus | Status |
 |---------|-------------------|-------|--------|
-| v007 | Phase 2, M2.4–2.6, M2.8–2.9 | Effect Workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview | 📋 planned |
+| v007 | Phase 2, M2.4–2.6, M2.8–2.9 | Effect Workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview | ✅ complete |
 | v006 | Phase 2, M2.1–2.3 | Effects engine foundation: filter expression engine, graph validation, text overlay, speed control | ✅ complete |
 | v005 | Phase 1, M1.10–1.12 | GUI shell + library browser + project manager | ✅ complete |
 | v004 | Phase 1, M1.8–1.9 | Testing infrastructure + quality verification | ✅ complete |
@@ -33,30 +33,21 @@ Track explorations that must complete before version design.
 | EXP-003 | FastAPI static file serving — GUI deployment from API server | v005 | complete |
 | BL-028 | Frontend framework selection (extends EXP-003) | v005 | complete |
 | BL-043 | Clip effect model design (how effects attach to clips) | v006 | complete |
-| BL-047 | Effect registry schema and builder protocol design | v007 | pending |
-| BL-051 | Preview thumbnail pipeline (frame extraction + effect application) | v007 | pending |
+| BL-047 | Effect registry schema and builder protocol design | v007 | complete |
+| BL-051 | Preview thumbnail pipeline (frame extraction + effect application) | v007 | complete |
 
 ## Planned Versions
 
-### v007 - Effect Workshop GUI (Planned)
-
-**Goal:** Complete remaining effects (audio, transitions), build effect registry, construct full GUI workshop. Milestones M2.4–2.6, M2.8–2.9.
-**Estimated scope:** 9 items
-
-**Items (BL-044–052):**
-- BL-044 (P1): Implement audio mixing filter builders
-- BL-045 (P1): Implement transition filter builders
-- BL-046 (P1): Create transition API endpoint
-- BL-047 (P1): Build effect registry with JSON schema validation
-- BL-048 (P1): Build effect catalog UI
-- BL-049 (P1): Build dynamic parameter form generator
-- BL-050 (P1): Implement live filter preview
-- BL-051 (P1): Build effect builder workflow
-- BL-052 (P2): E2E tests for effect workshop
-
-**Dependencies:** Depends on v006 (effects engine) and v005 (frontend project). BL-044/045→BL-037 (expression engine), BL-046→BL-045, BL-047→BL-044+BL-045, BL-048→BL-047, BL-049→BL-048, BL-050→BL-049, BL-051→BL-048+BL-049+BL-050, BL-052→BL-051
+No versions currently planned. Next version (v008) will target Phase 3: Composition Engine.
 
 ## Completed Versions
+
+### v007 - Effect Workshop GUI (2026-02-19)
+- **Themes:** rust-filter-builders, effect-registry-api, effect-workshop-gui, quality-validation
+- **Features:** 11 completed across 4 themes
+- **Backlog Resolved:** BL-044, BL-045, BL-046, BL-047, BL-048, BL-049, BL-050, BL-051, BL-052
+- **Key Changes:** Rust audio mixing builders (AmixBuilder, VolumeBuilder, AfadeBuilder, DuckingPattern) and transition builders (FadeBuilder, XfadeBuilder, AcrossfadeBuilder), effect registry refactor to builder-protocol dispatch with JSON schema validation, transition API endpoint with clip adjacency validation, complete GUI effect workshop (catalog with search/filter, schema-driven parameter forms, live filter preview with syntax highlighting, effect builder workflow with CRUD lifecycle), Playwright E2E tests with WCAG AA accessibility compliance
+- **Deferred:** None
 
 ### v006 - Effects Engine Foundation (2026-02-19)
 - **Themes:** filter-engine, filter-builders, effects-api
@@ -125,6 +116,7 @@ Query: `list_backlog_items(project="stoat-and-ferret", status="open")`
 
 | Date | Change |
 |------|--------|
+| 2026-02-19 | v007 complete: Effect Workshop GUI delivered (4 themes, 11 features, 9 backlog items completed). Moved v007 from Planned to Completed. Updated Current Focus to v008. Marked BL-047 and BL-051 investigations as complete. |
 | 2026-02-19 | v006 complete: Effects Engine Foundation delivered (3 themes, 8 features, 7 backlog items completed). Moved v006 from Planned to Completed. Updated Current Focus to v007. Marked BL-043 investigation as complete. |
 | 2026-02-09 | v005 complete: GUI Shell, Library Browser & Project Manager delivered (4 themes, 11 features, 10 backlog items completed). Moved v005 from Planned to Completed. Updated Current Focus to v006. Marked EXP-003 and BL-028 investigations as complete. |
 | 2026-02-09 | v004 complete: Testing Infrastructure & Quality Verification delivered (5 themes, 15 features, 13 backlog items completed). Moved v004 from Planned to Completed. Updated Current Focus to v005. |
