@@ -1,0 +1,15 @@
+{
+  "exploration_id": "v006-retro-001-env-1771483293898",
+  "results_folder": "v006-retro-001-env",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-19T06:41:33.898692",
+  "updated_at": "2026-02-19T06:41:33.898692",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/v006-retro-001-env/prompt.md",
+  "outbox_path": "comms/outbox/exploration/v006-retro-001-env"
+}
