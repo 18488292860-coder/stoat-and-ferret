@@ -4,6 +4,69 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v006] - 2026-02-19
+
+Effects Engine Foundation. Builds a greenfield Rust filter expression engine with graph validation, composition system, text overlay and speed control builders, effect discovery API, and clip effect application endpoint. Completes Phase 2 core milestones (M2.1-M2.3).
+
+### Added
+
+- **Filter Expression Engine (Rust)**
+  - `Expr` enum with type-safe builder API for FFmpeg filter expressions
+  - Operator overloading and precedence-aware serialization (minimizes parentheses)
+  - FFmpeg variable support (`t`, `n`, `w`, `h`, etc.) and function calls (`if`, `lt`, `between`, etc.)
+  - Proptest validation for expression correctness (balanced parens, no NaN/Inf)
+  - Full PyO3 bindings with Python type stubs
+
+- **Filter Graph Validation (Rust)**
+  - Opt-in `validate()` and `validated_to_string()` methods on `FilterGraph`
+  - Unconnected pad detection, duplicate label detection
+  - Cycle detection using Kahn's algorithm (O(V+E)) with involved-label error messages
+  - Backward-compatible: existing `to_string()` behavior unchanged
+
+- **Filter Composition API (Rust)**
+  - `compose_chain`, `compose_branch`, `compose_merge` programmatic composition functions
+  - `LabelGenerator` with thread-safe `AtomicU64` counter for automatic pad label management
+  - Auto-generated `_auto_{prefix}_{seq}` labels for debugging clarity
+
+- **DrawtextBuilder (Rust)**
+  - Type-safe drawtext filter builder with fluent API
+  - Position presets enum (Center, BottomCenter, TopLeft, etc.) with margin parameters
+  - Font styling (family, size, color), shadow and box background effects
+  - Alpha fade animation via expression engine integration
+  - Extended text escaping (`%` -> `%%` for drawtext expansion mode)
+
+- **SpeedControl (Rust)**
+  - `setpts` video speed builder with expression-based PTS manipulation
+  - `atempo` audio speed builder with automatic chaining for speeds outside [0.5, 2.0]
+  - Decomposition algorithm for extreme speeds (e.g., 4x -> atempo=2.0,atempo=2.0)
+  - Drop-audio option for video-only speed changes
+  - Proptest validation for atempo chain product correctness and bound compliance
+
+- **Effect Discovery API (Python)**
+  - `EffectRegistry` with parameter schemas and AI hints for each registered effect
+  - `GET /api/v1/effects` endpoint returning available effects with metadata
+  - Preview function integration (previewed filters match applied filters)
+
+- **Clip Effect Application API (Python)**
+  - `POST /api/v1/projects/{id}/clips/{id}/effects` endpoint
+  - Effect storage as JSON list column in clip model (`effects_json TEXT`)
+  - DrawtextBuilder and SpeedControl dispatch from API parameters
+  - DI via `create_app()` kwarg -> `app.state.effect_registry` pattern
+
+- **Architecture Documentation**
+  - Updated `02-architecture.md` with Rust filter modules, Effects Service, and clip model extension
+  - API specification reconciled with actual implementation
+  - C4 architecture documentation regenerated at all levels
+
+### Changed
+
+- Clip model extended with `effects_json` column for persistent effect storage
+- Effects router serves both global (`/api/v1/effects`) and per-clip (`/api/v1/projects/{id}/clips/{id}/effects`) routes
+
+### Fixed
+
+- N/A (greenfield implementation)
+
 ## [v005] - 2026-02-09
 
 GUI Shell, Library Browser & Project Manager. Builds the frontend from scratch: React/TypeScript/Vite project, WebSocket real-time events, backend thumbnail pipeline, four main GUI panels, and Playwright E2E testing. Completes Phase 1 (M1.10-M1.12).

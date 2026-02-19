@@ -29,15 +29,15 @@
     {
       "number": 3,
       "name": "effects-api",
-      "status": "in_progress",
+      "status": "completed",
       "features_total": 3,
       "features_complete": 3,
       "started_at": "2026-02-19T01:37:45.577514Z",
-      "completed_at": null,
+      "completed_at": "2026-02-19T02:18:58.374819Z",
       "skip_reason": null
     }
   ],
-  "current_theme": 3,
-  "current_feature": 3,
+  "current_theme": 4,
+  "current_feature": 1,
   "baseline_failures": []
 }
