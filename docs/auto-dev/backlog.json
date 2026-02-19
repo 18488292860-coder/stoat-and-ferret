@@ -1,6 +1,6 @@
 {
   "next_id": 56,
-  "updated_at": "2026-02-19T16:59:19.174765",
+  "updated_at": "2026-02-19T22:57:11.050544",
   "items": [
     {
       "id": "BL-001",
@@ -1663,10 +1663,10 @@
       "id": "BL-044",
       "title": "Implement audio mixing filter builders (amix/volume/fade)",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "l",
       "added": "2026-02-08T17:59:41.434479",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:02.037211",
       "tags": [
         "v007",
         "rust",
@@ -1698,18 +1698,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Implement audio mixing filter builders (amix/volume/fade). It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "rust-filter-builders",
       "upvotes": 0
     },
     {
       "id": "BL-045",
       "title": "Implement transition filter builders (fade/xfade)",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:59:46.825964",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:03.218415",
       "tags": [
         "v007",
         "rust",
@@ -1740,18 +1740,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Implement transition filter builders (fade/xfade). It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "rust-filter-builders",
       "upvotes": 0
     },
     {
       "id": "BL-046",
       "title": "Create transition API endpoint for clip-to-clip transitions",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T17:59:51.298982",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:04.502108",
       "tags": [
         "v007",
         "api",
@@ -1782,18 +1782,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Create transition API endpoint for clip-to-clip transitions. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "effect-registry-api",
       "upvotes": 0
     },
     {
       "id": "BL-047",
       "title": "Build effect registry with JSON schema validation and builder protocol",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "l",
       "added": "2026-02-08T17:59:58.051286",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:05.611359",
       "tags": [
         "v007",
         "registry",
@@ -1825,18 +1825,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Build effect registry with JSON schema validation and builder protocol. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "effect-registry-api",
       "upvotes": 0
     },
     {
       "id": "BL-048",
       "title": "Build effect catalog UI component",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T18:00:07.485872",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:06.657699",
       "tags": [
         "v007",
         "gui",
@@ -1868,18 +1868,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Build effect catalog UI component. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "effect-workshop-gui",
       "upvotes": 0
     },
     {
       "id": "BL-049",
       "title": "Build dynamic parameter form generator from JSON schema",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "l",
       "added": "2026-02-08T18:00:14.349552",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:07.771281",
       "tags": [
         "v007",
         "gui",
@@ -1911,18 +1911,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Build dynamic parameter form generator from JSON schema. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "effect-workshop-gui",
       "upvotes": 0
     },
     {
       "id": "BL-050",
       "title": "Implement live FFmpeg filter preview in effect parameter UI",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T18:00:19.762113",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:08.886165",
       "tags": [
         "v007",
         "gui",
@@ -1950,18 +1950,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Implement live FFmpeg filter preview in effect parameter UI. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "effect-workshop-gui",
       "upvotes": 0
     },
     {
       "id": "BL-051",
       "title": "Build effect builder workflow with clip selector and effect stack",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "size": "l",
       "added": "2026-02-08T18:00:26.538591",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:10.011196",
       "tags": [
         "v007",
         "gui",
@@ -1993,18 +1993,18 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: Build effect builder workflow with clip selector and effect stack. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "effect-workshop-gui",
       "upvotes": 0
     },
     {
       "id": "BL-052",
       "title": "E2E tests for effect workshop workflow",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "size": "m",
       "added": "2026-02-08T18:00:32.690882",
-      "completed_at": null,
+      "completed_at": "2026-02-19T22:57:11.050541",
       "tags": [
         "v007",
         "testing",
@@ -2036,8 +2036,8 @@
       ],
       "notes": null,
       "use_case": "This feature addresses: E2E tests for effect workshop workflow. It improves the system by resolving the described requirement.",
-      "implemented_in_version": null,
-      "implemented_in_theme": null,
+      "implemented_in_version": "v007",
+      "implemented_in_theme": "quality-validation",
       "upvotes": 0
     },
     {
@@ -2150,6 +2150,6 @@
       "upvotes": 0
     }
   ],
-  "completed_count": 40,
+  "completed_count": 49,
   "cancelled_count": 0
 }
