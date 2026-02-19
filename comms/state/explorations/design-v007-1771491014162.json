@@ -1,10 +1,10 @@
 {
   "exploration_id": "design-v007-1771491014162",
   "results_folder": "design-v007",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 12828,
   "started_at": "2026-02-19T08:50:14.162819",
-  "updated_at": "2026-02-19T08:50:14.162819",
+  "updated_at": "2026-02-19T08:50:16.694373",
   "completed_at": null,
   "error": null,
   "documents": [],
