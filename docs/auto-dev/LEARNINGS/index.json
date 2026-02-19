@@ -572,7 +572,159 @@
       "content_path": "docs/auto-dev/LEARNINGS/LRN-031-detailed-design-specifications-correlate-with-firs.md",
       "status": "active",
       "updated_at": null
+    },
+    {
+      "id": "LRN-032",
+      "title": "Schema-Driven Architecture Enables Backend-to-Frontend Consistency",
+      "tags": [
+        "pattern",
+        "architecture",
+        "schema",
+        "frontend",
+        "backend"
+      ],
+      "created": "2026-02-19T23:22:52.815000Z",
+      "source": "v007 cross-theme (T02-effect-registry-api/T03-effect-workshop-gui)",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Define data schemas once in the backend and use them to drive frontend UI generation, eliminating hardcoded components and ensuring consistent validation at both layers.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-032-schema-driven-architecture-enables-backend-to-fron.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-033",
+      "title": "Fix CI Reliability Before Dependent Development Cycles",
+      "tags": [
+        "process",
+        "ci",
+        "reliability",
+        "planning",
+        "failure-mode"
+      ],
+      "created": "2026-02-19T23:23:04.800386Z",
+      "source": "v007/03-effect-workshop-gui retrospective, v007/04-quality-validation retrospective, v007 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Fix CI reliability issues before starting development cycles that depend on CI for PR merges; a single flaky test can block multiple features and themes.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-033-fix-ci-reliability-before-dependent-development-cy.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-034",
+      "title": "Validate Numeric Requirements Against Upstream Sources During Design",
+      "tags": [
+        "process",
+        "requirements",
+        "design",
+        "validation",
+        "decision-framework"
+      ],
+      "created": "2026-02-19T23:23:16.386938Z",
+      "source": "v007/01-rust-filter-builders retrospective, v007/01-rust-filter-builders/002-transition-filter-builders completion-report",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Cross-check numeric claims in requirements against upstream source documentation during design to avoid spec-vs-reality mismatches during implementation.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-034-validate-numeric-requirements-against-upstream-sou.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-035",
+      "title": "Automate Manual Maintenance When Third Instance Appears",
+      "tags": [
+        "process",
+        "tooling",
+        "maintenance",
+        "automation",
+        "decision-framework"
+      ],
+      "created": "2026-02-19T23:23:29.214293Z",
+      "source": "v007/01-rust-filter-builders retrospective, v007 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Apply the rule of three to manual maintenance tasks: automate when the third instance appears, and set the threshold explicitly at the first instance.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-035-automate-manual-maintenance-when-third-instance-ap.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-036",
+      "title": "Debounced Stateless Preview Endpoints for Real-Time UI",
+      "tags": [
+        "pattern",
+        "api-design",
+        "frontend",
+        "performance",
+        "ux"
+      ],
+      "created": "2026-02-19T23:23:41.015401Z",
+      "source": "v007/03-effect-workshop-gui/003-live-filter-preview completion-report, v007/03-effect-workshop-gui retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Combine a stateless backend preview endpoint with client-side debouncing (200-300ms) for responsive real-time UI previews without API flooding.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-036-debounced-stateless-preview-endpoints-for-real-tim.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-037",
+      "title": "Feature Composition Succeeds Through Independent Store Interfaces",
+      "tags": [
+        "pattern",
+        "frontend",
+        "architecture",
+        "composability",
+        "zustand"
+      ],
+      "created": "2026-02-19T23:23:52.919238Z",
+      "source": "v007/03-effect-workshop-gui retrospective, v007 version retrospective",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Design each feature as a standalone component with an independent state store and clean interface; composition features can then orchestrate without modifying internals.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-037-feature-composition-succeeds-through-independent-s.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-038",
+      "title": "Sub-Agent File Operations Fail When Read-Before-Write Is Skipped",
+      "tags": [
+        "process",
+        "tooling",
+        "sub-agents",
+        "failure-mode",
+        "session-health"
+      ],
+      "created": "2026-02-19T23:24:06.282122Z",
+      "source": "session analytics (v007 period)",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "Sub-agents frequently fail with 'file not read' errors when attempting Write/Edit without prior Read; include explicit read-first instructions in sub-agent prompts.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-038-sub-agent-file-operations-fail-when-read-before-wr.md",
+      "status": "active",
+      "updated_at": null
+    },
+    {
+      "id": "LRN-039",
+      "title": "Excessive Context Compaction Signals Need for Task Decomposition",
+      "tags": [
+        "process",
+        "session-health",
+        "context-management",
+        "decomposition",
+        "efficiency"
+      ],
+      "created": "2026-02-19T23:24:17.662930Z",
+      "source": "session analytics (v007 period), v007 session health findings",
+      "source_type": "manual",
+      "related_backlog": null,
+      "summary": "48% of sessions hit 3+ context compaction events; decompose large tasks, use targeted reads, and summarize intermediate results to reduce context churn.",
+      "content_path": "docs/auto-dev/LEARNINGS/LRN-039-excessive-context-compaction-signals-need-for-task.md",
+      "status": "active",
+      "updated_at": null
     }
   ],
-  "next_id": 32
+  "next_id": 40
 }
