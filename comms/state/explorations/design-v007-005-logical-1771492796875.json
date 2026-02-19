@@ -1,0 +1,15 @@
+{
+  "exploration_id": "design-v007-005-logical-1771492796875",
+  "results_folder": "design-v007-005-logical",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-19T09:19:56.875682",
+  "updated_at": "2026-02-19T09:19:56.875682",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/design-v007-005-logical/prompt.md",
+  "outbox_path": "comms/outbox/exploration/design-v007-005-logical"
+}
