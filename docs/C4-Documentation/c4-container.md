@@ -11,8 +11,8 @@ C4Container
     System_Boundary(system, "stoat-and-ferret") {
         Container(gui, "Web GUI", "TypeScript/React/Vite", "SPA with dashboard, video library, project management")
         Container(api, "API Server", "Python/FastAPI/uvicorn", "REST + WebSocket API, serves static GUI, runs background jobs")
-        Container(rust, "Rust Core Library", "Rust/PyO3", "Timeline math, clip validation, FFmpeg command building, sanitization")
-        ContainerDb(db, "SQLite Database", "SQLite/aiosqlite", "Videos, projects, clips, audit log, FTS5 index")
+        Container(rust, "Rust Core Library", "Rust/PyO3", "Timeline math, clip validation, FFmpeg command building, sanitization, effect builders")
+        ContainerDb(db, "SQLite Database", "SQLite/aiosqlite/Alembic", "Videos, projects, clips, audit log, FTS5 index")
         Container(fs, "File Storage", "Local filesystem", "Source videos, thumbnails, database file")
     }
 
@@ -33,18 +33,19 @@ C4Container
 ### API Server
 
 - **Name**: API Server
-- **Description**: The FastAPI backend that hosts the REST API, WebSocket endpoint, background job worker, and serves the built GUI as static files. This is the single running process for the application.
+- **Description**: The FastAPI backend that hosts the REST API, WebSocket endpoint, background job worker, effects registry, and serves the built GUI as static files. This is the single running process for the application.
 - **Type**: API / Web Application
-- **Technology**: Python 3.10+, FastAPI, uvicorn, Starlette, Pydantic, asyncio
+- **Technology**: Python 3.10+, FastAPI, uvicorn, Starlette, Pydantic, asyncio, structlog, prometheus-client
 - **Deployment**: `python -m stoat_ferret.api` (uvicorn on port 8000). Dockerfile available for containerized testing.
 
 #### Purpose
 
-The API Server is the sole runtime process for stoat-and-ferret. It provides a RESTful API under `/api/v1/` for managing videos, projects, and clips; a WebSocket endpoint at `/ws` for real-time event broadcasting; health probes at `/health/live` and `/health/ready`; Prometheus metrics at `/metrics`; and serves the pre-built React SPA at `/gui`. It runs an in-process async job queue for long-running operations like directory scanning.
+The API Server is the sole runtime process for stoat-and-ferret. It provides a RESTful API under `/api/v1/` for managing videos, projects, clips, jobs, and effects; a WebSocket endpoint at `/ws` for real-time event broadcasting; health probes at `/health/live` and `/health/ready`; Prometheus metrics at `/metrics`; and serves the pre-built React SPA at `/gui`. It runs an in-process async job queue for long-running operations like directory scanning. The v006 update adds an effects discovery and application API backed by the Effects Engine registry.
 
 #### Components Deployed
 
-- [API Gateway](./c4-component-api-gateway.md) -- REST/WebSocket endpoints, middleware, schemas, settings
+- [API Gateway](./c4-component-api-gateway.md) -- REST/WebSocket endpoints, middleware, schemas, settings, effects router
+- [Effects Engine](./c4-component-effects-engine.md) -- EffectRegistry, EffectDefinition, built-in TEXT_OVERLAY and SPEED_CONTROL effects
 - [Application Services](./c4-component-application-services.md) -- Scan service, thumbnail generation, FFmpeg execution, job queue
 - [Data Access Layer](./c4-component-data-access.md) -- Repository pattern, domain models, schema, audit logging
 - [Python Bindings Layer](./c4-component-python-bindings.md) -- Re-exports from Rust core, type stubs
@@ -69,6 +70,9 @@ The API Server is the sole runtime process for stoat-and-ferret. It provides a R
   - `PATCH /api/v1/projects/{project_id}/clips/{clip_id}` -- Update clip
   - `DELETE /api/v1/projects/{project_id}/clips/{clip_id}` -- Delete clip
   - `GET /api/v1/jobs/{job_id}` -- Get job status
+  - `GET /api/v1/effects` -- List all available effects with parameter schemas and AI hints
+  - `GET /api/v1/effects/{effect_type}` -- Get single effect definition
+  - `POST /api/v1/effects/{effect_type}/apply` -- Apply effect to clip (enqueues job)
 - **WebSocket**: WS/JSON at `/ws` -- Real-time events (HEALTH_STATUS, SCAN_STARTED, SCAN_COMPLETED, PROJECT_CREATED, HEARTBEAT)
 - **Prometheus Metrics**: HTTP at `/metrics` -- Request count, duration histograms
 - **Static GUI**: HTTP at `/gui` -- Serves built React SPA assets
@@ -77,7 +81,7 @@ The API Server is the sole runtime process for stoat-and-ferret. It provides a R
 
 - **SQLite Database**: SQL via aiosqlite (in-process connection)
 - **File Storage**: Reads source video files, writes thumbnails to `data/thumbnails/`
-- **Rust Core Library**: PyO3 import for clip validation and FFmpeg command building
+- **Rust Core Library**: PyO3 import for clip validation, FFmpeg command building, DrawtextBuilder, SpeedControl
 - **FFmpeg / ffprobe**: Subprocess invocation for video processing and metadata extraction
 - **Prometheus** (optional): Scrapes `/metrics` endpoint
 
@@ -85,8 +89,8 @@ The API Server is the sole runtime process for stoat-and-ferret. It provides a R
 
 - **Config**: [Dockerfile](../../Dockerfile) (multi-stage build for testing), [docker-compose.yml](../../docker-compose.yml)
 - **Entry point**: `python -m stoat_ferret.api` or `uvicorn stoat_ferret.api.app:create_app`
-- **Settings**: Environment variables with `STOAT_` prefix (host, port, database path, scan roots)
-- **Scaling**: Single-process; horizontal scaling not supported (SQLite file-based)
+- **Settings**: Environment variables with `STOAT_` prefix (host, port, database path, scan roots, GUI static path)
+- **Scaling**: Single-process; horizontal scaling not supported (SQLite file-based, in-process job queue)
 - **CI**: [.github/workflows/ci.yml](../../.github/workflows/ci.yml) -- 9-matrix test across 3 OS x 3 Python versions
 
 ---
@@ -120,7 +124,7 @@ The Web GUI provides the browser-based interface for stoat-and-ferret. It render
 
 #### Infrastructure
 
-- **Config**: [gui/package.json](../../gui/package.json), [gui/vite.config.ts](../../gui/vite.config.ts)
+- **Config**: [gui/package.json](../../gui/package.json)
 - **Build**: `npm run build` produces static assets in `gui/dist/`
 - **Dev proxy**: Vite proxies `/api`, `/health`, `/metrics`, `/ws` to `http://localhost:8000`
 - **CI**: Frontend CI job runs `npm ci && npm run build && npx vitest run`
@@ -137,11 +141,12 @@ The Web GUI provides the browser-based interface for stoat-and-ferret. It render
 
 #### Purpose
 
-The Rust Core Library implements all performance-critical and safety-critical operations: frame-accurate timeline mathematics, clip validation against source constraints, type-safe FFmpeg command construction, and input sanitization to prevent command injection. It is compiled to a native Python extension and imported in-process by the API Server.
+The Rust Core Library implements all performance-critical and safety-critical operations: frame-accurate timeline mathematics, clip validation against source constraints, type-safe FFmpeg command construction, filter graph assembly, DrawtextBuilder and SpeedControl effect builders (used by the Effects Engine), and input sanitization to prevent command injection. It is compiled to a native Python extension and imported in-process by the API Server.
 
 #### Components Deployed
 
-- [Rust Core Engine](./c4-component-rust-core-engine.md) -- Timeline math, clip validation, FFmpeg commands, sanitization
+- [Rust Core Engine](./c4-component-rust-core-engine.md) -- Timeline math, clip validation, FFmpeg commands, filter graph, DrawtextBuilder, SpeedControl, sanitization
+- [Python Bindings Layer](./c4-component-python-bindings.md) -- Re-exports, type stubs (wraps the compiled extension)
 
 #### Interfaces
 
@@ -149,7 +154,8 @@ The Rust Core Library implements all performance-critical and safety-critical op
   - Timeline types: FrameRate, Position, Duration, TimeRange
   - Range operations: find_gaps, merge_ranges, total_coverage
   - Clip validation: validate_clip, validate_clips
-  - FFmpeg: FFmpegCommand builder, Filter, FilterChain, FilterGraph
+  - FFmpeg: FFmpegCommand builder, Filter, FilterChain, FilterGraph, Expr/PyExpr
+  - Effect builders: DrawtextBuilder, SpeedControl
   - Sanitization: escape_filter_text, validate_path, validate_crf, validate_speed, validate_volume, validate_video_codec, validate_audio_codec, validate_preset
 
 #### Dependencies
@@ -169,12 +175,12 @@ The Rust Core Library implements all performance-critical and safety-critical op
 - **Name**: SQLite Database
 - **Description**: Embedded file-based database storing all application data. Not a separate process -- accessed in-process by the API Server via aiosqlite.
 - **Type**: Database (embedded)
-- **Technology**: SQLite 3, aiosqlite, Alembic (migrations)
+- **Technology**: SQLite 3, aiosqlite, SQLAlchemy 2.0, Alembic (migrations)
 - **Deployment**: File at `data/stoat.db` (configurable via `STOAT_DATABASE_PATH`). Schema managed by Alembic migrations.
 
 #### Purpose
 
-The SQLite database stores all persistent application state: video metadata with FTS5 full-text search indexing, editing projects, clip definitions with timeline positions, and an audit log tracking all data changes with JSON diffs.
+The SQLite database stores all persistent application state: video metadata with FTS5 full-text search indexing, editing projects, clip definitions with timeline positions and effects JSON, and an audit log tracking all data changes with JSON diffs.
 
 #### Components Deployed
 
@@ -185,6 +191,7 @@ The SQLite database stores all persistent application state: video metadata with
 - **SQL**: Accessed via aiosqlite (async) from the API Server process
   - Tables: `videos`, `projects`, `clips`, `audit_log`
   - Indexes: FTS5 on `videos(filename, path)`
+  - Migrations: Alembic versioned migration scripts in `alembic/versions/`
 
 #### Dependencies
 
@@ -236,8 +243,8 @@ File storage holds the source video files that users scan into the library, gene
 
 | Container | Components |
 |-----------|-----------|
-| API Server | API Gateway, Application Services, Data Access Layer, Python Bindings Layer |
+| API Server | API Gateway, Effects Engine, Application Services, Data Access Layer, Python Bindings Layer |
 | Web GUI | Web GUI |
-| Rust Core Library | Rust Core Engine |
+| Rust Core Library | Rust Core Engine (+ Python Bindings Layer wrapping layer) |
 | SQLite Database | Data Access Layer (schema portion) |
 | File Storage | (infrastructure -- no application components) |

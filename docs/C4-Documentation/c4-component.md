@@ -4,11 +4,12 @@
 
 | Component | Description | Code Elements | Documentation |
 |-----------|-------------|---------------|---------------|
-| Rust Core Engine | Frame-accurate timeline math, clip validation, FFmpeg command building, input sanitization | 6 files | [c4-component-rust-core-engine.md](./c4-component-rust-core-engine.md) |
+| Rust Core Engine | Frame-accurate timeline math, clip validation, FFmpeg command building, filter graph construction, expression trees, and input sanitization | 8 files | [c4-component-rust-core-engine.md](./c4-component-rust-core-engine.md) |
 | Python Bindings Layer | Python re-export package, type stubs, and stub verification for Rust core | 3 files | [c4-component-python-bindings.md](./c4-component-python-bindings.md) |
-| API Gateway | FastAPI REST/WebSocket endpoints, middleware, schemas, and configuration | 5 files | [c4-component-api-gateway.md](./c4-component-api-gateway.md) |
+| Effects Engine | Effect definition registry with JSON Schema parameters and AI hints; text overlay and speed control built-in effects | 1 file | [c4-component-effects-engine.md](./c4-component-effects-engine.md) |
+| API Gateway | FastAPI REST/WebSocket endpoints, middleware, schemas, configuration, and effects discovery API | 7 files | [c4-component-api-gateway.md](./c4-component-api-gateway.md) |
 | Application Services | Video scanning, thumbnail generation, FFmpeg execution, async job queue | 3 files | [c4-component-application-services.md](./c4-component-application-services.md) |
-| Data Access Layer | SQLite repository pattern, domain models, schema, audit logging, structured logging | 2 files | [c4-component-data-access.md](./c4-component-data-access.md) |
+| Data Access Layer | SQLite repository pattern, domain models, ORM models, schema, audit logging, structured logging | 3 files | [c4-component-data-access.md](./c4-component-data-access.md) |
 | Web GUI | React SPA with dashboard, video library, project management, and real-time monitoring | 7 files | [c4-component-web-gui.md](./c4-component-web-gui.md) |
 | Test Infrastructure | Unit, integration, contract, black-box, security, and property-based test suites | 9 files | [c4-component-test-infrastructure.md](./c4-component-test-infrastructure.md) |
 
@@ -20,18 +21,21 @@ C4Component
 
     Container_Boundary(system, "stoat-and-ferret Video Editor") {
         Component(gui, "Web GUI", "React/TypeScript", "Dashboard, library, project management")
-        Component(api, "API Gateway", "Python/FastAPI", "REST/WebSocket endpoints, middleware")
+        Component(api, "API Gateway", "Python/FastAPI", "REST/WebSocket endpoints, middleware, effects API")
+        Component(effects, "Effects Engine", "Python", "Effect registry, schemas, AI hints, preview functions")
         Component(services, "Application Services", "Python", "Scan, thumbnail, FFmpeg, job queue")
         Component(data, "Data Access Layer", "Python/SQLite", "Repositories, models, audit, logging")
         Component(bindings, "Python Bindings", "Python", "Re-exports, type stubs, verification")
-        Component(rust, "Rust Core Engine", "Rust/PyO3", "Timeline math, validation, commands, sanitization")
+        Component(rust, "Rust Core Engine", "Rust/PyO3", "Timeline math, validation, commands, filter graph, expressions, sanitization")
         Component(tests, "Test Infrastructure", "Python/pytest", "~450 tests across 7 suites")
     }
 
     Rel(gui, api, "HTTP/REST + WebSocket")
+    Rel(api, effects, "list effects, get definition")
     Rel(api, services, "delegates business logic")
     Rel(api, data, "reads/writes via repos")
     Rel(api, bindings, "clip validation")
+    Rel(effects, bindings, "DrawtextBuilder, SpeedControl previews")
     Rel(services, data, "persists scanned data")
     Rel(services, bindings, "FFmpegCommand bridge")
     Rel(data, bindings, "Clip.validate()")
@@ -46,6 +50,8 @@ C4Component
 
 | Code-Level File | Component |
 |-----------------|-----------|
+| `c4-code-rust-core` | Rust Core Engine |
+| `c4-code-rust-ffmpeg` | Rust Core Engine |
 | `c4-code-rust-stoat-ferret-core-src` | Rust Core Engine |
 | `c4-code-rust-stoat-ferret-core-timeline` | Rust Core Engine |
 | `c4-code-rust-stoat-ferret-core-clip` | Rust Core Engine |
@@ -55,15 +61,19 @@ C4Component
 | `c4-code-stoat-ferret-core` | Python Bindings Layer |
 | `c4-code-stubs-stoat-ferret-core` | Python Bindings Layer |
 | `c4-code-scripts` | Python Bindings Layer |
+| `c4-code-python-effects` | Effects Engine |
 | `c4-code-stoat-ferret-api` | API Gateway |
+| `c4-code-python-api` | API Gateway |
 | `c4-code-stoat-ferret-api-routers` | API Gateway |
 | `c4-code-stoat-ferret-api-middleware` | API Gateway |
 | `c4-code-stoat-ferret-api-schemas` | API Gateway |
+| `c4-code-python-schemas` | API Gateway |
 | `c4-code-stoat-ferret-api-websocket` | API Gateway |
 | `c4-code-stoat-ferret-api-services` | Application Services |
 | `c4-code-stoat-ferret-ffmpeg` | Application Services |
 | `c4-code-stoat-ferret-jobs` | Application Services |
 | `c4-code-stoat-ferret-db` | Data Access Layer |
+| `c4-code-python-db` | Data Access Layer |
 | `c4-code-stoat-ferret` | Data Access Layer |
 | `c4-code-gui-src` | Web GUI |
 | `c4-code-gui-components` | Web GUI |

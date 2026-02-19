@@ -282,5 +282,5 @@ All Pydantic schemas automatically integrate with FastAPI's OpenAPI (Swagger) do
 
 ## Parent Component
 
-TBD
+[API Gateway](./c4-component-api-gateway.md)
 

@@ -275,5 +275,5 @@ classDiagram
 
 ## Parent Component
 
-TBD
+[Data Access Layer](./c4-component-data-access.md)
 

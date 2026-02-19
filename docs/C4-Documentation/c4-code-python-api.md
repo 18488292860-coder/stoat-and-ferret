@@ -315,5 +315,5 @@ classDiagram
 
 ## Parent Component
 
-TBD
+[API Gateway](./c4-component-api-gateway.md)
 

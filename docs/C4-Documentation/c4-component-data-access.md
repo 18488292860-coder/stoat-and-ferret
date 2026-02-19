@@ -12,10 +12,13 @@ The Data Access Layer provides all data persistence and retrieval for stoat-and-
 
 The package root (`stoat_ferret`) providing version metadata and structured logging configuration is included here as foundational infrastructure that the entire application depends on.
 
+The v006 update adds SQLAlchemy-based ORM models and repository classes with richer relational structures, complementing the existing lightweight SQLite repositories.
+
 ## Software Features
 - **Repository Pattern**: Protocol-based abstractions with SQLite and in-memory implementations
 - **Async Support**: Full async/await repository implementations via aiosqlite for FastAPI integration
 - **Domain Models**: Dataclass definitions for Video, Project, Clip, and AuditEntry with Rust validation bridge
+- **ORM Models**: SQLAlchemy 2.0 models for Video, Project, Clip with relationship declarations
 - **Full-Text Search**: FTS5 index on video filename/path for fast search
 - **Audit Logging**: Change tracking with operation, entity type, entity ID, and JSON diff
 - **Schema Management**: DDL for all tables, indexes, and FTS triggers
@@ -26,6 +29,7 @@ The package root (`stoat_ferret`) providing version metadata and structured logg
 
 This component contains:
 - [c4-code-stoat-ferret-db.md](./c4-code-stoat-ferret-db.md) — Repository protocols/impls, domain models, schema, audit logger
+- [c4-code-python-db.md](./c4-code-python-db.md) — SQLAlchemy ORM models, generic BaseRepository, async repositories, ProjectRepository, ClipRepository, AuditRepository
 - [c4-code-stoat-ferret.md](./c4-code-stoat-ferret.md) — Package root with version metadata and logging configuration
 
 ## Interfaces
@@ -76,6 +80,7 @@ This component contains:
 
 ### External Systems
 - **SQLite**: Persistent storage via sqlite3 (sync) and aiosqlite (async)
+- **SQLAlchemy**: ORM for richer repository implementations (v2.0 async engine)
 - **structlog**: Structured logging framework
 
 ## Component Diagram
@@ -86,6 +91,7 @@ C4Component
 
     Container_Boundary(data, "Data Access Layer") {
         Component(models, "Domain Models", "Python dataclasses", "Video, Project, Clip, AuditEntry")
+        Component(orm_models, "ORM Models", "Python/SQLAlchemy", "SQLAlchemy mapped classes with relationships")
         Component(schema, "Schema Manager", "Python/SQLite", "DDL, tables, indexes, FTS5 triggers")
         Component(video_repo, "Video Repository", "Python/aiosqlite", "Async CRUD with FTS5 search")
         Component(project_repo, "Project Repository", "Python/aiosqlite", "Async project CRUD")
@@ -101,4 +107,5 @@ C4Component
     Rel(video_repo, models, "returns/accepts")
     Rel(project_repo, models, "returns/accepts")
     Rel(clip_repo, models, "returns/accepts")
+    Rel(orm_models, schema, "mirrors table structure")
 ```

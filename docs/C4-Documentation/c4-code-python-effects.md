@@ -198,5 +198,5 @@ classDiagram
 
 ## Parent Component
 
-TBD
+[Effects Engine](./c4-component-effects-engine.md)
 

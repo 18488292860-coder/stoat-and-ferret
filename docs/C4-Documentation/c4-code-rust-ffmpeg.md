@@ -352,5 +352,5 @@ classDiagram
 
 ## Parent Component
 
-TBD
+[Rust Core Engine](./c4-component-rust-core-engine.md)
 
