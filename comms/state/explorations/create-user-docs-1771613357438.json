@@ -1,0 +1,15 @@
+{
+  "exploration_id": "create-user-docs-1771613357438",
+  "results_folder": "create-user-docs",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-20T18:49:17.438993",
+  "updated_at": "2026-02-20T18:49:17.438993",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/create-user-docs/prompt.md",
+  "outbox_path": "comms/outbox/exploration/create-user-docs"
+}
