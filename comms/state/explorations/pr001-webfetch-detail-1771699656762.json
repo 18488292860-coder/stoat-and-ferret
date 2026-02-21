@@ -1,14 +1,17 @@
 {
   "exploration_id": "pr001-webfetch-detail-1771699656762",
   "results_folder": "pr001-webfetch-detail",
-  "status": "running",
+  "status": "complete",
   "pid": 3164,
   "started_at": "2026-02-21T18:47:36.762031",
-  "updated_at": "2026-02-21T18:47:38.584777",
-  "completed_at": null,
+  "updated_at": "2026-02-21T18:53:10.208867",
+  "completed_at": "2026-02-21T18:53:10.208548",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md",
+    "version-breakdown.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/pr001-webfetch-detail/prompt.md",
   "outbox_path": "comms/outbox/exploration/pr001-webfetch-detail"
