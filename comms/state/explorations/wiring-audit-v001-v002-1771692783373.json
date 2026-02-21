@@ -1,14 +1,17 @@
 {
   "exploration_id": "wiring-audit-v001-v002-1771692783373",
   "results_folder": "wiring-audit-v001-v002",
-  "status": "running",
+  "status": "complete",
   "pid": 11564,
   "started_at": "2026-02-21T16:53:03.373970",
-  "updated_at": "2026-02-21T16:53:05.214202",
-  "completed_at": null,
+  "updated_at": "2026-02-21T16:57:08.112755",
+  "completed_at": "2026-02-21T16:57:08.112143",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md",
+    "gaps-found.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/wiring-audit-v001-v002/prompt.md",
   "outbox_path": "comms/outbox/exploration/wiring-audit-v001-v002"
