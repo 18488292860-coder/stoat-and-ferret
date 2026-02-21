@@ -8,7 +8,7 @@
 ## Current Focus
 
 **Recently Completed:** v007 (effect workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview)
-**Upcoming:** v008 (TBD — Phase 3: Composition Engine)
+**Upcoming:** v008 (Startup Integrity & CI Stability — wiring audit fixes)
 
 ## Roadmap → Version Mapping
 
@@ -38,7 +38,60 @@ Track explorations that must complete before version design.
 
 ## Planned Versions
 
-No versions currently planned. Next version (v008) will target Phase 3: Composition Engine.
+### v008 — Startup Integrity & CI Stability
+
+**Goal:** Fix P0 blockers and critical startup wiring gaps discovered by the wiring audit. After v008, a fresh install starts cleanly with working logging, database, and settings.
+
+**Theme 1: application-startup-wiring**
+- 001-database-startup: Wire `create_tables()` into lifespan startup [BL-058, P0]
+- 002-logging-startup: Call `configure_logging()` at startup, wire `settings.log_level` [BL-056, P1]
+- 003-orphaned-settings: Wire `settings.debug` to FastAPI and `settings.ws_heartbeat_interval` to ws.py [BL-062, P2]
+
+**Theme 2: ci-stability**
+- 001-flaky-e2e-fix: Fix `project-creation.spec.ts:31` toBeHidden timeout flake [BL-055, P0]
+
+**Backlog items:** BL-055, BL-056, BL-058, BL-062 (4 items)
+**Dependencies:** None. All items are independent startup/CI fixes.
+**Risk:** BL-055 (flaky E2E) may require Playwright timing investigation.
+
+---
+
+### v009 — Observability & GUI Runtime
+
+**Goal:** Complete the observability pipeline (FFmpeg metrics, audit logging, file-based logs) and fix GUI runtime gaps (SPA routing, pagination, WebSocket broadcasts).
+
+**Theme 1: observability-pipeline**
+- 001-ffmpeg-observability: Wire `ObservableFFmpegExecutor` into DI chain [BL-059, P1]
+- 002-audit-logging: Wire `AuditLogger` into repository DI [BL-060, P2]
+- 003-file-logging: Add `RotatingFileHandler` to `configure_logging()` [BL-057, P2]
+
+**Theme 2: gui-runtime-fixes**
+- 001-spa-routing: Add SPA fallback to serve index.html for GUI sub-paths [BL-063, P1]
+- 002-pagination-fix: Add `count()` to `AsyncProjectRepository`, fix total in GET /projects [BL-064, P2]
+- 003-websocket-broadcasts: Wire `ConnectionManager.broadcast()` calls into API operations [BL-065, P2]
+
+**Backlog items:** BL-057, BL-059, BL-060, BL-063, BL-064, BL-065 (6 items)
+**Dependencies:** BL-057 depends on BL-056 (v008). All others independent.
+**Risk:** BL-065 (WebSocket broadcasts) touches multiple API endpoints.
+
+---
+
+### v010 — API Surface Cleanup & Remaining
+
+**Goal:** Audit and trim dead PyO3 bindings, resolve the Rust-Python FFmpeg bridge, add transition GUI support, and close remaining housekeeping.
+
+**Theme 1: rust-python-api-cleanup**
+- 001-ffmpeg-bridge: Wire or remove `execute_command()` Rust-Python bridge [BL-061, P2]
+- 002-v001-bindings-audit: Audit and trim unused v001 PyO3 bindings (TimeRange ops, sanitization) [BL-067, P3]
+- 003-v006-bindings-audit: Audit and trim unused v006 PyO3 bindings (Expr, graph validation, composition) [BL-068, P3]
+
+**Theme 2: gui-and-housekeeping**
+- 001-transition-gui: Add transition support to Effect Workshop GUI [BL-066, P3]
+- 002-agents-md-guidance: Add Windows bash /dev/null redirect guidance to AGENTS.md [BL-019, P3]
+
+**Backlog items:** BL-019, BL-061, BL-066, BL-067, BL-068 (5 items)
+**Dependencies:** BL-066 depends on transition API from v007. All others independent.
+**Risk:** BL-061 requires a design decision (wire vs remove). BL-067/BL-068 are audit-then-act.
 
 ## Completed Versions
 
@@ -93,6 +146,7 @@ No versions currently planned. Next version (v008) will target Phase 3: Composit
 |------|------|----|-----------|
 | Contract tests with real FFmpeg | M1.3 | v004 | Part of testing infrastructure version |
 | Drop-frame timecode support | M1.2 | TBD | Complex; start with non-drop-frame only |
+| Phase 3: Composition Engine | v008 (original) | post-v010 | Wiring audit fixes take priority over new features |
 
 ## Backlog Integration
 
@@ -106,16 +160,23 @@ Work categories:
 | `blocked` | Waiting on external dependency |
 
 **Version-agnostic items** (can be addressed opportunistically):
-- BL-011 (P3): Consolidate Python/Rust build backends
 - BL-018 (P2): Create C4 architecture documentation
-- BL-019 (P1): Add Windows bash /dev/null guidance to AGENTS.md
 
 Query: `list_backlog_items(project="stoat-and-ferret", status="open")`
+
+## Cancelled Items
+
+| ID | Title | Rationale |
+|----|-------|-----------|
+| BL-011 | Consolidate Python/Rust build backends | Obsoleted by 7 versions of successful dual-backend usage |
+| BL-053 | Add PR vs BL routing guidance to AGENTS.md | Routing guidance embedded in core auto-dev scripts instead |
+| BL-054 | Add WebFetch safety rules to AGENTS.md | Superseded by auto-dev-mcp BL-536 at the global level |
 
 ## Change Log
 
 | Date | Change |
 |------|--------|
+| 2026-02-21 | Planned v008-v010 covering all 15 open backlog items from wiring audit. Cancelled BL-011, BL-053, BL-054. Closed PR-001, PR-002 after investigation. Deferred Phase 3: Composition Engine to post-v010. |
 | 2026-02-19 | v007 complete: Effect Workshop GUI delivered (4 themes, 11 features, 9 backlog items completed). Moved v007 from Planned to Completed. Updated Current Focus to v008. Marked BL-047 and BL-051 investigations as complete. |
 | 2026-02-19 | v006 complete: Effects Engine Foundation delivered (3 themes, 8 features, 7 backlog items completed). Moved v006 from Planned to Completed. Updated Current Focus to v007. Marked BL-043 investigation as complete. |
 | 2026-02-09 | v005 complete: GUI Shell, Library Browser & Project Manager delivered (4 themes, 11 features, 10 backlog items completed). Moved v005 from Planned to Completed. Updated Current Focus to v006. Marked EXP-003 and BL-028 investigations as complete. |

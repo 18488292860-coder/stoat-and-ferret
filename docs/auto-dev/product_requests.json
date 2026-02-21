@@ -3,9 +3,9 @@
     {
       "id": "PR-001",
       "title": "Session health: Orphaned WebFetch calls across 14 instances",
-      "description": "14 unique orphaned WebFetch tool_use calls found across 11 sessions in the past 7 days. These HTTP requests were issued but never returned results, wasting execution time and blocking parallel tool completion. Related to existing BL-054 (WebFetch safety rules). The current lack of effective WebFetch timeout means any hung HTTP request blocks the entire session until manual termination. Adding timeout enforcement would eliminate this class of waste and improve session reliability.",
+      "description": "14 unique orphaned WebFetch tool_use calls reported across 11 sessions. Investigation (pr001-webfetch-breakdown) found only 5 of 14 belong to stoat-and-ferret (v002: 2, v006: 3). The remaining 9 were cross-project contamination (kb-store 4, auto-dev-mcp 4, gw-test 1) due to health check querying with scope=all. Impact was low \u2014 sessions were killed quickly. Root cause: WebFetch has no timeout + agents fetch URLs that won't return (GitHub pages, auth-walled sites). Addressed globally by auto-dev-mcp BL-536.",
       "priority": "P1",
-      "status": "open",
+      "status": "completed",
       "tags": [
         "session-health",
         "retrospective"
@@ -13,14 +13,14 @@
       "project": "stoat-and-ferret",
       "upvotes": 0,
       "created": "2026-02-19T23:09:53.038879",
-      "updated": "2026-02-19T23:09:53.038879"
+      "updated": "2026-02-21T19:54:01.553063"
     },
     {
       "id": "PR-002",
       "title": "Session health: 34 orphaned non-WebFetch tool calls detected",
-      "description": "34 unique orphaned tool calls (tool_use without tool_result) found across 7 tool types: Bash (11), Task (7), TaskOutput (7), Read (6), Edit (1), Grep (1), Write (1). Orphaned Read/Edit/Write calls indicate abnormal session termination where work may have been lost. Adding graceful shutdown handling that records partial results for in-flight tool calls would improve debugging and reduce repeated work after interrupted sessions.",
+      "description": "34 unique orphaned tool calls (tool_use without tool_result) across 7 tool types: Bash (11), TaskOutput (8), Task (7), Read (6), Edit (1), Grep (1), Write (1). Investigation (pr002-orphaned-tools-breakdown) found only 4 of 28 affected sessions belong to stoat-and-ferret. 69% of orphans are blocking waits (sleep commands, TaskOutput polling, pytest runs) \u2014 normal session termination during long operations. Zero correlation with WebFetch orphans (PR-001), confirming independent causes. Lost work risk minimal: 33 of 35 orphans are non-destructive; only 1 Edit and 1 Write on non-production files carry moderate risk. Also flagged 3x row inflation from duplicate tool_use_ids in the ingestion pipeline. No action required for data integrity \u2014 these represent normal session lifecycle patterns.",
       "priority": "P2",
-      "status": "open",
+      "status": "completed",
       "tags": [
         "session-health",
         "retrospective"
@@ -28,9 +28,9 @@
       "project": "stoat-and-ferret",
       "upvotes": 0,
       "created": "2026-02-19T23:09:55.253835",
-      "updated": "2026-02-19T23:09:55.253837"
+      "updated": "2026-02-21T19:54:09.082969"
     }
   ],
   "next_id": 3,
-  "updated": "2026-02-19T23:09:55.253842"
+  "updated": "2026-02-21T19:54:09.082971"
 }
