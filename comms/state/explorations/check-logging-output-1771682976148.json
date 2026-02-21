@@ -1,0 +1,15 @@
+{
+  "exploration_id": "check-logging-output-1771682976148",
+  "results_folder": "check-logging-output",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-21T14:09:36.148885",
+  "updated_at": "2026-02-21T14:09:36.148885",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/check-logging-output/prompt.md",
+  "outbox_path": "comms/outbox/exploration/check-logging-output"
+}

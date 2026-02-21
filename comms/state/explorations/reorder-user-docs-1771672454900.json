@@ -1,14 +1,16 @@
 {
   "exploration_id": "reorder-user-docs-1771672454900",
   "results_folder": "reorder-user-docs",
-  "status": "running",
+  "status": "complete",
   "pid": 11564,
   "started_at": "2026-02-21T11:14:14.900201",
-  "updated_at": "2026-02-21T11:14:16.883071",
-  "completed_at": null,
+  "updated_at": "2026-02-21T11:17:56.415850",
+  "completed_at": "2026-02-21T11:17:56.415440",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/reorder-user-docs/prompt.md",
   "outbox_path": "comms/outbox/exploration/reorder-user-docs"
