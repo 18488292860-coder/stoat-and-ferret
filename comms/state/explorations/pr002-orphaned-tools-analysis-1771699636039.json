@@ -1,14 +1,18 @@
 {
   "exploration_id": "pr002-orphaned-tools-analysis-1771699636039",
   "results_folder": "pr002-orphaned-tools-analysis",
-  "status": "running",
+  "status": "complete",
   "pid": 3164,
   "started_at": "2026-02-21T18:47:16.039098",
-  "updated_at": "2026-02-21T18:47:18.167477",
-  "completed_at": null,
+  "updated_at": "2026-02-21T18:54:52.822824",
+  "completed_at": "2026-02-21T18:54:52.822420",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md",
+    "tool-analysis.md",
+    "version-breakdown.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/pr002-orphaned-tools-analysis/prompt.md",
   "outbox_path": "comms/outbox/exploration/pr002-orphaned-tools-analysis"
