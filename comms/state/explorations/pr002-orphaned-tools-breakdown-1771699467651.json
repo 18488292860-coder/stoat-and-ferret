@@ -1,10 +1,10 @@
 {
   "exploration_id": "pr002-orphaned-tools-breakdown-1771699467651",
   "results_folder": "pr002-orphaned-tools-breakdown",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 3164,
   "started_at": "2026-02-21T18:44:27.651725",
-  "updated_at": "2026-02-21T18:44:27.651725",
+  "updated_at": "2026-02-21T18:44:29.476659",
   "completed_at": null,
   "error": null,
   "documents": [],
