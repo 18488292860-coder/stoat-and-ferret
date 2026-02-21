@@ -1,0 +1,33 @@
+{
+  "schema_version": "2.0",
+  "version": "v008",
+  "description": "Fix P0 blockers and critical startup wiring gaps so a fresh install starts cleanly with working logging, database, and settings.",
+  "status": "pending",
+  "started_at": "2026-02-21T20:58:39.408695Z",
+  "completed_at": null,
+  "themes": [
+    {
+      "number": 1,
+      "name": "application-startup-wiring",
+      "status": "pending",
+      "features_total": 3,
+      "features_complete": 0,
+      "started_at": null,
+      "completed_at": null,
+      "skip_reason": null
+    },
+    {
+      "number": 2,
+      "name": "ci-stability",
+      "status": "pending",
+      "features_total": 1,
+      "features_complete": 0,
+      "started_at": null,
+      "completed_at": null,
+      "skip_reason": null
+    }
+  ],
+  "current_theme": 1,
+  "current_feature": 1,
+  "baseline_failures": []
+}
