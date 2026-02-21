@@ -1,10 +1,10 @@
 {
   "exploration_id": "design-v008-1771704461175",
   "results_folder": "design-v008",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 3164,
   "started_at": "2026-02-21T20:07:41.175697",
-  "updated_at": "2026-02-21T20:07:41.175697",
+  "updated_at": "2026-02-21T20:07:43.146952",
   "completed_at": null,
   "error": null,
   "documents": [],
