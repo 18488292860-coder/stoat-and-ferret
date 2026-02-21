@@ -1,14 +1,14 @@
 {
   "exploration_id": "wiring-audit-v003-v004-1771692796626",
   "results_folder": "wiring-audit-v003-v004",
-  "status": "running",
+  "status": "complete",
   "pid": 11564,
   "started_at": "2026-02-21T16:53:16.626050",
-  "updated_at": "2026-02-21T16:53:18.507874",
-  "completed_at": null,
+  "updated_at": "2026-02-21T17:02:21.688933",
+  "completed_at": "2026-02-21T17:02:21.688666",
   "error": null,
   "documents": [],
-  "committed": false,
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/wiring-audit-v003-v004/prompt.md",
   "outbox_path": "comms/outbox/exploration/wiring-audit-v003-v004"
