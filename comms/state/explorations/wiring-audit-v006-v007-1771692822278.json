@@ -1,10 +1,10 @@
 {
   "exploration_id": "wiring-audit-v006-v007-1771692822278",
   "results_folder": "wiring-audit-v006-v007",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 11564,
   "started_at": "2026-02-21T16:53:42.278406",
-  "updated_at": "2026-02-21T16:53:42.278406",
+  "updated_at": "2026-02-21T16:53:44.173202",
   "completed_at": null,
   "error": null,
   "documents": [],
