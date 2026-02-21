@@ -1,6 +1,6 @@
 {
-  "next_id": 58,
-  "updated_at": "2026-02-21T15:39:39.168375",
+  "next_id": 69,
+  "updated_at": "2026-02-21T18:43:44.327919",
   "items": [
     {
       "id": "BL-001",
@@ -399,7 +399,7 @@
       "id": "BL-011",
       "title": "Consolidate Python/Rust build backends",
       "priority": "P3",
-      "status": "open",
+      "status": "cancelled",
       "size": "m",
       "added": "2026-01-26T17:16:34.152027",
       "completed_at": null,
@@ -427,7 +427,7 @@
           "done": false
         }
       ],
-      "notes": null,
+      "notes": "Obsoleted by 7 versions of successful dual-backend usage. The hatchling + maturin pattern is the correct approach for PyO3 hybrid projects \u2014 consolidation isn't feasible without tradeoffs that aren't worth it.",
       "use_case": "This feature addresses: Consolidate Python/Rust build backends. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
       "implemented_in_theme": null,
@@ -680,7 +680,7 @@
     {
       "id": "BL-019",
       "title": "Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore",
-      "priority": "P1",
+      "priority": "P3",
       "status": "open",
       "size": "m",
       "added": "2026-02-06T20:37:40.867158",
@@ -692,7 +692,7 @@
       ],
       "description": "Add Windows bash null redirect guidance to AGENTS.md and add `nul` to .gitignore. In bash contexts on Windows: Always use `/dev/null` for output redirection (Git Bash correctly translates this to the Windows null device). Never use bare `nul` which gets interpreted as a literal filename in MSYS/Git Bash environments. Correct: `command > /dev/null 2>&1`. Wrong: `command > nul 2>&1`.",
       "acceptance_criteria": [],
-      "notes": null,
+      "notes": "The .gitignore half is already done (nul added to .gitignore). Remaining scope: add Windows bash /dev/null redirect guidance to AGENTS.md.",
       "use_case": "This feature addresses: Add Windows bash /dev/null guidance to AGENTS.md and nul to .gitignore. It improves the system by resolving the described requirement.",
       "implemented_in_version": null,
       "implemented_in_theme": null,
@@ -2044,7 +2044,7 @@
       "id": "BL-053",
       "title": "Add PR vs BL routing guidance to AGENTS.md (stoat-and-ferret)",
       "priority": "P1",
-      "status": "open",
+      "status": "cancelled",
       "size": "l",
       "added": "2026-02-14T11:57:14.106367",
       "completed_at": null,
@@ -2073,7 +2073,7 @@
           "done": false
         }
       ],
-      "notes": "Mirror of BL-510 (auto-dev-mcp). Keep the AGENTS.md addition concise \u2014 3-5 lines max. Content should be identical across all managed projects for consistency.",
+      "notes": "Rejected because PR vs BL routing guidance is being embedded into the core retrospective and design scripts in auto-dev-mcp, which is the right place for it. Don't want to pollute AGENTS.md with auto-dev-specific process guidance.",
       "use_case": "During any Claude Code session on stoat-and-ferret, the agent reads AGENTS.md first. When it discovers an improvement opportunity mid-implementation, it currently has no guidance on whether to file a PR or BL. With this change, AGENTS.md tells it to default to product requests for ideas and reserve backlog items for structured problems.",
       "implemented_in_version": null,
       "implemented_in_theme": null,
@@ -2083,7 +2083,7 @@
       "id": "BL-054",
       "title": "Add WebFetch safety rules to AGENTS.md",
       "priority": "P1",
-      "status": "open",
+      "status": "cancelled",
       "size": "l",
       "added": "2026-02-15T01:19:06.391688",
       "completed_at": null,
@@ -2108,7 +2108,7 @@
           "done": false
         }
       ],
-      "notes": null,
+      "notes": "Superseded by auto-dev-mcp BL-536 which addresses WebFetch safety at the global level in the MCP server itself, rather than per-project AGENTS.md patches.",
       "use_case": "Same as BL-517: prevent WebFetch hangs from freezing sessions by requiring URL verification before every WebFetch call.",
       "implemented_in_version": null,
       "implemented_in_theme": null,
@@ -2235,6 +2235,393 @@
         }
       ],
       "notes": "Depends on BL-056 (wire up stdout logging first). Use RotatingFileHandler with maxBytes=10MB. Log directory: {project_root}/logs/. Must add logs/ to .gitignore.",
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-058",
+      "title": "Wire database schema creation into application startup",
+      "priority": "P0",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:29:21.122506",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "database",
+        "startup"
+      ],
+      "description": "**Current state:** `create_tables()` exists and Alembic migrations are configured, but neither is called during application startup. A fresh database gets no schema \u2014 the application starts but any database operation will fail.\n\n**Gap:** Database initialization was built in v002/03-database-foundation but never wired into the lifespan startup sequence. Requires manual CLI intervention to create schema.\n\n**Impact:** The application cannot function against a new database without manual steps. This contradicts the project's principle that all processes must be fully automated.",
+      "acceptance_criteria": [
+        {
+          "text": "Database tables are created automatically during application startup lifespan if they don't exist",
+          "done": false
+        },
+        {
+          "text": "Alembic migrations run at startup or a clear automated mechanism ensures schema is current",
+          "done": false
+        },
+        {
+          "text": "A fresh database with no prior state becomes fully functional after a single application start",
+          "done": false
+        },
+        {
+          "text": "Existing tests continue to pass",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-059",
+      "title": "Wire ObservableFFmpegExecutor into dependency injection",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:29:30.577955",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "observability",
+        "ffmpeg"
+      ],
+      "description": "**Current state:** `ObservableFFmpegExecutor` exists with full metrics and structured logging instrumentation, but is never instantiated. The application uses the base executor directly, bypassing all observability.\n\n**Gap:** Created in v002/04-ffmpeg-integration but never wired into the dependency injection chain. The metrics and logging decorators are dead code.\n\n**Impact:** No visibility into FFmpeg execution \u2014 no duration metrics, no structured logs for render operations, no correlation ID tracking for debugging failed renders.",
+      "acceptance_criteria": [
+        {
+          "text": "ObservableFFmpegExecutor is instantiated and injected as the FFmpeg executor during startup",
+          "done": false
+        },
+        {
+          "text": "FFmpeg operations emit structlog calls with duration, command preview, and correlation ID",
+          "done": false
+        },
+        {
+          "text": "Prometheus metrics for FFmpeg execution count and duration are populated after render operations",
+          "done": false
+        },
+        {
+          "text": "Recording test double remains available for test injection",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-060",
+      "title": "Wire AuditLogger into repository dependency injection",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:29:38.024412",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "observability",
+        "database"
+      ],
+      "description": "**Current state:** `AuditLogger` class exists and repository constructors accept it as a parameter, but it's never instantiated \u2014 the parameter is always None. No audit trail is produced for any database operation.\n\n**Gap:** Created in v002/03-database-foundation but never wired into the DI chain.\n\n**Impact:** No audit trail for data mutations. Debugging \"what changed and when\" requires manual database inspection.",
+      "acceptance_criteria": [
+        {
+          "text": "AuditLogger is instantiated and injected into repositories that accept it",
+          "done": false
+        },
+        {
+          "text": "Database mutations (create, update, delete) produce audit log entries",
+          "done": false
+        },
+        {
+          "text": "Audit entries include correlation ID, resource type, and operation type",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-061",
+      "title": "Wire or remove execute_command() Rust-Python FFmpeg bridge",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:29:48.053602",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "ffmpeg",
+        "rust-python"
+      ],
+      "description": "**Current state:** `execute_command()` was built in v002/04-ffmpeg-integration as the bridge between the Rust command builder and the Python FFmpeg executor. It has zero callers in production code.\n\n**Gap:** The function exists and is tested in isolation but is never used in any render or export workflow.\n\n**Impact:** The Rust-to-Python FFmpeg pipeline has no integration point. Either the bridge needs wiring into a real workflow, or it's dead code that should be removed to reduce maintenance burden.",
+      "acceptance_criteria": [
+        {
+          "text": "execute_command() is called by at least one render/export code path connecting Rust command builder output to Python FFmpeg executor",
+          "done": false
+        },
+        {
+          "text": "Render workflow produces a working output file via the Rust\u2192Python bridge",
+          "done": false
+        },
+        {
+          "text": "If execute_command() is genuinely unnecessary, it is removed along with its tests",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-062",
+      "title": "Wire orphaned settings (debug, ws_heartbeat_interval) to their consumers",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:29:57.910080",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "settings",
+        "configuration"
+      ],
+      "description": "**Current state:** Two settings fields are defined with full validation and env var support but never consumed: `debug` is never passed to FastAPI or uvicorn, and `ws_heartbeat_interval` is ignored in favour of a hardcoded `DEFAULT_HEARTBEAT_INTERVAL = 30` in ws.py.\n\n**Gap:** Settings were created in v003/02-api-foundation as \"define the field\" without \"wire the field to its consumer.\"\n\n**Impact:** Operators cannot control debug mode or WebSocket heartbeat timing via configuration. The env vars exist but do nothing.",
+      "acceptance_criteria": [
+        {
+          "text": "settings.debug is passed to FastAPI(debug=...) and/or uvicorn.run()",
+          "done": false
+        },
+        {
+          "text": "settings.ws_heartbeat_interval is read by ws.py instead of using hardcoded DEFAULT_HEARTBEAT_INTERVAL",
+          "done": false
+        },
+        {
+          "text": "No settings fields remain defined but unconsumed (excluding log_level which is covered by BL-056)",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-063",
+      "title": "Add SPA routing fallback for GUI sub-paths",
+      "priority": "P1",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:30:08.176968",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "gui",
+        "routing"
+      ],
+      "description": "**Current state:** FastAPI serves the GUI via `StaticFiles(html=True)`, but this does not fall back to `index.html` for unknown sub-paths. Navigating directly to `/gui/library` or refreshing on `/gui/projects` returns 404. React Router handles client-side navigation fine, but only when starting from the root.\n\n**Gap:** Standard SPA routing fallback was not implemented in v005/01-frontend-foundation. The e2e test suite explicitly works around this by navigating via tab clicks only.\n\n**Impact:** Bookmarks, page refreshes, and shared URLs to any GUI sub-page are broken.",
+      "acceptance_criteria": [
+        {
+          "text": "Direct navigation to /gui/library, /gui/projects, and other GUI sub-paths returns the SPA index.html instead of 404",
+          "done": false
+        },
+        {
+          "text": "Page refresh on any GUI sub-path preserves the current view",
+          "done": false
+        },
+        {
+          "text": "Bookmarked and shared GUI URLs load the correct page",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-064",
+      "title": "Fix projects endpoint pagination total count",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:30:16.415759",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "api",
+        "pagination"
+      ],
+      "description": "**Current state:** `GET /api/v1/projects` returns `total=len(projects)` which equals the current page size, not the true database total. A `count()` method was added to `AsyncVideoRepository` but not to `AsyncProjectRepository`.\n\n**Gap:** Pagination total count implementation was incomplete in v005/02-backend-services \u2014 only one of two repositories received the method.\n\n**Impact:** Frontend pagination metadata is incorrect when there are more projects than the page limit. Users see wrong page counts and may not discover all their projects.",
+      "acceptance_criteria": [
+        {
+          "text": "AsyncProjectRepository has a count() method matching AsyncVideoRepository's implementation",
+          "done": false
+        },
+        {
+          "text": "GET /api/v1/projects returns correct total count reflecting all projects in the database, not just the current page",
+          "done": false
+        },
+        {
+          "text": "Frontend pagination displays correct page count when projects exceed the page limit",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-065",
+      "title": "Wire WebSocket broadcast calls into API operations",
+      "priority": "P2",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:30:27.033787",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "websocket",
+        "gui"
+      ],
+      "description": "**Current state:** The backend defines WebSocket event types (SCAN_STARTED, SCAN_COMPLETED, PROJECT_CREATED, HEALTH_STATUS) and the frontend ActivityLog listens for them, but no API operation ever calls `ConnectionManager.broadcast()`. The only messages sent are heartbeat pings.\n\n**Gap:** WebSocket infrastructure was built in v005 across 02-backend-services and 03-gui-components, but the broadcast calls were never added to the API operations that should trigger them.\n\n**Impact:** The Dashboard ActivityLog renders correctly but only ever shows heartbeat entries. Real-time feedback for scan progress, project creation, and other operations is non-functional.",
+      "acceptance_criteria": [
+        {
+          "text": "Library scan operations trigger SCAN_STARTED and SCAN_COMPLETED WebSocket broadcasts",
+          "done": false
+        },
+        {
+          "text": "Project creation triggers PROJECT_CREATED WebSocket broadcast",
+          "done": false
+        },
+        {
+          "text": "Dashboard ActivityLog displays real application events, not just heartbeat pings",
+          "done": false
+        },
+        {
+          "text": "WebSocket event payloads include relevant context (project ID, scan path, etc.)",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-066",
+      "title": "Add transition support to Effect Workshop GUI",
+      "priority": "P3",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:30:37.704660",
+      "completed_at": null,
+      "tags": [
+        "wiring-gap",
+        "gui",
+        "effects",
+        "transitions"
+      ],
+      "description": "**Current state:** `POST /projects/{id}/effects/transition` endpoint is implemented and functional, but the Effect Workshop GUI only handles per-clip effects. There is no GUI surface for the transition API.\n\n**Gap:** The transition API was built in v007/02-effect-registry-api but the Effect Workshop GUI in v007/03 was scoped to per-clip effects only.\n\n**Impact:** Transitions are only accessible via direct API calls. Users have no way to discover or apply transitions through the GUI.",
+      "acceptance_criteria": [
+        {
+          "text": "Effect Workshop GUI includes a transition section or mode for applying transitions between clips",
+          "done": false
+        },
+        {
+          "text": "GUI calls POST /projects/{id}/effects/transition endpoint",
+          "done": false
+        },
+        {
+          "text": "User can preview and apply at least one transition type through the GUI",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-067",
+      "title": "Audit and trim unused PyO3 bindings from v001 (TimeRange ops, input sanitization)",
+      "priority": "P3",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:30:51.088167",
+      "completed_at": null,
+      "tags": [
+        "dead-code",
+        "rust-python",
+        "api-surface"
+      ],
+      "description": "**Current state:** Several Rust functions are exposed via PyO3 but have zero production callers in Python. TimeRange list operations (find_gaps, merge_ranges, total_coverage) are design-ahead code for future timeline editing. Input sanitization functions (validate_crf, validate_speed) overlap with internal Rust validation in FFmpegCommand.build().\n\n**Gap:** Functions were exposed \"just in case\" in v001 without a consuming code path. They're tested but unused.\n\n**Impact:** Inflated public API surface increases maintenance burden and PyO3 binding complexity. Unclear to consumers which functions are intended for use vs aspirational.",
+      "acceptance_criteria": [
+        {
+          "text": "TimeRange list operations (find_gaps, merge_ranges, total_coverage) are either used by a production code path or removed from PyO3 bindings",
+          "done": false
+        },
+        {
+          "text": "Input sanitization functions (validate_crf, validate_speed, etc.) are either called from Python production code or removed from PyO3 bindings if Rust-internal validation covers the same checks",
+          "done": false
+        },
+        {
+          "text": "Stub file reflects the final public API surface",
+          "done": false
+        }
+      ],
+      "notes": null,
+      "use_case": null,
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
+      "upvotes": 0
+    },
+    {
+      "id": "BL-068",
+      "title": "Audit and trim unused PyO3 bindings from v006 filter engine",
+      "priority": "P3",
+      "status": "open",
+      "size": "l",
+      "added": "2026-02-21T17:31:01.421347",
+      "completed_at": null,
+      "tags": [
+        "dead-code",
+        "rust-python",
+        "api-surface"
+      ],
+      "description": "**Current state:** Three v006 filter engine features (Expression Engine, Graph Validation, Filter Composition) expose Python bindings via PyO3 that are only used in parity tests, never in production code. The Rust code uses these capabilities internally (e.g., DrawtextBuilder uses Expr for alpha fades, DuckingPattern uses composition).\n\n**Gap:** PyO3 bindings were created in v006/01-filter-engine for all three features but no Python production code consumes them. The Rust-internal usage works fine without the Python bindings.\n\n**Impact:** Six unused Python binding functions inflate the public API surface. Maintaining PyO3 wrappers for internally-consumed Rust code adds build complexity without value.",
+      "acceptance_criteria": [
+        {
+          "text": "Expression Engine (Expr), Graph Validation (validate, validated_to_string), and Filter Composition (compose_chain, compose_branch, compose_merge) PyO3 bindings are either used by Python production code or removed from the public API",
+          "done": false
+        },
+        {
+          "text": "If bindings are retained for future use, they are documented as such in the stub file",
+          "done": false
+        },
+        {
+          "text": "Parity tests are updated to reflect any binding changes",
+          "done": false
+        }
+      ],
+      "notes": null,
       "use_case": null,
       "implemented_in_version": null,
       "implemented_in_theme": null,

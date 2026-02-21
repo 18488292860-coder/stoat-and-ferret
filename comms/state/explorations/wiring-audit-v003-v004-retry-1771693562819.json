@@ -1,14 +1,17 @@
 {
   "exploration_id": "wiring-audit-v003-v004-retry-1771693562819",
   "results_folder": "wiring-audit-v003-v004-retry",
-  "status": "running",
+  "status": "complete",
   "pid": 3164,
   "started_at": "2026-02-21T17:06:02.819496",
-  "updated_at": "2026-02-21T17:06:04.735559",
-  "completed_at": null,
+  "updated_at": "2026-02-21T17:12:34.139823",
+  "completed_at": "2026-02-21T17:12:34.139395",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md",
+    "gaps-found.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/wiring-audit-v003-v004-retry/prompt.md",
   "outbox_path": "comms/outbox/exploration/wiring-audit-v003-v004-retry"
