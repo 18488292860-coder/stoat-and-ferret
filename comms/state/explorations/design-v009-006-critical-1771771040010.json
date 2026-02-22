@@ -1,14 +1,16 @@
 {
   "exploration_id": "design-v009-006-critical-1771771040010",
   "results_folder": "design-v009-006-critical",
-  "status": "running",
+  "status": "complete",
   "pid": 9032,
   "started_at": "2026-02-22T14:37:20.010355",
-  "updated_at": "2026-02-22T14:37:22.159190",
-  "completed_at": null,
+  "updated_at": "2026-02-22T14:50:17.391709",
+  "completed_at": "2026-02-22T14:50:17.391367",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/design-v009-006-critical/prompt.md",
   "outbox_path": "comms/outbox/exploration/design-v009-006-critical"
