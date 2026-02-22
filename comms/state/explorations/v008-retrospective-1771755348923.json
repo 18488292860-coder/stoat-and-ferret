@@ -1,10 +1,10 @@
 {
   "exploration_id": "v008-retrospective-1771755348923",
   "results_folder": "v008-retrospective",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 9032,
   "started_at": "2026-02-22T10:15:48.923781",
-  "updated_at": "2026-02-22T10:15:48.923781",
+  "updated_at": "2026-02-22T10:15:50.764052",
   "completed_at": null,
   "error": null,
   "documents": [],
