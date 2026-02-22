@@ -1,10 +1,10 @@
 {
   "exploration_id": "v008-retro-001-env-1771755410115",
   "results_folder": "v008-retro-001-env",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 9032,
   "started_at": "2026-02-22T10:16:50.115475",
-  "updated_at": "2026-02-22T10:16:50.115475",
+  "updated_at": "2026-02-22T10:16:52.108375",
   "completed_at": null,
   "error": null,
   "documents": [],
