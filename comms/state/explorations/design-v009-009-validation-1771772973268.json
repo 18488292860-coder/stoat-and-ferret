@@ -1,10 +1,10 @@
 {
   "exploration_id": "design-v009-009-validation-1771772973268",
   "results_folder": "design-v009-009-validation",
-  "status": "pending",
-  "pid": null,
+  "status": "running",
+  "pid": 9032,
   "started_at": "2026-02-22T15:09:33.268996",
-  "updated_at": "2026-02-22T15:09:33.268996",
+  "updated_at": "2026-02-22T15:09:35.043998",
   "completed_at": null,
   "error": null,
   "documents": [],
