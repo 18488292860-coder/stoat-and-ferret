@@ -7,13 +7,14 @@
 
 ## Current Focus
 
-**Recently Completed:** v007 (effect workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview)
-**Upcoming:** v008 (Startup Integrity & CI Stability — wiring audit fixes)
+**Recently Completed:** v008 (Startup Integrity & CI Stability — wiring audit fixes)
+**Upcoming:** v009 (Observability & GUI Runtime)
 
 ## Roadmap → Version Mapping
 
 | Version | Roadmap Reference | Focus | Status |
 |---------|-------------------|-------|--------|
+| v008 | Wiring audit | Startup Integrity & CI Stability: database startup, logging startup, orphaned settings, flaky E2E fix | ✅ complete |
 | v007 | Phase 2, M2.4–2.6, M2.8–2.9 | Effect Workshop GUI: audio mixing, transitions, effect registry, catalog UI, parameter forms, live preview | ✅ complete |
 | v006 | Phase 2, M2.1–2.3 | Effects engine foundation: filter expression engine, graph validation, text overlay, speed control | ✅ complete |
 | v005 | Phase 1, M1.10–1.12 | GUI shell + library browser + project manager | ✅ complete |
@@ -37,24 +38,6 @@ Track explorations that must complete before version design.
 | BL-051 | Preview thumbnail pipeline (frame extraction + effect application) | v007 | complete |
 
 ## Planned Versions
-
-### v008 — Startup Integrity & CI Stability
-
-**Goal:** Fix P0 blockers and critical startup wiring gaps discovered by the wiring audit. After v008, a fresh install starts cleanly with working logging, database, and settings.
-
-**Theme 1: application-startup-wiring**
-- 001-database-startup: Wire `create_tables()` into lifespan startup [BL-058, P0]
-- 002-logging-startup: Call `configure_logging()` at startup, wire `settings.log_level` [BL-056, P1]
-- 003-orphaned-settings: Wire `settings.debug` to FastAPI and `settings.ws_heartbeat_interval` to ws.py [BL-062, P2]
-
-**Theme 2: ci-stability**
-- 001-flaky-e2e-fix: Fix `project-creation.spec.ts:31` toBeHidden timeout flake [BL-055, P0]
-
-**Backlog items:** BL-055, BL-056, BL-058, BL-062 (4 items)
-**Dependencies:** None. All items are independent startup/CI fixes.
-**Risk:** BL-055 (flaky E2E) may require Playwright timing investigation.
-
----
 
 ### v009 — Observability & GUI Runtime
 
@@ -94,6 +77,13 @@ Track explorations that must complete before version design.
 **Risk:** BL-061 requires a design decision (wire vs remove). BL-067/BL-068 are audit-then-act.
 
 ## Completed Versions
+
+### v008 - Startup Integrity & CI Stability (2026-02-22)
+- **Themes:** application-startup-wiring, ci-stability
+- **Features:** 4 completed across 2 themes
+- **Backlog Resolved:** BL-055, BL-056, BL-058, BL-062
+- **Key Changes:** Database schema creation wired into lifespan startup (`create_tables_async()`), structured logging wired with `settings.log_level` and idempotent handler guard, orphaned settings (`settings.debug`, `settings.ws_heartbeat_interval`) wired to consumers so all 9 Settings fields are now consumed by production code, flaky E2E `toBeHidden()` assertion fixed with explicit timeout
+- **Deferred:** None
 
 ### v007 - Effect Workshop GUI (2026-02-19)
 - **Themes:** rust-filter-builders, effect-registry-api, effect-workshop-gui, quality-validation
@@ -175,6 +165,7 @@ Query: `list_backlog_items(project="stoat-and-ferret", status="open")`
 
 | Date | Change |
 |------|--------|
+| 2026-02-22 | v008 complete: Startup Integrity & CI Stability delivered (2 themes, 4 features, 4 backlog items completed). Moved v008 from Planned to Completed. Updated Current Focus to v009. |
 | 2026-02-21 | Planned v008-v010 covering all 15 open backlog items from wiring audit. Cancelled BL-011, BL-053, BL-054. Closed PR-001, PR-002 after investigation. Deferred Phase 3: Composition Engine to post-v010. |
 | 2026-02-19 | v007 complete: Effect Workshop GUI delivered (4 themes, 11 features, 9 backlog items completed). Moved v007 from Planned to Completed. Updated Current Focus to v008. Marked BL-047 and BL-051 investigations as complete. |
 | 2026-02-19 | v006 complete: Effects Engine Foundation delivered (3 themes, 8 features, 7 backlog items completed). Moved v006 from Planned to Completed. Updated Current Focus to v007. Marked BL-043 investigation as complete. |
