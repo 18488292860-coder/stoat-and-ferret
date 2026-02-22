@@ -4,6 +4,35 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v008] - 2026-02-22
+
+Application Startup Wiring & CI Stability. Wires disconnected infrastructure — database schema creation, structured logging, and orphaned settings — into the FastAPI lifespan startup sequence, and fixes a flaky E2E test that intermittently blocked CI merges.
+
+### Added
+
+- **Database Startup Wiring**
+  - `create_tables_async()` called in lifespan so database schema is created automatically on fresh startup
+  - 3 duplicate test helpers consolidated into shared import
+
+- **Logging Startup Wiring**
+  - `configure_logging()` wired into lifespan with `settings.log_level` controlling verbosity
+  - Idempotent handler guard prevents duplicate log handlers
+  - Uvicorn log level made configurable from settings
+
+- **Orphaned Settings Wiring**
+  - `settings.debug` wired to `FastAPI(debug=...)` for error detail control
+  - `settings.ws_heartbeat_interval` replaces hardcoded constant in WebSocket manager
+  - All 9 `Settings` fields now consumed by production code
+
+### Changed
+
+- Lifespan startup sequence extended with database schema creation and logging configuration
+- WebSocket heartbeat interval now driven by settings instead of hardcoded value
+
+### Fixed
+
+- Flaky E2E `toBeHidden()` assertion in `project-creation.spec.ts` — added explicit 10-second timeout matching established pattern in other specs (BL-055)
+
 ## [v007] - 2026-02-19
 
 Effect Workshop GUI. Implements Rust filter builders for audio mixing and video transitions, refactors the effect registry to builder-protocol dispatch with JSON schema validation, builds the complete GUI effect workshop (catalog, parameter forms, live preview, builder workflow), and validates with E2E tests and accessibility compliance. Covers milestones M2.4–M2.6, M2.8–M2.9.
