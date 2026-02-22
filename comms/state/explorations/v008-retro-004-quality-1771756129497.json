@@ -1,14 +1,16 @@
 {
   "exploration_id": "v008-retro-004-quality-1771756129497",
   "results_folder": "v008-retro-004-quality",
-  "status": "running",
+  "status": "complete",
   "pid": 9032,
   "started_at": "2026-02-22T10:28:49.497070",
-  "updated_at": "2026-02-22T10:28:51.466230",
-  "completed_at": null,
+  "updated_at": "2026-02-22T10:32:38.612506",
+  "completed_at": "2026-02-22T10:32:38.611573",
   "error": null,
-  "documents": [],
-  "committed": false,
+  "documents": [
+    "README.md"
+  ],
+  "committed": true,
   "commit_error": null,
   "prompt_path": "comms/inbox/exploration/v008-retro-004-quality/prompt.md",
   "outbox_path": "comms/outbox/exploration/v008-retro-004-quality"

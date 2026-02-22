@@ -1,0 +1,15 @@
+{
+  "exploration_id": "v008-retro-004b-health-1771756427036",
+  "results_folder": "v008-retro-004b-health",
+  "status": "pending",
+  "pid": null,
+  "started_at": "2026-02-22T10:33:47.036242",
+  "updated_at": "2026-02-22T10:33:47.036242",
+  "completed_at": null,
+  "error": null,
+  "documents": [],
+  "committed": false,
+  "commit_error": null,
+  "prompt_path": "comms/inbox/exploration/v008-retro-004b-health/prompt.md",
+  "outbox_path": "comms/outbox/exploration/v008-retro-004b-health"
+}
