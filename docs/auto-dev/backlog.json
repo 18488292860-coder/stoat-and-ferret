@@ -1,6 +1,6 @@
 {
   "next_id": 69,
-  "updated_at": "2026-02-22T10:24:16.860374",
+  "updated_at": "2026-02-22T14:11:25.153610",
   "items": [
     {
       "id": "BL-001",
@@ -2234,7 +2234,7 @@
           "done": false
         }
       ],
-      "notes": "Depends on BL-056 (wire up stdout logging first). Use RotatingFileHandler with maxBytes=10MB. Log directory: {project_root}/logs/. Must add logs/ to .gitignore.",
+      "notes": "Depends on BL-056 (wire up stdout logging first). Use RotatingFileHandler with maxBytes=10MB. Log directory: {project_root}/logs/. Must add logs/ to .gitignore. Use case added during v009 design backlog analysis.",
       "use_case": null,
       "implemented_in_version": null,
       "implemented_in_theme": null,

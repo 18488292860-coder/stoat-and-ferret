@@ -1,6 +1,6 @@
 # Project Backlog
 
-*Last updated: 2026-02-22 10:24*
+*Last updated: 2026-02-22 14:11*
 
 **Total completed:** 53 | **Cancelled:** 0
 
@@ -165,7 +165,7 @@ Tags like `v070-tech-debt` are acceptable temporarily to group related items fro
 - [ ] File handler uses the same structlog formatter and log level as the stdout handler
 - [ ] Stdout logging continues to work alongside file logging
 
-**Notes:** Depends on BL-056 (wire up stdout logging first). Use RotatingFileHandler with maxBytes=10MB. Log directory: {project_root}/logs/. Must add logs/ to .gitignore.
+**Notes:** Depends on BL-056 (wire up stdout logging first). Use RotatingFileHandler with maxBytes=10MB. Log directory: {project_root}/logs/. Must add logs/ to .gitignore. Use case added during v009 design backlog analysis.
 
 [↑ Back to list](#bl-057-ref)
 
