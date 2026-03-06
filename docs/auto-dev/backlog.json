@@ -1,6 +1,6 @@
 {
-  "next_id": 80,
-  "updated_at": "2026-02-25T11:42:18.190721",
+  "next_id": 81,
+  "updated_at": "2026-02-26T10:40:20.513640",
   "items": [
     {
       "id": "BL-001",
@@ -3107,6 +3107,46 @@
       "use_case": null,
       "implemented_in_version": "v012",
       "implemented_in_theme": "workshop-and-docs-polish",
+      "upvotes": 0
+    },
+    {
+      "id": "BL-080",
+      "title": "Fix scan dialog freeze at 100% due to backend/frontend status string mismatch",
+      "priority": "P0",
+      "status": "open",
+      "size": "xl",
+      "added": "2026-02-26T10:40:14.546343",
+      "completed_at": null,
+      "tags": [
+        "bug",
+        "gui",
+        "scan",
+        "jobs",
+        "user-feedback"
+      ],
+      "description": "**Current state:** The backend `JobStatus` enum serializes completion as `\"complete\"` (`queue.py:22`), but the frontend `ScanModal.tsx:14` type interface expects `\"completed\"`. The polling check at `ScanModal.tsx:98` compares `status.status === 'completed'` which never matches the backend's `\"complete\"` response.\n\n**Gap:** When a directory scan finishes, the progress bar reaches 100% but the completion branch never fires. The dialog stays in `scanning` state with the polling loop running indefinitely. No videos appear in the library.\n\n**Impact:** Directory scanning is completely broken for end users \u2014 the core library import workflow is non-functional. Previously masked by BL-072 (blocking subprocess freeze), which was fixed in v010. The status mismatch is now the sole remaining blocker.\n\n**Secondary issue:** The frontend also lacks handling for the backend's `\"timeout\"` status (`JobStatus.TIMEOUT`), causing the same infinite-polling freeze for scans exceeding 300 seconds.",
+      "acceptance_criteria": [
+        {
+          "text": "ScanModal.tsx JobStatus interface uses 'complete' (not 'completed') matching backend JobStatus.COMPLETE enum value",
+          "done": false
+        },
+        {
+          "text": "Scan dialog closes and library refreshes when backend returns status 'complete'",
+          "done": false
+        },
+        {
+          "text": "ScanModal.tsx handles 'timeout' status by showing error state with appropriate message",
+          "done": false
+        },
+        {
+          "text": "E2E or integration test verifies scan completion flow from 100% progress through dialog dismissal",
+          "done": false
+        }
+      ],
+      "notes": "size: s \u2014 fix is two string changes and one new branch in ScanModal.tsx. Auto-estimate inflated by description length. Root cause identified in exploration: scan-directory-freeze (commit in comms/outbox/exploration/scan-directory-freeze/).",
+      "use_case": "When a user scans a directory to import videos, the dialog should close upon completion and the library should display the discovered files. Currently the dialog freezes at 100%, requiring a page refresh and leaving users unsure if their scan worked.",
+      "implemented_in_version": null,
+      "implemented_in_theme": null,
       "upvotes": 0
     }
   ],

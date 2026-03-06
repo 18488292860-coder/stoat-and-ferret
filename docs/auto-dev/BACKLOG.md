@@ -1,6 +1,6 @@
 # Project Backlog
 
-*Last updated: 2026-02-25 11:42*
+*Last updated: 2026-02-26 10:40*
 
 **Total completed:** 74 | **Cancelled:** 0
 
@@ -8,7 +8,7 @@
 
 | Priority | Name | Count |
 |----------|------|-------|
-| P0 | Critical | 0 |
+| P0 | Critical | 1 |
 | P1 | High | 0 |
 | P2 | Medium | 1 |
 | P3 | Low | 0 |
@@ -17,6 +17,7 @@
 
 | ID | Pri | Size | Title | Description |
 |----|-----|------|-------|-------------|
+| <a id="bl-080-ref"></a>[BL-080](#bl-080) | P0 | xl | Fix scan dialog freeze at 100% due to backend/frontend status string mismatch | **Current state:** The backend `JobStatus` enum serialize... |
 | <a id="bl-069-ref"></a>[BL-069](#bl-069) | P2 | xl | Update C4 architecture documentation for v009 changes | C4 documentation was last generated for v008. v009 introd... |
 
 ## Tags Summary
@@ -26,6 +27,11 @@
 | architecture | 1 | BL-069 |
 | c4 | 1 | BL-069 |
 | documentation | 1 | BL-069 |
+| bug | 1 | BL-080 |
+| gui | 1 | BL-080 |
+| scan | 1 | BL-080 |
+| jobs | 1 | BL-080 |
+| user-feedback | 1 | BL-080 |
 
 ## Tag Conventions
 
@@ -79,6 +85,33 @@ When a tag is not in the approved list, map it to the nearest approved tag:
 Tags like `v070-tech-debt` are acceptable temporarily to group related items from a specific version. Once all items with that tag are completed, the tag naturally expires. Prefer using `cleanup` plus a version reference in the item description over creating new version-specific tags.
 
 ## Item Details
+
+### P0: Critical
+
+#### 📋 BL-080: Fix scan dialog freeze at 100% due to backend/frontend status string mismatch
+
+**Status:** open
+**Tags:** bug, gui, scan, jobs, user-feedback
+
+**Current state:** The backend `JobStatus` enum serializes completion as `"complete"` (`queue.py:22`), but the frontend `ScanModal.tsx:14` type interface expects `"completed"`. The polling check at `ScanModal.tsx:98` compares `status.status === 'completed'` which never matches the backend's `"complete"` response.
+
+**Gap:** When a directory scan finishes, the progress bar reaches 100% but the completion branch never fires. The dialog stays in `scanning` state with the polling loop running indefinitely. No videos appear in the library.
+
+**Impact:** Directory scanning is completely broken for end users — the core library import workflow is non-functional. Previously masked by BL-072 (blocking subprocess freeze), which was fixed in v010. The status mismatch is now the sole remaining blocker.
+
+**Secondary issue:** The frontend also lacks handling for the backend's `"timeout"` status (`JobStatus.TIMEOUT`), causing the same infinite-polling freeze for scans exceeding 300 seconds.
+
+**Use Case:** When a user scans a directory to import videos, the dialog should close upon completion and the library should display the discovered files. Currently the dialog freezes at 100%, requiring a page refresh and leaving users unsure if their scan worked.
+
+**Acceptance Criteria:**
+- [ ] ScanModal.tsx JobStatus interface uses 'complete' (not 'completed') matching backend JobStatus.COMPLETE enum value
+- [ ] Scan dialog closes and library refreshes when backend returns status 'complete'
+- [ ] ScanModal.tsx handles 'timeout' status by showing error state with appropriate message
+- [ ] E2E or integration test verifies scan completion flow from 100% progress through dialog dismissal
+
+**Notes:** size: s — fix is two string changes and one new branch in ScanModal.tsx. Auto-estimate inflated by description length. Root cause identified in exploration: scan-directory-freeze (commit in comms/outbox/exploration/scan-directory-freeze/).
+
+[↑ Back to list](#bl-080-ref)
 
 ### P2: Medium
 
