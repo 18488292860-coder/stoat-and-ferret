@@ -4,6 +4,29 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v013] - 2026-03-07
+
+Scan Dialog Freeze Fix. Fixes the P0 scan dialog freeze where the progress bar reached 100% but the completion branch never fired, and adds timeout status handling so timed-out scans show an error instead of polling indefinitely.
+
+### Added
+
+- N/A
+
+### Changed
+
+- N/A
+
+### Fixed
+
+- **Scan Dialog Freeze (BL-080)**
+  - Fixed `'completed'` vs `'complete'` string mismatch between frontend `JobStatus` type union and backend `JobStatus.COMPLETE` enum in `ScanModal.tsx`
+  - Updated polling comparison and test mock atomically
+  - Added integration test for scan completion flow (running -> complete -> onScanComplete fires)
+- **Timeout Status Handling**
+  - Added `'timeout'` to frontend `JobStatus` type union
+  - Added timeout error handling branch mirroring the existing `'failed'` pattern
+  - Timed-out scans now show an error message instead of polling indefinitely
+
 ## [v012] - 2026-02-25
 
 API Surface & Bindings Cleanup. Removes 11 unused PyO3 bindings and 1 dead bridge function from the Rust-Python boundary, wires transition effects into the Effect Workshop GUI, and corrects misleading API specification examples.
