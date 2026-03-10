@@ -4,6 +4,56 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v015] - 2026-03-10
+
+Phase 2 Quality Debt + Rust Layout/Composition Core. Retires all Phase 2 quality debt (coverage enforcement, property testing, FFmpeg contract tests, performance benchmarks) and builds the foundational Rust layout and composition modules for Phase 3.
+
+### Added
+
+- **Unit Test Coverage Enforcement**
+  - Achieved >95% line coverage for all 8 `src/ffmpeg/` modules with error path tests
+  - CI enforcement step parsing `cargo llvm-cov --json` for per-module coverage checks
+
+- **Property-Based Testing (Filter Builders)**
+  - 12 proptest strategies across drawtext, speed, audio, and transitions builders
+  - Coverage of both valid and invalid parameter ranges for thorough edge case detection
+
+- **FFmpeg Contract Tests**
+  - 15 contract tests validating Phase 2 filter builder outputs against real FFmpeg execution
+  - `@requires_ffmpeg` marker for graceful CI skip in environments without FFmpeg
+
+- **Performance Benchmarks**
+  - 15 Criterion benchmarks across 7 groups for filter builders
+  - Baseline performance measurements with HTML reports in `target/criterion/`
+
+- **LayoutPosition (Rust)**
+  - `LayoutPosition` struct with normalized coordinates (0.0–1.0), `to_pixels()` conversion, and `validate()`
+  - `LayoutError` exception type for invalid coordinate values
+  - PyO3 bindings with proptest coverage for pixel rounding edge cases
+
+- **LayoutPreset (Rust)**
+  - `LayoutPreset` enum with 7 variants: 4 PIP corners, SideBySide, TopBottom, Grid2x2
+  - `positions(input_count)` method returning `Vec<LayoutPosition>` for preset layouts
+  - PyO3 bindings with manual type stubs (pyo3-stub-gen does not support enums)
+
+- **Overlay & Scale Filter Builders (Rust)**
+  - `build_overlay_filter()` and `build_scale_for_layout()` in `compose/overlay` module
+  - Converts LayoutPosition to FFmpeg filter strings with `force_divisible_by=2` for codec compatibility
+  - PyO3 bindings, proptest strategies, and FFmpeg contract tests
+
+- **Composition Position Calculator (Rust)**
+  - `CompositionClip` and `TransitionSpec` structs for multi-clip timeline representation
+  - `calculate_composition_positions()` and `calculate_timeline_duration()` with transition overlap clamping
+  - PyO3 bindings and comprehensive tests for clamping edge cases
+
+### Changed
+
+- N/A
+
+### Fixed
+
+- N/A
+
 ## [v014] - 2026-03-09
 
 Phase 2 Smoke Test. API-level smoke test suite exercising the full backend stack (HTTP → FastAPI → Services → PyO3/Rust → SQLite) with real video files, providing a verified Phase 2 baseline before Phase 3 begins.
