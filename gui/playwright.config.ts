@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
-    baseURL: "http://localhost:8000/gui/",
+    baseURL: "http://localhost:8765/gui/",
     trace: "on-first-retry",
   },
   projects: [
@@ -18,8 +18,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "cd .. && uv run uvicorn src.stoat_ferret.api.app:create_app --factory",
-    url: "http://localhost:8000/health/live",
+    command: "cd .. && uv run uvicorn src.stoat_ferret.api.app:create_app --factory --port 8765",
+    url: "http://localhost:8765/health/live",
     reuseExistingServer: !process.env.CI,
   },
 });
