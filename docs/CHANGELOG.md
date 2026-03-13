@@ -4,6 +4,63 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v018] - 2026-03-13
+
+GUI Timeline Canvas + Quality. Builds the visual composition interface (timeline canvas, clip visualization, layout preview), validates Phase 3 with comprehensive smoke and contract tests, and closes out Phase 3 with documentation and C4 architecture updates across all four levels.
+
+### Added
+
+- **Phase 3 Smoke Tests**
+  - 5 smoke test files (7 tests) covering timeline, compose, batch render, versions, and audio mix endpoints
+  - Full HTTP stack validation with real Rust core via `smoke_client` fixture
+
+- **Phase 3 Contract Tests**
+  - 6 contract tests validating overlay filters, composition graphs, and audio mix against real FFmpeg
+  - Uses lavfi virtual inputs (`testsrc2`, `sine`) for portable, fast test execution
+
+- **Timeline Page & Navigation**
+  - `/gui/timeline` route with Timeline tab in navigation
+  - `timelineStore` and `composeStore` Zustand stores with `isLoading`/`error`/`data` async pattern
+  - Wired to Phase 3 timeline and compose API endpoints
+
+- **Timeline Canvas**
+  - `TimeRuler`, `Track`, `ZoomControls`, `TimelineCanvas` components
+  - `timeToPixel()`/`pixelToTime()` coordinate utility for position-accurate rendering
+  - Horizontal scroll and zoom controls
+
+- **Clip Visualization & Playhead**
+  - `TimelineClip` component with position-accurate rendering, click-to-select, and duration labels
+  - `Playhead` component with time position indicator
+
+- **Layout Preview Panel**
+  - `LayoutSelector`, `LayoutPreview`, and `LayerStack` components
+  - Preset selection consuming backend preset schema
+  - Custom coordinate input support
+  - Percentage-based CSS positioning for resolution-independent previews
+
+- **Design Document Updates**
+  - Updated 5 design docs (roadmap, architecture, API spec, quality architecture, GUI architecture) with Phase 3 content
+
+- **Impact Assessment Patterns**
+  - Phase 3 composition model grep patterns (TrackType, LayoutPosition, LayoutPreset, AudioMixSpec, BatchProgress) added to IMPACT_ASSESSMENT
+
+- **C4 Architecture Documentation**
+  - 58 Code-level docs across 10 directories covering all modules
+  - 8 Component-level docs for all logical components
+  - Container-level docs (containers.md, interfaces.md)
+  - Context-level system-context.md
+  - Covers 6 versions of accumulated drift (v009-v017)
+
+### Changed
+
+- GUI navigation extended with Timeline tab
+- Frontend test suite expanded to 301 tests (104 new tests across timeline theme)
+- C4 documentation fully regenerated from scratch for current codebase state
+
+### Fixed
+
+- N/A
+
 ## [v017] - 2026-03-13
 
 Composition & Audio API + Batch. Delivers composition layout API with preset discovery and filter preview, audio mix configuration endpoints, WebSocket broadcast events for composition mutations, batch rendering with semaphore concurrency, and project version persistence with save/restore/list operations.
