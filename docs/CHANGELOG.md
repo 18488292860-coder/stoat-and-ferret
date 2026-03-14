@@ -4,6 +4,47 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v019] - 2026-03-14
+
+Smoke Test Coverage Expansion. Extends the Phase 2 smoke test suite to cover 6 API surfaces introduced in v015-v018 (timeline clips, transitions, compose layout, video detail, version restore, filesystem directories), adds negative-path smoke tests for Phase 3 validation rules, and updates harness documentation to reflect Phase 2 completion.
+
+### Added
+
+- **Timeline Clip CRUD Smoke Tests**
+  - PATCH position, PATCH track, and DELETE smoke tests for timeline clips in `test_timeline.py`
+
+- **Timeline Transition Smoke Tests**
+  - POST and DELETE smoke tests for timeline transitions
+  - `create_adjacent_clips_timeline()` conftest helper for multi-clip timeline setup
+
+- **Compose Layout Smoke Tests**
+  - POST smoke test for compose layout preset application in `test_compose.py`
+
+- **Video Detail Smoke Tests**
+  - GET detail, GET thumbnail, and DELETE smoke tests for videos in `test_library.py`
+
+- **Version Restore Smoke Tests**
+  - POST restore smoke test with `create_version_repo()` factory helper for direct repository access
+
+- **Filesystem Directory Smoke Tests**
+  - GET directories smoke test with `tmp_path` fixtures and `dir_tree` deterministic fixture in `test_filesystem.py`
+
+- **Negative-Path Smoke Tests**
+  - 6 negative-path smoke tests covering timeline, audio, batch, and compose error handling
+  - Validates consistent `{"detail": {"code": "...", "message": "..."}}` error response format
+
+- **Harness Documentation Update**
+  - Updated 6 documentation files to reflect Phase 1 implementation and Phase 2 expansion status
+
+### Changed
+
+- Smoke test suite expanded from ~22 to ~43 tests across timeline, compose, library, versions, and filesystem modules
+- `conftest.py` extended with reusable helpers: `create_adjacent_clips_timeline()`, `create_version_repo()`
+
+### Fixed
+
+- N/A
+
 ## [v018] - 2026-03-13
 
 GUI Timeline Canvas + Quality. Builds the visual composition interface (timeline canvas, clip visualization, layout preview), validates Phase 3 with comprehensive smoke and contract tests, and closes out Phase 3 with documentation and C4 architecture updates across all four levels.
