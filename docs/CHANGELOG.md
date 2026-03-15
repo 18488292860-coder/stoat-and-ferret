@@ -4,6 +4,28 @@ All notable changes to stoat-and-ferret will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v020] - 2026-03-15
+
+Sample Project: Running Montage. Delivers the complete sample project infrastructure for the Running Montage example, including a CLI seed script, smoke test fixture with effects and transitions, regression test, developer-facing user guide, and cross-artifact sync check in IMPACT_ASSESSMENT.
+
+### Added
+
+- **Running Montage Seed Script**
+  - `scripts/seed_sample_project.py` — synchronous CLI script creating full Running Montage project (health check, video scan, project, 4 clips, 5 effects, 1 transition)
+
+- **Sample Project Fixture Extensions**
+  - Extended `sample_project` fixture in `tests/smoke/conftest.py` with effects and transition creation
+  - Added `SAMPLE_EFFECT_DEFS` and `SAMPLE_TRANSITION_DEFS` shared constants
+
+- **Sample Project Regression Test**
+  - `tests/smoke/test_sample_project.py` validating project metadata, clip frames, source video associations, and effect-to-clip mappings against canonical constants
+
+- **Sample Project User Guide**
+  - `docs/setup/guides/sample-project.md` with prerequisites, quick start, data overview, API exploration, reset instructions, and developer cross-references
+
+- **Sample Project Artifact Sync Check**
+  - 5th check in `docs/auto-dev/IMPACT_ASSESSMENT.md` covering seed script, fixture, and guide synchronization across constant categories
+
 ## [v019] - 2026-03-14
 
 Smoke Test Coverage Expansion. Extends the Phase 2 smoke test suite to cover 6 API surfaces introduced in v015-v018 (timeline clips, transitions, compose layout, video detail, version restore, filesystem directories), adds negative-path smoke tests for Phase 3 validation rules, and updates harness documentation to reflect Phase 2 completion.
